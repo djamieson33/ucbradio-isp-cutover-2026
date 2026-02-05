@@ -1,3 +1,6 @@
+## [0.1.0] - 2026-02-05
+- Second test: automated GitHub release creation
+
 ## [0.0.2] - 2026-02-05
 - Test release automation
 

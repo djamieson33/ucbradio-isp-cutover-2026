@@ -1,7 +1,7 @@
 # UCB Radio – ISP Change Project (2026)
 
 
-**Version:** 0.0.2  
+**Version:** 0.1.0  
 **Last updated:** 2026-02-05
 
 ---
