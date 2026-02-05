@@ -58,12 +58,12 @@
 	- List all Windows servers/roles
 	- List remote sites/towers
 	- Note critical dependencies/integrations
-- Quick questions for team:
-	1. What must never go offline?
-	2. Any scheduled events/broadcasts at risk?
-	3. Who to contact if something fails?
-	4. Any undocumented dependencies?
-	5. Any concerns about this change?
+- Team Discovery Questions:
+  1. Which systems or services must never go offline during the ISP cutover?
+  2. Are there any scheduled events, broadcasts, or deadlines that could be impacted by the transition?
+  3. Are there any undocumented connections, dependencies, or integrations we should know about?
+  4. Who should be contacted immediately if something fails during the cutover?
+  5. Is there anything you’re specifically concerned about with this change?
 
 ## Standards & Glossary
 - Use clear, consistent naming for files/folders/docs
@@ -98,23 +98,7 @@ All questions, blockers, and requests for help should be posted in the designate
 - BL: Brad Linnard (Content Director)
 - DT: Dan Trudeau (Operations Manager)
 - RW: Richard Wand (Program Director)
-## Onboarding & Discovery
-
-### Initial Environment Snapshot Checklist
-- List all current public IP addresses and subnets in use
-- Export current DNS records (see dns/current-records.yaml)
-- Export current firewall (SonicWall) NAT and access rules
-- List all Windows servers and their roles (Aquira, Zetta, etc.)
-- Identify all remote sites and radio towers connected to NMC
-- Document any known critical dependencies or integrations
-
-### Quick Discovery Questionnaire
-Please answer briefly:
-1. What systems or services must never go offline during the cutover?
-2. Are there any scheduled events or broadcasts that could be impacted?
-3. Who should be contacted immediately if something fails?
-4. Are there any undocumented connections or dependencies?
-5. Is there anything you’re worried about with this change?
+## (Section removed: duplicate onboarding & discovery)
 ## Sensitive Data Handling
 
 All passwords and sensitive information (e.g., VPN keys, private certificates, exports) must be stored in 1Password using shared vaults. Sensitive data must never be committed to the repository or shared via email or chat. Reference sensitive items in documentation by their 1Password vault entry name only.
