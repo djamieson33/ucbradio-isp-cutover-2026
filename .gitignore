@@ -1,0 +1,28 @@
+# Secrets / Sensitive
+**/*secret*
+**/*password*
+**/*passwd*
+**/*token*
+**/*apikey*
+**/*api_key*
+**/*private*
+**/*credential*
+**/*.pfx
+**/*.p12
+**/*.pem
+**/*.key
+**/*.ppk
+**/*.ovpn
+**/*.rdp
+
+# SonicWall exports excluded by default
+firewall/sonicwall/exports/*
+!firewall/sonicwall/exports/README.md
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+
+# Logs / raw dumps
+*.log
+*.etl
