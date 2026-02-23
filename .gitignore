@@ -26,3 +26,6 @@ Thumbs.db
 # Logs / raw dumps
 *.log
 *.etl
+
+# Project backups
+backups/

@@ -148,7 +148,7 @@ Documentation + evidence for the ISP migration:
 UCB (UCB Radio, UCB Media) is transitioning its internet service provider from Cogeco to Bell to achieve significant improvements in speed and reliability. This project covers the complete migration process, ensuring that all critical equipment and software remain operational with minimal interruption. The transition deadline is February 28, 2026.
 
 Key responsibilities include:
-- Maintaine uninterrupted radio and online feeds during the ISP changeover
+- Maintain uninterrupted radio and online feeds during the ISP changeover 
 - Coordinating changes for the SonicWall firewall
 - Managing Windows servers at the Belleville head office (NMC) and remote radio tower sites
 - Ensuring all critical systems and connections are updated and validated
