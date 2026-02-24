@@ -1,3 +1,6 @@
+## [0.1.3] - 2026-02-24
+- Firewall configuration has effectively been converted into structured infrastructure data.
+
 ## [0.1.2] - 2026-02-24
 - adding intentory files
 
