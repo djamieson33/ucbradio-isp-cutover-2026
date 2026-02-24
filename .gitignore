@@ -19,6 +19,9 @@
 firewall/sonicwall/exports/*
 !firewall/sonicwall/exports/README.md
 
+# Ignore release archives
+releases/
+
 # OS/editor noise
 .DS_Store
 Thumbs.db
