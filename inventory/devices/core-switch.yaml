@@ -1,0 +1,27 @@
+schema_version: 1
+id: core-switch
+name: Core Switch (NMC)
+type: switch
+site: nmc-belleville
+role: lan-core
+
+network:
+  mgmt_ip: TODO
+  mgmt_port: 443
+  notes: >
+    Document VLANs/trunks and any links to transmitter/encoder equipment.
+
+access:
+  mgmt_url: TODO
+  auth_ref: 1password://Shared/NETWORK - Core Switch Admin
+
+ownership:
+  primary: dj
+
+dependencies:
+  upstream:
+    - sonicwall-nmc
+  downstream:
+    - zettaserver
+    - srvpathfind1
+    - svr-mj01a1dt

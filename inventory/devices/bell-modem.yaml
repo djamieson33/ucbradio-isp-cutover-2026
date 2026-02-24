@@ -1,0 +1,26 @@
+schema_version: 1
+id: bell-modem
+name: Bell Modem / ONT
+type: modem
+site: nmc-belleville
+role: bell-wan-hand-off
+
+network:
+  mgmt_ip: TODO
+  mgmt_port: 80
+  notes: >
+    Document handoff type (PPPoE/static), VLAN tagging, and any bridge mode settings.
+
+access:
+  mgmt_url: TODO
+  auth_ref: 1password://Shared/ISP - Bell Modem Admin
+  notes: >
+    Avoid committing screenshots with sensitive WAN credentials.
+
+ownership:
+  primary: dj
+  escalation: dt
+
+dependencies:
+  downstream:
+    - sonicwall-nmc

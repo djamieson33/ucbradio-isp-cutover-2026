@@ -1,0 +1,7 @@
+schema_version: 1
+sites:
+  - id: nmc-belleville
+    name: National Media Centre (Belleville)
+    subnet_primary: 192.168.100.0/24
+    notes: >
+      Primary head office site. Most broadcast/ops systems terminate here.

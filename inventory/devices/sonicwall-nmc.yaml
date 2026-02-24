@@ -1,0 +1,52 @@
+schema_version: 1
+id: sonicwall-nmc
+name: SonicWall NMC
+type: firewall
+site: nmc-belleville
+role: edge-router
+
+network:
+  mgmt_ip: 192.168.100.1  # TODO: confirm
+  mgmt_port: 443
+  interfaces:
+    - name: X0
+      purpose: LAN
+      subnet: 192.168.100.0/24
+    - name: X1
+      purpose: Cogeco WAN
+      notes: TODO: confirm interface + addressing
+    - name: X3
+      purpose: Bell WAN (staged)
+      notes: Currently staged on X3 per project notes; confirm addressing.
+
+access:
+  mgmt_url: https://192.168.100.1
+  auth_ref: 1password://Shared/DEVICE - SonicWall NMC Admin
+  notes: >
+    SonicOS 7.x. For CPU/memory/health: Device > Diagnostics > Tech Support Report.
+
+ownership:
+  primary: dj
+  escalation: bl
+
+dependencies:
+  upstream:
+    - cogeco-modem
+    - bell-modem
+  downstream:
+    - core-switch
+
+cutover:
+  criticality: broadcast-critical
+  prechecks:
+    - Confirm Bell WAN link is up and reachable (no production route change yet)
+    - Confirm outbound tests to streaming endpoints via Bell succeed
+    - Confirm TTL propagation for cutover-related DNS (if applicable)
+  rollback:
+    - Restore default route to Cogeco
+    - Re-enable Cogeco NAT policies; disable Bell NAT policies
+    - Validate FM/streaming stability
+
+evidence:
+  pre_change_dir: evidence/pre-change/sonicwall-nmc/
+  post_change_dir: evidence/post-change/sonicwall-nmc/

@@ -1,0 +1,14 @@
+schema_version: 1
+owners:
+  - id: dj
+    name: Dwayne Jamieson
+    role: Technical Lead
+  - id: bl
+    name: Brad Linnard
+    role: Executive Oversight
+  - id: dt
+    name: Dan Trudeau
+    role: Operations
+  - id: rw
+    name: Richard Wand
+    role: Programming / Streaming Validation

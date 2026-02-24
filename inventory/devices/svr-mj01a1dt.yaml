@@ -1,0 +1,31 @@
+schema_version: 1
+id: svr-mj01a1dt
+name: SVR-MJ01A1DT (MJ)
+type: server
+site: nmc-belleville
+role: operations-server
+
+network:
+  mgmt_ip: 192.168.100.10
+  mgmt_port: 3389
+
+access:
+  mgmt_url: rdp://192.168.100.10
+  auth_ref: 1password://Shared/SERVER - MJ Admin
+  notes: >
+    Confirm any services that require inbound NAT or outbound vendor endpoints.
+
+ownership:
+  primary: dj
+  escalation: dt
+
+dependencies:
+  upstream:
+    - sonicwall-nmc
+
+cutover:
+  criticality: internal-only
+  prechecks:
+    - Validate outbound connectivity to required vendor endpoints via Bell
+  rollback:
+    - Revert WAN routing to Cogeco if critical services fail

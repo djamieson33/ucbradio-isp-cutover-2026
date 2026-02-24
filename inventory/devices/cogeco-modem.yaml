@@ -1,0 +1,24 @@
+schema_version: 1
+id: cogeco-modem
+name: Cogeco Modem
+type: modem
+site: nmc-belleville
+role: cogeco-wan-hand-off
+
+network:
+  mgmt_ip: TODO
+  mgmt_port: 80
+  notes: >
+    Document bridge mode settings and current public IP assignment details.
+
+access:
+  mgmt_url: TODO
+  auth_ref: 1password://Shared/ISP - Cogeco Modem Admin
+
+ownership:
+  primary: dj
+  escalation: dt
+
+dependencies:
+  downstream:
+    - sonicwall-nmc

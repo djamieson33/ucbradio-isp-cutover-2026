@@ -1,0 +1,34 @@
+schema_version: 1
+id: stream-encoder
+name: Streaming Encoder
+type: encoder
+site: nmc-belleville
+role: stream-ingest
+
+network:
+  mgmt_ip: TODO
+  mgmt_port: 80
+  notes: >
+    Identify whether this is hardware (Barix/Comrex/Tieline) or software encoder,
+    and whether it has LTE/cellular failover.
+
+access:
+  mgmt_url: TODO
+  auth_ref: 1password://Shared/BROADCAST - Streaming Encoder Admin
+
+ownership:
+  primary: rw
+  escalation: dj
+
+dependencies:
+  upstream:
+    - core-switch
+  downstream: []
+
+cutover:
+  criticality: broadcast-critical
+  prechecks:
+    - Confirm ingest endpoints reachable via Bell
+    - Confirm encoder can sustain stable bitrate during test window
+  rollback:
+    - Revert WAN routing to Cogeco if ingest fails
