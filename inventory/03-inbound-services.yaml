@@ -1,0 +1,123 @@
+# inventory/03-inbound-services.yaml
+# Purpose:
+#   Authoritative map of all inbound (Internet -> Belleville LAN) services
+#   that must remain reachable after Cogeco -> Bell cutover.
+#
+# Notes:
+#   - One "service" entry may have multiple NAT rules/ports.
+#   - Keep "tests" practical (curl, browser, telnet/nc, vendor client login).
+#   - Populate "current_public_ip" (Cogeco) now; later add "target_public_ip" (Bell).
+
+version: 1
+updated_utc: "2026-02-24T00:00:00Z"
+
+services:
+  - id: sw-mgmt
+    name: "SonicWall Management UI"
+    description: "Remote admin access to SonicWall over HTTPS."
+    criticality: high            # high|medium|low
+    exposure: restricted         # public|restricted|vpn-only
+    owner: "IT"
+    environment: "production"    # production|staging|both
+    category: "network"          # network|web|broadcast|remote-access|other
+
+    public_entry:
+      fqdns:
+        - "sw.ucbradio.com"
+      current_public_ip: "24.51.249.34"     # Cogeco
+      target_public_ip: ""                  # Bell (fill later)
+      notes: "Known NAT loopback quirks; validate from LTE."
+
+    nat:
+      provider: "sonicwall"
+      rules:
+        - nat_policy_name: "SW_MGMT_HTTPS"
+          from_zone: "WAN"
+          to_zone: "LAN"
+          public_ip: "24.51.249.34"
+          public_port: 443
+          protocol: "tcp"
+          internal_ip: "192.168.100.1"
+          internal_port: 443
+          inbound_interface: "X1"           # X1 Cogeco / X3 Bell
+          source_restrictions:
+            - "Allowed MGMT IPs group"
+          notes: ""
+
+    dependencies:
+      - type: "dns"
+        value: "DigitalOcean"
+      - type: "isp"
+        value: "Cogeco (current), Bell (target)"
+      - type: "firewall"
+        value: "SonicWall NAT + Access Rules"
+
+    tests:
+      - name: "HTTPS from external network"
+        method: "curl"
+        command: "curl -vk https://sw.ucbradio.com"
+        expected: "HTTP 200/302 and valid cert; NOT connection refused"
+        run_from: "LTE/mobile hotspot (not on LAN)"
+      - name: "Browser login page loads"
+        method: "browser"
+        expected: "SonicWall login page reachable"
+        run_from: "LTE/mobile hotspot"
+
+    rollback:
+      notes: "If broken, revert NAT binding to X1 (Cogeco) and confirm WAN access rule."
+
+    status:
+      documented: false
+      validated_external: false
+      last_validated_utc: ""
+
+
+  - id: zetta-remote
+    name: "Zetta Remote Access (example)"
+    description: "If any Zetta-related remote access is published."
+    criticality: high
+    exposure: restricted
+    owner: "Programming"
+    environment: "production"
+    category: "broadcast"
+
+    public_entry:
+      fqdns: []
+      current_public_ip: ""
+      target_public_ip: ""
+      notes: ""
+
+    nat:
+      provider: "sonicwall"
+      rules:
+        - nat_policy_name: ""
+          from_zone: "WAN"
+          to_zone: "LAN"
+          public_ip: ""
+          public_port: null
+          protocol: "tcp"
+          internal_ip: "192.168.100.97"
+          internal_port: null
+          inbound_interface: "X1"
+          source_restrictions: []
+          notes: ""
+
+    dependencies:
+      - type: "host"
+        value: "ZETTASERVER (192.168.100.97)"
+      - type: "app"
+        value: "Zetta"
+
+    tests:
+      - name: "Vendor client connects"
+        method: "app"
+        expected: "Successful connection/login"
+        run_from: "External network"
+
+    rollback:
+      notes: ""
+
+    status:
+      documented: false
+      validated_external: false
+      last_validated_utc: ""
