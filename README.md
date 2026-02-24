@@ -1,6 +1,6 @@
 # UCB Radio -- ISP Change Project (2026)
 
-**Version:** 0.1.2\
+.1.2\
 **Cutover Target:** February 28, 2026\
 **Primary Change:** Cogeco → Bell ISP
 

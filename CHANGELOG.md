@@ -1,3 +1,6 @@
+## [0.1.2] - 2026-02-24
+- adding intentory files
+
 ## [0.1.1] - 2026-02-05
 - Patch release: Improved release automation and versioning process.
 	- Added VERSION file for consistent version tracking
