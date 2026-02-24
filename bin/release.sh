@@ -2,14 +2,21 @@
 set -euo pipefail
 
 # ==============================================================================
+# UCB Radio – ISP Changeover 2026
 # File:        bin/release.sh
 # Purpose:     Release orchestration:
 #              - compute new version (major/minor/patch)
 #              - call bump_version.sh (single source of truth)
 #              - commit + tag
 #              - call create_archive.sh (single source of truth)
+#              - generate SHA256 sidecar for the release ZIP (if created)
 #              - optionally push
 #              - optionally create GitHub release (attach ZIP + sha)
+#
+# Repo Standards:
+#   - Release zips are required to have a .sha256 sidecar
+#   - Release zips do NOT require timestamps in filename (SemVer is sufficient)
+#   - See: docs/01-governance/FILE_STANDARDS.md
 # ==============================================================================
 
 die() { echo "[ERROR] $*" >&2; exit 2; }
@@ -33,6 +40,21 @@ Examples:
   ./bin/release.sh minor "Add preflight checks scaffolding" --push
   ./bin/release.sh patch "Firewall exports updated" --github-release
 USAGE
+}
+
+generate_sha256() {
+  local file="$1"
+
+  [[ -f "$file" ]] || die "Cannot generate SHA256 — file not found: $file"
+  command -v shasum >/dev/null 2>&1 || die "shasum is required to generate SHA256 sidecar."
+
+  info "Generating SHA256 for $(basename "$file")"
+  shasum -a 256 "$file" > "${file}.sha256" || die "SHA256 generation failed"
+
+  # Verify immediately (guards against write/corruption issues)
+  shasum -a 256 -c "${file}.sha256" >/dev/null 2>&1 || die "Checksum verification failed"
+
+  info "Created ${file}.sha256"
 }
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -96,11 +118,17 @@ git commit -m "Release $TAG: $DESCRIPTION"
 git tag -a "$TAG" -m "$DESCRIPTION"
 info "Created commit + tag $TAG"
 
-# Archive (single source of truth)
+# Archive (single source of truth) + SHA256 sidecar
 ARCHIVE_PATH=""
 if [[ "$DO_ARCHIVE" == "yes" ]]; then
   ARCHIVE_PATH="$(./bin/create_archive.sh "$TAG")"
+  [[ -n "$ARCHIVE_PATH" ]] || die "create_archive.sh did not return an archive path"
+  [[ -f "$ARCHIVE_PATH" ]] || die "Archive not found at returned path: $ARCHIVE_PATH"
+
   info "Archive created: $ARCHIVE_PATH"
+
+  # Ensure SHA256 sidecar always exists for release zips
+  generate_sha256 "$ARCHIVE_PATH"
 fi
 
 # Push optional
