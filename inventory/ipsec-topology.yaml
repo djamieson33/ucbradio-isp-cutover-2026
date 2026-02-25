@@ -1,116 +1,102 @@
-# inventory/ipsec-topology.yaml
-# Purpose: Asset-number-centric hub/spoke view for active STL tunnels only.
-# Scope: ONLY tunnels currently enabled on BELL-102 (hub asset 1).
-#
-# IMPORTANT:
-# - Dan confirmed location numbering: CHAT-100 and CHAT-101 are different locations.
-# - The "STL-CHAT-100" label on the HUB is a typo and should be corrected to CHAT-101 once validated.
-
 schema_version: 1
 version: 5
-
 refs:
-  sites_file: "inventory/sites.yaml"
-
+  sites_file: inventory/sites.yaml
 hub:
   asset: 1
-  site_id: "nmc-belleville"
-  site_code: "BELL-102"
-  device_file: "inventory/devices/firewalls/1-bell-102.yaml"
-
+  site_id: belleville-nmc
+  site_code: BELL-102
+  device_file: inventory/devices/firewalls/1-bell-102.yaml
   networks:
     lan_subnets:
-      - "192.168.100.0/24"
-
+    - 192.168.100.0/24
   wan_public_ips:
-    cogeco_current: "24.51.249.34"
-    bell_target: "207.236.163.98"
-
+    cogeco_current: 24.51.249.34
+    bell_target: 207.236.163.98
 spokes:
-
-  - asset: 2
-    site_id: "belleville-read"            # READ is a physical location (distinct from NMC)
-    site_code: "BELL-100"
-    device_file: "inventory/devices/firewalls/2-bell-100.yaml"
-    wan_ip: "69.31.226.114"
-    networks:
-      lan_subnets: ["192.168.101.0/24"]
-    criticality: "On-air"
-    tunnel_name_on_hub: "STL-BELL-100 IPsec"
-
-  - asset: 9
-    site_id: "brockville-tx"
-    site_code: "BROC-100"
-    device_file: "inventory/devices/firewalls/9-broc-100.yaml"
-    wan_ip: "69.31.226.50"
-    networks:
-      lan_subnets: ["192.168.104.0/24"]
-    criticality: "On-air"
-    tunnel_name_on_hub: "STL-BROC-100 IPsec"
-    peer_expected_on_spoke:
-      current: "24.51.249.34"
-      target_bell: "207.236.163.98"
-      strategy: "duplicate_tunnel_on_site_preferred"
-
-  - asset: 3
-    site_id: "cobourg-tx"
-    site_code: "COBO-100"
-    device_file: "inventory/devices/firewalls/3-cobo-100.yaml"
-    wan_ip: "207.236.214.34"
-    networks:
-      lan_subnets: ["192.168.102.0/24"]
-    criticality: "On-air"
-    tunnel_name_on_hub: "STL-COBO-100 IPsec"
-
-  - asset: 5
-    site_id: "kingston-tx"
-    site_code: "KING-100"
-    device_file: "inventory/devices/firewalls/5-king-100.yaml"
-    wan_ip: "69.7.247.201"
-    networks:
-      lan_subnets: ["192.168.105.0/24"]
-    criticality: "On-air"
-    tunnel_name_on_hub: "STL-KING-100 IPsec"
-
-  - asset: 7
-    site_id: "windsor-tx"
-    site_code: "WIND-100"
-    device_file: "inventory/devices/firewalls/7-wind-100.yaml"
-    wan_ip: "192.186.113.50"
-    networks:
-      lan_subnets: ["192.168.106.0/24"]
-    criticality: "On-air"
-    tunnel_name_on_hub: "STL-WIND-100 IPsec"
-
-  # CHATHAM: confirmed active spoke, but peer device is currently Peplink (Asset 431).
-  # HUB tunnel name may still be mislabeled as STL-CHAT-100 and should be corrected after verification.
-  - asset: 431
-    site_id: "chatham-101"
-    site_code: "CHAT-101"
-    device_file: "inventory/devices/network/431-chat-101.yaml"   # create/confirm this file; Peplink BOne5G per notes
-    wan_ip: "67.71.250.138"
-    ddns: "ucbmedia-chat100.ddns.net"                    # hostname label likely needs alignment to chat-101 later
-    networks:
-      lan_subnets: ["192.168.103.0/24"]
-      lan_gateway: "192.168.103.1"
-    criticality: "On-air"
-    tunnel_name_on_hub: "STL-CHAT-100 IPsec"             # KNOWN LABEL ISSUE (typo) - should become STL-CHAT-101
-    tunnel_name_target: "STL-CHAT-101 IPsec"
-    peer_expected_on_spoke:
-      current: "unknown"
-      target_bell: "207.236.163.98"
-      strategy: "tbd_after_site_review"
-    notes:
-      - "Dan confirmed CHAT-100 != CHAT-101."
-      - "Active hub tunnel appears labeled STL-CHAT-100; treat as typo until corrected."
-      - "No confirmed SonicWall inventory entry for Chatham firewall yet; peer device evidence currently points to Peplink (asset 431)."
-
+- asset: 2
+  site_id: belleville-read
+  site_code: BELL-100
+  device_file: inventory/devices/firewalls/2-bell-100.yaml
+  wan_ip: 69.31.226.114
+  networks:
+    lan_subnets:
+    - 192.168.101.0/24
+  criticality: On-air
+  tunnel_name_on_hub: STL-BELL-100 IPsec
+  notes:
+  - '"READ" in this context is a location label only (not ''read-only'' device).'
+- asset: 9
+  site_id: brockville-tx
+  site_code: BROC-100
+  device_file: inventory/devices/firewalls/9-broc-100.yaml
+  wan_ip: 69.31.226.50
+  networks:
+    lan_subnets:
+    - 192.168.104.0/24
+  criticality: On-air
+  tunnel_name_on_hub: STL-BROC-100 IPsec
+  peer_expected_on_spoke:
+    current: 24.51.249.34
+    target_bell: 207.236.163.98
+    strategy: duplicate_tunnel_on_site_preferred
+- asset: 3
+  site_id: cobourg-tx
+  site_code: COBO-100
+  device_file: inventory/devices/firewalls/3-cobo-100.yaml
+  wan_ip: 207.236.214.34
+  networks:
+    lan_subnets:
+    - 192.168.102.0/24
+  criticality: On-air
+  tunnel_name_on_hub: STL-COBO-100 IPsec
+- asset: 5
+  site_id: kingston-tx
+  site_code: KING-100
+  device_file: inventory/devices/firewalls/5-king-100.yaml
+  wan_ip: 69.7.247.201
+  networks:
+    lan_subnets:
+    - 192.168.105.0/24
+  criticality: On-air
+  tunnel_name_on_hub: STL-KING-100 IPsec
+- asset: 7
+  site_id: windsor-tx
+  site_code: WIND-100
+  device_file: inventory/devices/firewalls/7-wind-100.yaml
+  wan_ip: 192.186.113.50
+  networks:
+    lan_subnets:
+    - 192.168.106.0/24
+  criticality: On-air
+  tunnel_name_on_hub: STL-WIND-100 IPsec
+- asset: 431
+  site_id: chatham-101
+  site_code: CHAT-101
+  device_file: inventory/devices/network/431-chat-101.yaml
+  wan_ip: 67.71.250.138
+  ddns: ucbmedia-chat100.ddns.net
+  networks:
+    lan_subnets:
+    - 192.168.103.0/24
+    lan_gateway: 192.168.103.1
+  criticality: On-air
+  tunnel_name_on_hub: STL-CHAT-100 IPsec
+  tunnel_name_target: STL-CHAT-101 IPsec
+  peer_expected_on_spoke:
+    current: unknown
+    target_bell: 207.236.163.98
+    strategy: tbd_after_site_review
+  notes:
+  - Dan confirmed CHAT-100 != CHAT-101.
+  - Active hub tunnel appears labeled STL-CHAT-100; treat as typo until corrected.
+  - No confirmed SonicWall inventory entry for Chatham firewall yet; peer device evidence currently points to Peplink (asset
+    431).
 cutover:
-  objective: "Ensure all active STL spokes accept hub bell_target IP before WAN cutover"
+  objective: Ensure all active STL spokes accept hub bell_target IP before WAN cutover
   pre_whitelist_required: true
   dual_whitelist_recommended: true
   notes:
-    - "Only active STL tunnels included (per hub enabled list)."
-    - "Chatham naming must be corrected: CHAT-101 location; hub label currently shows CHAT-100."
-    - "Confirm whether Chatham peer is Peplink-only IPsec or IPsec passes through to a downstream firewall."
-    
+  - Only active STL tunnels included (per hub enabled list).
+  - 'Chatham naming must be corrected: CHAT-101 location; hub label currently shows CHAT-100.'
+  - Confirm whether Chatham peer is Peplink-only IPsec or IPsec passes through to a downstream firewall.
