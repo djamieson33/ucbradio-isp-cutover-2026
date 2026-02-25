@@ -1,0 +1,52 @@
+# inventory/devices/3-cobo-100.yaml
+# Cobourg transmitter site firewall
+
+device:
+  name: "COBO-100"
+  site: "Cobourg"
+  asset_number: 3
+  vendor: "SonicWall"
+  model: "TZ270"
+  role: "Transmitter site firewall"
+  unique_firewall_identifier: "2CB8EDD81CB0"
+  serial_number: "2CB8EDD81CB0"
+
+management:
+  wan_url: "https://207.236.214.34"
+  lan_url: "https://192.168.102.1"
+  username: "admin"
+  notes:
+    - "LAN management at 192.168.102.1"
+    - "Public WAN management at 207.236.214.34"
+
+interfaces:
+  wan:
+    public_ip: "207.236.214.34"
+    role: "Primary WAN"
+  lan:
+    gateway_ip: "192.168.102.1"
+    subnet: "192.168.102.0/24"
+
+vpn:
+  ipsec_site_to_site:
+    - name: "STL-COBO-100 IPsec"
+      status: "active_on_hub"
+      local_subnet: "192.168.102.0/24"
+      remote_subnet: "192.168.100.0/24"
+      remote_gateway_expected: "unknown"   # confirm on site firewall (likely 24.51.249.34 currently)
+      crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
+      nat_traversal: "unknown"
+      dpd:
+        enabled: "unknown"
+        interval_seconds: "unknown"
+        failure_trigger_level: "unknown"
+      notes:
+        - "Must pre-whitelist hub Bell IP 207.236.163.98 prior to cutover"
+
+tags:
+  - cobo-100
+  - cobourg
+  - transmitter-site
+  - sonicwall
+  - tz270
+  

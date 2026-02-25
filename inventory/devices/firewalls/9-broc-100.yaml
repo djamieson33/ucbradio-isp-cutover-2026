@@ -1,0 +1,123 @@
+# inventory/devices/firewalls/9-broc-100.yaml
+# Brockville transmitter site firewall (STL spoke)
+#
+# Notes:
+# - This device peers to the Belleville hub (BELL-102 asset 1).
+# - This file captures the BROC-100-side VPN policy settings from screenshots.
+# - Secondary IPsec gateway is set to Bell target (207.236.163.98) to support cutover prep.
+
+schema_version: 1
+
+device:
+  asset_number: 9
+  name: "BROC-100"
+  site_code: "BROC-100"
+  site: "Brockville"
+  vendor: "SonicWall"
+  model: "TZ270"
+  role: "STL spoke firewall"
+  serial_number: "2CB8EDD81CB0"          # from your earlier BROC-100 card
+  unique_firewall_identifier: "2CB8EDD81CB0"
+
+management:
+  wan_url: "https://69.31.226.50"
+  lan_url: "unknown"                      # VERIFY (do not assume .1)
+  username: "admin"
+  notes:
+    - "Verify LAN management IP/URL (commonly https://192.168.104.1 but NOT confirmed here)."
+    - "Hub is BELL-102 (asset 1)."
+
+interfaces:
+  wan:
+    zone: "WAN"
+    public_ip: "69.31.226.50"
+    subnet_mask: "255.255.255.240"       # VERIFY if needed
+    gateway: "69.31.226.49"              # VERIFY if needed
+  lan:
+    # IMPORTANT: Older notes mentioned 192.168.0.0/24, but the hub tunnel list shows 192.168.104.0/24 for BROC.
+    subnet: "192.168.104.0/24"
+    gateway_ip: "unknown"                 # VERIFY (often .1)
+    dhcp_range:
+      start: "unknown"
+      end: "unknown"
+
+vpn:
+  ipsec_site_to_site:
+    - name: "STL-BROC-100 IPsec VPN"
+      policy_type: "site-to-site"
+      authentication_method: "IKE using Preshared Secret"
+      gateways:
+        primary: "24.51.249.34"          # hub current (Cogeco) - from BROC VPN Policy screenshot
+        secondary: "207.236.163.98"      # hub target (Bell) - added for cutover prep
+      ike_ids:
+        local:
+          type: "IPv4 Address"
+          value: "unknown"               # UI field present but blank in screenshots
+        peer:
+          type: "IPv4 Address"
+          value: "unknown"               # UI field present but blank in screenshots
+      networks:
+        local:
+          name_ref: "STL-BROC-100 LAN"
+          subnets:
+            - "192.168.104.0/24"
+        remote:
+          name_ref: "STL-BELL-102 LAN"
+          subnets:
+            - "192.168.100.0/24"
+      proposals:
+        ike_phase_1:
+          exchange_mode: "Aggressive Mode"
+          dh_group: "256-Bit Random ECP Group"
+          encryption: "AES-256"
+          authentication: "SHA256"
+          lifetime_seconds: 28800
+        ipsec_phase_2:
+          protocol: "ESP"
+          encryption: "AES-256"
+          authentication: "SHA256"
+          pfs:
+            enabled: true
+            dh_group: "256-Bit Random ECP Group"
+          lifetime_seconds: 28800
+      advanced:
+        enable_keep_alive: true
+        preempt_secondary_gateway: true
+        primary_gateway_detection_interval:
+          ui_label: "Primary Gateway Detection Interval (seconds)"
+          value_seconds: 28800
+          verified_meaning: false
+          notes:
+            - "Value is unusual; confirm whether this is actually DPD/keepalive behavior in SonicOS 7."
+        suppress_automatic_access_rules: false
+        apply_nat_policies: false
+        management_via_sa:
+          https: true
+          ssh: true
+          snmp: true
+      cutover:
+        hub_peer_current: "24.51.249.34"
+        hub_peer_target_bell: "207.236.163.98"
+        goal: "Allow hub to migrate from Cogeco to Bell without tunnel rebuild (dual gateway/whitelist)."
+
+verification:
+  quick_tests:
+    - name: "Ping hub LAN over IPsec"
+      method: "ping"
+      target: "192.168.100.1"
+      expected: "Replies over tunnel"
+    - name: "Ping BROC LAN gateway from hub"
+      method: "ping"
+      target: "192.168.104.1"
+      expected: "Replies over tunnel once gateway IP is confirmed"
+  last_verified_utc: ""
+  evidence_refs: []
+
+tags:
+  - firewall
+  - sonicwall
+  - tz270
+  - stl-spoke
+  - broc-100
+  - brockville
+  

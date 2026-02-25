@@ -1,0 +1,57 @@
+# inventory/devices/9-broc-100.yaml
+# Brockville transmitter site firewall
+
+device:
+  name: "BROC-100"
+  site: "Brockville"
+  asset_number: 9
+  vendor: "SonicWall"
+  model: "TZ270"
+  role: "Transmitter site firewall"
+  unique_firewall_identifier: "2CB8EDD82580"
+  serial_number: "2CB8EDD82580"
+
+management:
+  wan_url: "https://69.31.226.50"
+  lan_url: "https://192.168.104.1"
+  username: "admin"
+  notes:
+    - "LAN management at 192.168.104.1"
+    - "Public WAN management at 69.31.226.50"
+
+interfaces:
+  wan:
+    public_ip: "69.31.226.50"
+    subnet_mask: "255.255.255.240"
+    gateway: "69.31.226.49"
+  lan:
+    gateway_ip: "192.168.104.1"
+    subnet: "192.168.104.0/24"
+    dhcp_range:
+      start: "192.168.104.100"
+      end: "192.168.104.200"
+
+vpn:
+  ipsec_site_to_site:
+    - name: "STL-BROC-100 IPsec"
+      status: "active_on_hub"
+      local_subnet: "192.168.104.0/24"
+      remote_subnet: "192.168.100.0/24"
+      remote_gateway_expected: "24.51.249.34"   # confirmed on BROC tunnel
+      crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
+      nat_traversal: "enabled"
+      dpd:
+        enabled: true
+        interval_seconds: 60
+        failure_trigger_level: 3
+      notes:
+        - "Pilot spoke for Bell pre-whitelist / dual-whitelist strategy"
+        - "Must allow new hub IP 207.236.163.98 before cutover"
+
+tags:
+  - broc-100
+  - brockville
+  - transmitter-site
+  - sonicwall
+  - tz270
+  

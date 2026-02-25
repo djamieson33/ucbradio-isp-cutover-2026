@@ -1,0 +1,24 @@
+# inventory/devices/ZZZ-DEPRECATED-148-chat-100.yaml
+# DEPRECATED (2026-02-25)
+#
+# Why:
+# - This file was created from an assumption that CHAT-100 had a SonicWall
+#   with serial 18C241500360 and asset 148.
+# - Subsequent review found the imported master asset list does NOT confirm
+#   a Chatham SonicWall entry, and the serial in question is not verified
+#   as Chatham in the inventory set we reviewed.
+#
+# Action:
+# - Do NOT use this file for cutover decisions.
+# - CHAT-100 firewall remains "asset: unknown" until confirmed by:
+#   1) logging into the CHAT firewall directly, or
+#   2) producing an updated/corrected asset export that includes the firewall.
+#
+# Replacement:
+# - Create the real file as:
+#   inventory/devices/<asset>-chat-100.yaml
+
+deprecated: true
+replaced_by: "inventory/devices/<asset>-chat-100.yaml"
+reason: "CHAT-100 firewall asset/serial not confirmed"
+last_updated_utc: "2026-02-25T00:00:00Z"

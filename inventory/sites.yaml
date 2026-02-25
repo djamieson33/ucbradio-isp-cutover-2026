@@ -1,7 +1,128 @@
 schema_version: 1
+
 sites:
-  - id: nmc-belleville
+
+  # --------------------------------------------------
+  # BELLEVILLE - NATIONAL MEDIA CENTRE (NMC)
+  # --------------------------------------------------
+
+  - id: belleville-nmc
+    site_code: BELL-102
     name: National Media Centre (Belleville)
-    subnet_primary: 192.168.100.0/24
+    role: hub
+    city: Belleville
+    province: ON
+    networks:
+      lan_subnets:
+        - "192.168.100.0/24"
     notes: >
+      NMC (National Media Centre) physical location.
       Primary head office site. Most broadcast/ops systems terminate here.
+      SonicWall hub firewall asset 1 (TZ470).
+
+
+  # --------------------------------------------------
+  # BELLEVILLE - READ LOCATION (SEPARATE PHYSICAL SITE)
+  # --------------------------------------------------
+
+  - id: belleville-read
+    site_code: BELL-100
+    name: Belleville (Read Location)
+    role: tx-site
+    city: Belleville
+    province: ON
+    networks:
+      lan_subnets:
+        - "192.168.101.0/24"
+    notes: >
+      READ physical location (distinct from NMC).
+      Location code BELL-100.
+      SonicWall firewall asset 2 (TZ270).
+
+
+  # --------------------------------------------------
+  # STL SPOKE SITES
+  # --------------------------------------------------
+
+  - id: brockville-tx
+    site_code: BROC-100
+    name: Brockville Transmitter Site
+    role: tx-site
+    city: Brockville
+    province: ON
+    networks:
+      lan_subnets:
+        - "192.168.104.0/24"
+    notes: >
+      SonicWall-based transmitter site.
+
+  - id: cobourg-tx
+    site_code: COBO-100
+    name: Cobourg Transmitter Site
+    role: tx-site
+    city: Cobourg
+    province: ON
+    networks:
+      lan_subnets:
+        - "192.168.102.0/24"
+    notes: >
+      SonicWall-based transmitter site.
+
+  - id: kingston-tx
+    site_code: KING-100
+    name: Kingston Transmitter Site
+    role: tx-site
+    city: Kingston
+    province: ON
+    networks:
+      lan_subnets:
+        - "192.168.105.0/24"
+    notes: >
+      SonicWall-based transmitter site.
+
+  - id: windsor-tx
+    site_code: WIND-100
+    name: Windsor Transmitter Site
+    role: tx-site
+    city: Windsor
+    province: ON
+    networks:
+      lan_subnets:
+        - "192.168.106.0/24"
+    notes: >
+      SonicWall-based transmitter site.
+
+
+  # --------------------------------------------------
+  # CHATHAM LOCATIONS (IMPORTANT DISTINCTION)
+  # --------------------------------------------------
+
+  - id: chatham-101
+    site_code: CHAT-101
+    name: Chatham Centre (Peplink Location)
+    role: tx-site
+    city: Chatham
+    province: ON
+    networks:
+      lan_subnets:
+        - "192.168.103.0/24"
+      lan_gateway: "192.168.103.1"
+    internet:
+      wan_public_ip: "67.71.250.138"
+      ddns: "ucbmedia-chat100.ddns.net"
+    notes: >
+      Peplink BOne5G (Asset 431).
+      Confirmed by Dan that -100/-101 represent different physical locations.
+      Note: DDNS label uses chat100; verify if hostname should be updated to chat101.
+
+  - id: chatham-100
+    site_code: CHAT-100
+    name: Chatham (Secondary Location)
+    role: unknown
+    city: Chatham
+    province: ON
+    status: unverified
+    notes: >
+      Location code exists per Dan.
+      No confirmed device inventory yet.
+      Confirm subnet, WAN, and firewall presence before using in topology.

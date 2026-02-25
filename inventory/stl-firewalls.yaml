@@ -1,0 +1,165 @@
+# inventory/stl-firewalls.yaml
+# Purpose: Source-of-truth list of STL (Belleville hub ↔ remote spoke) firewalls
+#          involved in the IPsec cutover risk surface.
+#
+# Scope:
+# - Includes ONLY firewalls that participate in the active STL site-to-site tunnels
+#   on hub asset 1 (BELL-102).
+# - Non-firewall devices (transmitters, ISP records, etc.) intentionally excluded.
+#
+# Key cutover fact:
+# - Remote firewalls that currently whitelist/expect the hub peer as Cogeco
+#   (24.51.249.34) must also accept the Bell static IP (207.236.163.98)
+#   before the final cutover.
+#
+# IMPORTANT:
+# - The imported master asset list DOES NOT currently contain a confirmed SonicWall entry for Chatham.
+#   The CHAT-100 tunnel is active on the hub, so the CHAT firewall asset is tracked as unknown
+#   until confirmed by a site login or updated asset inventory.
+
+version: 2
+
+hub:
+  asset: 1
+  site_code: "BELL-102"
+  site: "Belleville (NMC)"
+  role: "hub"
+  vendor: "SonicWall"
+  model: "TZ470"
+  serial: "2CB8ED903580"
+  lan:
+    networks:
+      - "192.168.100.0/24"
+    mgmt_ip: "192.168.100.1"
+  wan:
+    interface: "X3"
+    public_ip_bell: "207.236.163.98"
+    public_ip_cogeco_observed: "24.51.249.34"
+    gateway_bell: "207.236.163.97"
+    subnet_mask_bell: "255.255.255.224"
+  management:
+    urls:
+      - "https://sw.ucbradio.com"
+      - "https://192.168.100.1"
+
+spokes:
+  - asset: 2
+    site_code: "BELL-100"
+    site: "Belleville (Read)"
+    role: "spoke"
+    vendor: "SonicWall"
+    model: "TZ270"
+    serial: "2CB8EDD82610"
+    lan:
+      networks: ["192.168.101.0/24"]
+      mgmt_ip: "192.168.101.1"
+    wan:
+      public_ip: "69.31.226.114"
+    tunnel:
+      name_on_hub: "STL-BELL-100 IPsec"
+      remote_networks_seen_on_hub: ["192.168.101.0/24"]
+    peer_expected_on_spoke:
+      hub_peer_current: "unknown"
+      hub_peer_target_bell: "207.236.163.98"
+
+  - asset: 9
+    site_code: "BROC-100"
+    site: "Brockville"
+    role: "spoke"
+    vendor: "SonicWall"
+    model: "TZ270"
+    serial: "2CB8EDD82580"
+    lan:
+      networks: ["192.168.104.0/24"]
+      mgmt_ip: "192.168.104.1"
+    wan:
+      public_ip: "69.31.226.50"
+    tunnel:
+      name_on_hub: "STL-BROC-100 IPsec"
+      remote_networks_seen_on_hub: ["192.168.104.0/24"]
+    peer_expected_on_spoke:
+      hub_peer_current: "24.51.249.34"
+      hub_peer_target_bell: "207.236.163.98"
+
+  - asset: "unknown"
+    site_code: "CHAT-100"
+    site: "Chatham"
+    role: "spoke"
+    vendor: "unknown"
+    model: "unknown"
+    serial: "unknown"
+    lan:
+      networks: ["192.168.103.0/24"]
+      mgmt_ip: "unknown"
+    wan:
+      public_ip: "67.71.250.138"
+    tunnel:
+      name_on_hub: "STL-CHAT-100 IPsec"
+      remote_networks_seen_on_hub: ["192.168.103.0/24"]
+    peer_expected_on_spoke:
+      hub_peer_current: "unknown"
+      hub_peer_target_bell: "207.236.163.98"
+    asset_list_source:
+      file: "inventory/asset-list-imported/master-asset-list-202602251150.csv"
+      note: "No confirmed SonicWall entry found for Chatham in this import. Confirm actual firewall asset."
+
+  - asset: 3
+    site_code: "COBO-100"
+    site: "Cobourg"
+    role: "spoke"
+    vendor: "SonicWall"
+    model: "TZ270"
+    serial: "2CB8EDD81CB0"
+    lan:
+      networks: ["192.168.102.0/24"]
+      mgmt_ip: "192.168.102.1"
+    wan:
+      public_ip: "207.236.214.34"
+    tunnel:
+      name_on_hub: "STL-COBO-100 IPsec"
+      remote_networks_seen_on_hub: ["192.168.102.0/24"]
+    peer_expected_on_spoke:
+      hub_peer_current: "unknown"
+      hub_peer_target_bell: "207.236.163.98"
+
+  - asset: 5
+    site_code: "KING-100"
+    site: "Kingston"
+    role: "spoke"
+    vendor: "SonicWall"
+    model: "TZ270"
+    serial: "2CB8EDD82430"
+    lan:
+      networks: ["192.168.105.0/24"]
+      mgmt_ip: "192.168.105.1"
+    wan:
+      public_ip: "69.7.247.201"
+    tunnel:
+      name_on_hub: "STL-KING-100 IPsec"
+      remote_networks_seen_on_hub: ["192.168.105.0/24"]
+    peer_expected_on_spoke:
+      hub_peer_current: "unknown"
+      hub_peer_target_bell: "207.236.163.98"
+
+  - asset: 7
+    site_code: "WIND-100"
+    site: "Windsor"
+    role: "spoke"
+    vendor: "SonicWall"
+    model: "TZ270"
+    serial: "2CB8EDD825E0"
+    lan:
+      networks: ["192.168.106.0/24"]
+      mgmt_ip: "192.168.1.1"
+    wan:
+      public_ip: "192.186.113.50"
+    tunnel:
+      name_on_hub: "STL-WIND-100 IPsec"
+      remote_networks_seen_on_hub: ["192.168.106.0/24"]
+    peer_expected_on_spoke:
+      hub_peer_current: "unknown"
+      hub_peer_target_bell: "207.236.163.98"
+    notes:
+      - "Verify LAN mgmt IP (192.168.1.1) vs remote network (192.168.106.0/24)."
+      - "Windsor transmitter (Nautel GV7.5) is asset 21 and is intentionally excluded."
+      
