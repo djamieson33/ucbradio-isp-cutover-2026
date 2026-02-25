@@ -1,3 +1,6 @@
+## [0.2.0] - 2026-02-25
+- Stage Bell WAN + BROC dual-gateway prep; add evidence artifacts and topology normalization
+
 ## [0.1.4] - 2026-02-25
 - Bell WAN staged; BROC dual gateway configured
 
