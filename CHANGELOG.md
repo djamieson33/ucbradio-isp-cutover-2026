@@ -1,3 +1,13 @@
+## [0.3.0] - 2026-02-25
+- refactor(tooling): introduce namespaced bin architecture
+
+- release/ tool with lib/ (git, semver, archive, checksum, github)
+- archive/ tool with lib/
+- validate/ tool with modular check registry
+- Wrapper scripts maintained for compatibility
+
+Standardizes internal tooling architecture ahead of Bell WAN pilot.
+
 ## [0.2.0] - 2026-02-25
 - Stage Bell WAN + BROC dual-gateway prep; add evidence artifacts and topology normalization
 
