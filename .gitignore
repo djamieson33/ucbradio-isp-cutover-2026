@@ -37,3 +37,12 @@ backups/
 __pycache__/
 *.py[cod]
 *$py.class
+
+# macOS junk
+.DS_Store
+
+# macOS junk
+.DS_Store
+
+# macOS
+.DS_Store
