@@ -1,3 +1,6 @@
+## [0.4.0] - 2026-02-25
+- feat: add site env resolver + nettest suite (ping/tcp/curl/ssh/public_ip + run_all)
+
 ## [0.3.0] - 2026-02-25
 - refactor(tooling): introduce namespaced bin architecture
 
