@@ -153,6 +153,20 @@ for d in "${CHECK_DIRS[@]}"; do
 done
 
 # ------------------------------------------------------------------------------
+# 6) Executable bit sanity for bin/ scripts
+# ------------------------------------------------------------------------------
+BIN_DIR="$ROOT/bin"
+if [[ -d "$BIN_DIR" ]]; then
+  while IFS= read -r -d '' f; do
+    base="$(basename "$f")"
+    # Require execute bit for shell scripts and direct bin entrypoints
+    if [[ "$base" =~ \.sh$ ]] && [[ ! -x "$f" ]]; then
+      fail "bin script not executable: bin/$base (run: chmod +x bin/$base)"
+    fi
+  done < <(find "$BIN_DIR" -maxdepth 1 -type f -name "*.sh" -print0)
+fi
+
+# ------------------------------------------------------------------------------
 # Final
 # ------------------------------------------------------------------------------
 if [[ "$fail_count" -gt 0 ]]; then
