@@ -1,3 +1,6 @@
+## [0.1.4] - 2026-02-25
+- Bell WAN staged; BROC dual gateway configured
+
 ## [0.1.3] - 2026-02-24
 - Firewall configuration has effectively been converted into structured infrastructure data.
 
