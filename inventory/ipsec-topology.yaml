@@ -1,102 +1,155 @@
-schema_version: 1
-version: 5
+schema_version: 3
+version: 8
+
 refs:
   sites_file: inventory/sites.yaml
+  ipsec_tunnels_file: inventory/ipsec-tunnels.yaml
+  device_inventory:
+    firewalls_dir: inventory/devices/firewalls/
+    network_dir: inventory/devices/network/
+  notes:
+    - "Topology references devices by device_key only; do not store device_file paths here."
+    - "WAN public IPs and peer endpoints belong in device inventory and/or ipsec-tunnels.yaml."
+
+conventions:
+  device_key_format: "<asset>-fw-sonicwall-<site>"
+  nmc_peer_fqdn: vpn.ucbradio.com
+  wan_public_ip_source_of_truth:
+    - inventory/devices/firewalls/<asset>-fw-sonicwall-<site>.yaml: network.wan.primary.public_ip
+    - inventory/ipsec-tunnels.yaml: ipsec_tunnels[].spoke.remote_peer
+
 hub:
   asset: 1
   site_id: belleville-nmc
   site_code: BELL-102
-  device_file: inventory/devices/firewalls/1-bell-102.yaml
+  device_key: 1-fw-sonicwall-bell-102
   networks:
     lan_subnets:
-    - 192.168.100.0/24
+      - 192.168.100.0/24
   wan_public_ips:
     cogeco_current: 24.51.249.34
     bell_target: 207.236.163.98
+
 spokes:
-- asset: 2
-  site_id: belleville-read
-  site_code: BELL-100
-  device_file: inventory/devices/firewalls/2-bell-100.yaml
-  wan_ip: 69.31.226.114
-  networks:
-    lan_subnets:
-    - 192.168.101.0/24
-  criticality: On-air
-  tunnel_name_on_hub: STL-BELL-100 IPsec
-  notes:
-  - '"READ" in this context is a location label only (not ''read-only'' device).'
-- asset: 9
-  site_id: brockville-tx
-  site_code: BROC-100
-  device_file: inventory/devices/firewalls/9-broc-100.yaml
-  wan_ip: 69.31.226.50
-  networks:
-    lan_subnets:
-    - 192.168.104.0/24
-  criticality: On-air
-  tunnel_name_on_hub: STL-BROC-100 IPsec
-  peer_expected_on_spoke:
-    current: 24.51.249.34
-    target_bell: 207.236.163.98
-    strategy: duplicate_tunnel_on_site_preferred
-- asset: 3
-  site_id: cobourg-tx
-  site_code: COBO-100
-  device_file: inventory/devices/firewalls/3-cobo-100.yaml
-  wan_ip: 207.236.214.34
-  networks:
-    lan_subnets:
-    - 192.168.102.0/24
-  criticality: On-air
-  tunnel_name_on_hub: STL-COBO-100 IPsec
-- asset: 5
-  site_id: kingston-tx
-  site_code: KING-100
-  device_file: inventory/devices/firewalls/5-king-100.yaml
-  wan_ip: 69.7.247.201
-  networks:
-    lan_subnets:
-    - 192.168.105.0/24
-  criticality: On-air
-  tunnel_name_on_hub: STL-KING-100 IPsec
-- asset: 7
-  site_id: windsor-tx
-  site_code: WIND-100
-  device_file: inventory/devices/firewalls/7-wind-100.yaml
-  wan_ip: 192.186.113.50
-  networks:
-    lan_subnets:
-    - 192.168.106.0/24
-  criticality: On-air
-  tunnel_name_on_hub: STL-WIND-100 IPsec
-- asset: 431
-  site_id: chatham-101
-  site_code: CHAT-101
-  device_file: inventory/devices/network/431-chat-101.yaml
-  wan_ip: 67.71.250.138
-  ddns: ucbmedia-chat100.ddns.net
-  networks:
-    lan_subnets:
-    - 192.168.103.0/24
-    lan_gateway: 192.168.103.1
-  criticality: On-air
-  tunnel_name_on_hub: STL-CHAT-100 IPsec
-  tunnel_name_target: STL-CHAT-101 IPsec
-  peer_expected_on_spoke:
-    current: unknown
-    target_bell: 207.236.163.98
-    strategy: tbd_after_site_review
-  notes:
-  - Dan confirmed CHAT-100 != CHAT-101.
-  - Active hub tunnel appears labeled STL-CHAT-100; treat as typo until corrected.
-  - No confirmed SonicWall inventory entry for Chatham firewall yet; peer device evidence currently points to Peplink (asset
-    431).
+  - asset: 2
+    site_id: belleville-read
+    site_code: BELL-100
+    device_key: 2-fw-sonicwall-bell-100
+    networks:
+      lan_subnets:
+        - 192.168.101.0/24
+    criticality: On-air
+    tunnel_ref:
+      tunnel_name: STL-BELL-100
+      tunnel_name_on_hub: STL-BELL-100 IPsec
+    peer_expected_on_spoke:
+      current: unknown
+      target_bell: 207.236.163.98
+      strategy: tbd_after_site_review
+    notes:
+      - '"READ" in this context is a location label only (not ''read-only'' device).'
+
+  - asset: 9
+    site_id: brockville-tx
+    site_code: BROC-100
+    device_key: 9-fw-sonicwall-broc-100
+    networks:
+      lan_subnets:
+        - 192.168.104.0/24
+    criticality: On-air
+    broadcast_dependency:
+      carries_rtp_audio: true
+      dependent_devices:
+        - 28-codec-zipone-broc-100
+        - 84-tx-nautel-vs300-broc-100
+    tunnel_ref:
+      tunnel_name: STL-BROC-100
+      tunnel_name_on_hub: STL-BROC-100 IPsec
+    peer_expected_on_spoke:
+      current: 24.51.249.34
+      target_bell: 207.236.163.98
+      strategy: duplicate_tunnel_on_site_preferred
+
+  - asset: 3
+    site_id: cobourg-tx
+    site_code: COBO-100
+    device_key: 3-fw-sonicwall-cobo-100
+    networks:
+      lan_subnets:
+        - 192.168.102.0/24
+    criticality: On-air
+    tunnel_ref:
+      tunnel_name: STL-COBO-100
+      tunnel_name_on_hub: STL-COBO-100 IPsec
+    peer_expected_on_spoke:
+      current: unknown
+      target_bell: 207.236.163.98
+      strategy: tbd_after_site_review
+
+  - asset: 5
+    site_id: kingston-tx
+    site_code: KING-100
+    device_key: 5-fw-sonicwall-king-100
+    networks:
+      lan_subnets:
+        - 192.168.105.0/24
+    criticality: On-air
+    broadcast_dependency:
+      carries_rtp_audio: true
+      dependent_devices:
+        - 34-codec-zipone-king-100
+    tunnel_ref:
+      tunnel_name: STL-KING-100
+      tunnel_name_on_hub: STL-KING-100 IPsec
+    peer_expected_on_spoke:
+      current: unknown
+      target_bell: 207.236.163.98
+      strategy: tbd_after_site_review
+
+  - asset: 7
+    site_id: windsor-tx
+    site_code: WIND-100
+    device_key: 7-fw-sonicwall-wind-100
+    networks:
+      lan_subnets:
+        - 192.168.106.0/24
+    criticality: On-air
+    tunnel_ref:
+      tunnel_name: STL-WIND-100
+      tunnel_name_on_hub: STL-WIND-100 IPsec
+    peer_expected_on_spoke:
+      current: unknown
+      target_bell: 207.236.163.98
+      strategy: tbd_after_site_review
+
+  - asset: 431
+    site_id: chatham-101
+    site_code: CHAT-101
+    device_key: 431-chat-101
+    networks:
+      lan_subnets:
+        - 192.168.103.0/24
+      lan_gateway: 192.168.103.1
+    criticality: On-air
+    tunnel_ref:
+      tunnel_name: STL-CHAT-100
+      tunnel_name_on_hub: STL-CHAT-100 IPsec
+      tunnel_name_target: STL-CHAT-101 IPsec
+    peer_expected_on_spoke:
+      current: unknown
+      target_bell: 207.236.163.98
+      strategy: tbd_after_site_review
+    notes:
+      - "Peer device inventory currently points to Peplink (asset 431)."
+
 cutover:
   objective: Ensure all active STL spokes accept hub bell_target IP before WAN cutover
   pre_whitelist_required: true
   dual_whitelist_recommended: true
+  execution_strategy:
+    - "Prefer FQDN peer where supported: vpn.ucbradio.com (DNS-only, TTL 300)."
+    - "Where FQDN not feasible, stage Bell peer by duplicate tunnel before cutover."
   notes:
-  - Only active STL tunnels included (per hub enabled list).
-  - 'Chatham naming must be corrected: CHAT-101 location; hub label currently shows CHAT-100.'
-  - Confirm whether Chatham peer is Peplink-only IPsec or IPsec passes through to a downstream firewall.
+    - Only active STL tunnels included (per hub enabled list).
+    - Confirm whether Chatham peer is Peplink-only IPsec or IPsec passes through to a downstream firewall.
+    

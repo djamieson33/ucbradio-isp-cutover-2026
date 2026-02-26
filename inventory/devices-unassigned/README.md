@@ -36,4 +36,4 @@ The remaining files here need asset-number confirmation (or a decision that they
 - `core-switch.yaml`
 - `stream-encoder.yaml`
 
-> Note: `sonicwall-nmc.yaml` was moved to `inventory/deprecated/devices/` because the hub firewall is now tracked as `inventory/devices/firewalls/1-bell-102.yaml`.
+> Note: `sonicwall-nmc.yaml` was moved to `inventory/deprecated/devices/` because the hub firewall is now tracked as `inventory/devices/firewalls/1-fw-sonicwall-bell-102.yaml`.

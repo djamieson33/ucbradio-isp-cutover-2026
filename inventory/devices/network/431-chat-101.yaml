@@ -91,7 +91,7 @@ relationships:
   hub_reference:
     hub_site_code: "BELL-102"
     hub_asset: 1
-    hub_device_file: "inventory/devices/1-bell-102.yaml"
+    hub_device_file: "inventory/devices/firewalls/1-fw-sonicwall-bell-102.yaml"
     hub_tunnel_label_current: "STL-CHAT-100 IPsec"
     hub_tunnel_label_target: "STL-CHAT-101 IPsec"
 

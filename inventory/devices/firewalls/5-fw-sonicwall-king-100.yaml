@@ -1,57 +1,68 @@
-# inventory/devices/9-broc-100.yaml
-# Brockville transmitter site firewall
+# inventory/devices/firewalls/5-fw-sonicwall-king-100.yaml
+# Asset 5 – SonicWall – KING-100
 
 device:
-  name: "BROC-100"
-  site: "Brockville"
-  asset_number: 9
-  vendor: "SonicWall"
-  model: "TZ270"
-  role: "Transmitter site firewall"
-  unique_firewall_identifier: "2CB8EDD82580"
-  serial_number: "2CB8EDD82580"
+  asset_id: 5
+  category: firewall
+  vendor: sonicwall
+  role: vpn-gateway
+  device_key: 5-fw-sonicwall-king-100
 
-management:
-  wan_url: "https://69.31.226.50"
-  lan_url: "https://192.168.104.1"
-  username: "admin"
-  notes:
-    - "LAN management at 192.168.104.1"
-    - "Public WAN management at 69.31.226.50"
+site:
+  code: KING-100
+  short: king-100
+  name: Kingston - Italia
+  province: ON
 
-interfaces:
+hardware:
+  manufacturer: SonicWall
+  model: TZ270
+  serial_number: "2CB8EDD82430"
+
+firmware:
+  sonicos_major: "TBD"
+  version: "TBD"
+
+network:
   wan:
-    public_ip: "69.31.226.50"
-    subnet_mask: "255.255.255.240"
-    gateway: "69.31.226.49"
+    primary:
+      interface: X1
+      public_ip: 69.7.247.201
+      gateway: "TBD"
+      isp: "TBD"
   lan:
-    gateway_ip: "192.168.104.1"
-    subnet: "192.168.104.0/24"
-    dhcp_range:
-      start: "192.168.104.100"
-      end: "192.168.104.200"
+    primary:
+      interface: X0
+      subnet: 192.168.105.0/24
+      management_ip: 192.168.105.1
 
 vpn:
-  ipsec_site_to_site:
-    - name: "STL-BROC-100 IPsec"
-      status: "active_on_hub"
-      local_subnet: "192.168.104.0/24"
-      remote_subnet: "192.168.100.0/24"
-      remote_gateway_expected: "24.51.249.34"   # confirmed on BROC tunnel
-      crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
-      nat_traversal: "enabled"
-      dpd:
-        enabled: true
-        interval_seconds: 60
-        failure_trigger_level: 3
-      notes:
-        - "Pilot spoke for Bell pre-whitelist / dual-whitelist strategy"
-        - "Must allow new hub IP 207.236.163.98 before cutover"
+  role: spoke
+  nmc_peer_fqdn: vpn.ucbradio.com
+  sslvpn_port: 4433
+  sslvpn_domain: KING-100
+  carries_rtp_audio: true
+  vpn_dependent_devices:
+    - 34-codec-zipone-king-100
+
+management:
+  wan_url: https://69.7.247.201
+  lan_url: https://192.168.105.1
+  wan_https_enabled: true
+  wan_https_restricted: "Confirm source-IP restriction"
+  credentials_location: "1Password > UCB > Firewalls > KING-100 (Asset 5)"
+
+operational:
+  critical_path: true
+  notes: >
+    KING-100 firewall carries RTP program audio for site broadcast chain.
+    IPSec VPN stability is broadcast-critical.
 
 tags:
-  - broc-100
-  - brockville
-  - transmitter-site
+  - firewall
   - sonicwall
-  - tz270
+  - king-100
+  - kingston
+  - vpn
+  - critical-path
   

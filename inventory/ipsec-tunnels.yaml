@@ -1,157 +1,268 @@
+schema_version: 2
+version: 7
+
+refs:
+  topology_file: inventory/ipsec-topology.yaml
+  devices_root:
+    firewalls: inventory/devices/firewalls/
+    network: inventory/devices/network/
+
+conventions:
+  hub_device_key: 1-fw-sonicwall-bell-102
+  peer_fqdn: vpn.ucbradio.com
+
 ipsec_tunnels:
-- name: STL-BROC-100
-  site: Brockville
-  site_code: BROC-100
-  remote_peer: 69.31.226.50
-  local_networks:
-  - 192.168.100.0/24
-  remote_networks:
-  - 192.168.104.0/24
-  crypto_suite: 'ESP: AES-256/HMAC SHA256 (IKE)'
-  ike_version: IKE
-  auth_method: PSK
-  nat_traversal: enabled
-  dpd:
-    enabled: true
-    interval_seconds: 60
-    failure_trigger_level: 3
-  peer_expected_on_site:
-    current: 24.51.249.34
-    target_bell: 207.236.163.98
-    strategy: duplicate_tunnel_on_site_preferred
-  purpose: "Studio LAN \u2194 Brockville transmitter LAN"
-  impact_if_down: On-air
-  owner: UCB (internal)
-  quick_tests:
-  - name: Ping Brockville firewall LAN
-    method: ping
-    target: 192.168.104.1
-    expected: Replies from 192.168.104.1 over VPN
-  evidence_refs:
-  - firewall/sonicwall/screenshots/broc-100-active-tunnel-20260225.png
-  last_verified_utc: ''
-- name: STL-BELL-100
-  site: Bellville TX site (labelled BELL-100)
-  site_code: BELL-100
-  remote_peer: 69.31.226.114
-  local_networks:
-  - 192.168.100.0/24
-  remote_networks:
-  - 192.168.101.0/24
-  crypto_suite: 'ESP: AES-256/HMAC SHA256 (IKE)'
-  ike_version: IKE
-  auth_method: PSK
-  nat_traversal: unknown
-  dpd:
-    enabled: unknown
-  peer_expected_on_site:
-    current: unknown
-    target_bell: 207.236.163.98
-    strategy: tbd_after_site_review
-  purpose: "Studio LAN \u2194 transmitter LAN"
-  impact_if_down: On-air
-  owner: UCB (internal)
-  quick_tests: []
-  evidence_refs:
-  - firewall/sonicwall/screenshots/nmc-stl-active-tunnels-20260225.png
-  last_verified_utc: ''
-- name: STL-CHAT-100
-  site: Chatham TX site (labelled CHAT-100)
-  site_code: CHAT-100
-  remote_peer: 67.71.250.138
-  local_networks:
-  - 192.168.100.0/24
-  remote_networks:
-  - 192.168.103.0/24
-  crypto_suite: 'ESP: AES-256/HMAC SHA256 (IKE)'
-  ike_version: IKE
-  auth_method: PSK
-  nat_traversal: unknown
-  dpd:
-    enabled: unknown
-  peer_expected_on_site:
-    current: unknown
-    target_bell: 207.236.163.98
-    strategy: tbd_after_site_review
-  purpose: "Studio LAN \u2194 transmitter LAN"
-  impact_if_down: On-air
-  owner: UCB (internal)
-  quick_tests: []
-  evidence_refs:
-  - firewall/sonicwall/screenshots/nmc-stl-active-tunnels-20260225.png
-  last_verified_utc: ''
-- name: STL-COBO-100
-  site: Cobourg TX site (labelled COBO-100)
-  site_code: COBO-100
-  remote_peer: 207.236.214.34
-  local_networks:
-  - 192.168.100.0/24
-  remote_networks:
-  - 192.168.102.0/24
-  crypto_suite: 'ESP: AES-256/HMAC SHA256 (IKE)'
-  ike_version: IKE
-  auth_method: PSK
-  nat_traversal: unknown
-  dpd:
-    enabled: unknown
-  peer_expected_on_site:
-    current: unknown
-    target_bell: 207.236.163.98
-    strategy: tbd_after_site_review
-  purpose: "Studio LAN \u2194 transmitter LAN"
-  impact_if_down: On-air
-  owner: UCB (internal)
-  quick_tests: []
-  evidence_refs:
-  - firewall/sonicwall/screenshots/nmc-stl-active-tunnels-20260225.png
-  last_verified_utc: ''
-- name: STL-KING-100
-  site: Kingston TX site (labelled KING-100)
-  site_code: KING-100
-  remote_peer: 69.7.247.201
-  local_networks:
-  - 192.168.100.0/24
-  remote_networks:
-  - 192.168.105.0/24
-  crypto_suite: 'ESP: AES-256/HMAC SHA256 (IKE)'
-  ike_version: IKE
-  auth_method: PSK
-  nat_traversal: unknown
-  dpd:
-    enabled: unknown
-  peer_expected_on_site:
-    current: unknown
-    target_bell: 207.236.163.98
-    strategy: tbd_after_site_review
-  purpose: "Studio LAN \u2194 transmitter LAN"
-  impact_if_down: On-air
-  owner: UCB (internal)
-  quick_tests: []
-  evidence_refs:
-  - firewall/sonicwall/screenshots/nmc-stl-active-tunnels-20260225.png
-  last_verified_utc: ''
-- name: STL-WIND-100
-  site: Windsor TX site (labelled WIND-100)
-  site_code: WIND-100
-  remote_peer: 192.186.113.50
-  local_networks:
-  - 192.168.100.0/24
-  remote_networks:
-  - 192.168.106.0/24
-  crypto_suite: 'ESP: AES-256/HMAC SHA256 (IKE)'
-  ike_version: IKE
-  auth_method: PSK
-  nat_traversal: unknown
-  dpd:
-    enabled: unknown
-  peer_expected_on_site:
-    current: unknown
-    target_bell: 207.236.163.98
-    strategy: tbd_after_site_review
-  purpose: "Studio LAN \u2194 transmitter LAN"
-  impact_if_down: On-air
-  owner: UCB (internal)
-  quick_tests: []
-  evidence_refs:
-  - firewall/sonicwall/screenshots/nmc-stl-active-tunnels-20260225.png
-  last_verified_utc: ''
+
+  - name: STL-BROC-100
+    site: Brockville
+    site_code: BROC-100
+    site_id: brockville-tx
+
+    hub:
+      device_key: 1-fw-sonicwall-bell-102
+      local_networks:
+        - 192.168.100.0/24
+
+    spoke:
+      device_key: 9-fw-sonicwall-broc-100
+      remote_peer: 69.31.226.50
+      remote_networks:
+        - 192.168.104.0/24
+
+    peer_endpoint:
+      fqdn: vpn.ucbradio.com
+      hub_public_ips:
+        cogeco_current: 24.51.249.34
+        bell_target: 207.236.163.98
+
+    crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
+    ike_version: IKE
+    auth_method: PSK
+    nat_traversal: enabled
+
+    dpd:
+      enabled: true
+      interval_seconds: 60
+      failure_trigger_level: 3
+
+    broadcast_dependency:
+      carries_rtp_audio: true
+      dependent_devices:
+        - 28-codec-zipone-broc-100
+        - 84-tx-nautel-vs300-broc-100
+
+    impact_if_down: On-air
+    owner: UCB (internal)
+
+    quick_tests:
+      - name: Ping Brockville firewall LAN
+        method: ping
+        target: 192.168.104.1
+        expected: Replies from 192.168.104.1 over VPN
+
+    evidence_refs:
+      - firewall/sonicwall/screenshots/broc-100-active-tunnel-20260225.png
+
+    last_verified_utc: ""
+
+  - name: STL-BELL-100
+    site: Belleville TX
+    site_code: BELL-100
+    site_id: belleville-read
+
+    hub:
+      device_key: 1-fw-sonicwall-bell-102
+      local_networks:
+        - 192.168.100.0/24
+
+    spoke:
+      device_key: 2-fw-sonicwall-bell-100
+      remote_peer: 69.31.226.114
+      remote_networks:
+        - 192.168.101.0/24
+
+    peer_endpoint:
+      fqdn: vpn.ucbradio.com
+      hub_public_ips:
+        cogeco_current: 24.51.249.34
+        bell_target: 207.236.163.98
+
+    crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
+    ike_version: IKE
+    auth_method: PSK
+    nat_traversal: unknown
+    dpd:
+      enabled: unknown
+
+    broadcast_dependency:
+      carries_rtp_audio: unknown
+      dependent_devices: []
+
+    impact_if_down: On-air
+    owner: UCB (internal)
+    quick_tests: []
+    evidence_refs:
+      - firewall/sonicwall/screenshots/nmc-stl-active-tunnels-20260225.png
+    last_verified_utc: ""
+
+  - name: STL-CHAT-100
+    site: Chatham TX
+    site_code: CHAT-101
+    site_id: chatham-101
+
+    hub:
+      device_key: 1-fw-sonicwall-bell-102
+      local_networks:
+        - 192.168.100.0/24
+
+    spoke:
+      device_key: 431-chat-101
+      remote_peer: 67.71.250.138
+      remote_networks:
+        - 192.168.103.0/24
+
+    peer_endpoint:
+      fqdn: vpn.ucbradio.com
+      hub_public_ips:
+        cogeco_current: 24.51.249.34
+        bell_target: 207.236.163.98
+
+    crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
+    ike_version: IKE
+    auth_method: PSK
+    nat_traversal: unknown
+    dpd:
+      enabled: unknown
+
+    broadcast_dependency:
+      carries_rtp_audio: unknown
+      dependent_devices: []
+
+    impact_if_down: On-air
+    owner: UCB (internal)
+    quick_tests: []
+    evidence_refs:
+      - firewall/sonicwall/screenshots/nmc-stl-active-tunnels-20260225.png
+    last_verified_utc: ""
+
+  - name: STL-COBO-100
+    site: Cobourg TX
+    site_code: COBO-100
+    site_id: cobourg-tx
+
+    hub:
+      device_key: 1-fw-sonicwall-bell-102
+      local_networks:
+        - 192.168.100.0/24
+
+    spoke:
+      device_key: 3-fw-sonicwall-cobo-100
+      remote_peer: 207.236.214.34
+      remote_networks:
+        - 192.168.102.0/24
+
+    peer_endpoint:
+      fqdn: vpn.ucbradio.com
+      hub_public_ips:
+        cogeco_current: 24.51.249.34
+        bell_target: 207.236.163.98
+
+    crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
+    ike_version: IKE
+    auth_method: PSK
+    nat_traversal: unknown
+    dpd:
+      enabled: unknown
+
+    broadcast_dependency:
+      carries_rtp_audio: unknown
+      dependent_devices: []
+
+    impact_if_down: On-air
+    owner: UCB (internal)
+    quick_tests: []
+    evidence_refs:
+      - firewall/sonicwall/screenshots/nmc-stl-active-tunnels-20260225.png
+    last_verified_utc: ""
+
+  - name: STL-KING-100
+    site: Kingston TX
+    site_code: KING-100
+    site_id: kingston-tx
+
+    hub:
+      device_key: 1-fw-sonicwall-bell-102
+      local_networks:
+        - 192.168.100.0/24
+
+    spoke:
+      device_key: 5-fw-sonicwall-king-100
+      remote_peer: 69.7.247.201
+      remote_networks:
+        - 192.168.105.0/24
+
+    peer_endpoint:
+      fqdn: vpn.ucbradio.com
+      hub_public_ips:
+        cogeco_current: 24.51.249.34
+        bell_target: 207.236.163.98
+
+    crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
+    ike_version: IKE
+    auth_method: PSK
+    nat_traversal: unknown
+    dpd:
+      enabled: unknown
+
+    broadcast_dependency:
+      carries_rtp_audio: true
+      dependent_devices:
+        - 34-codec-zipone-king-100
+
+    impact_if_down: On-air
+    owner: UCB (internal)
+    quick_tests: []
+    evidence_refs:
+      - firewall/sonicwall/screenshots/nmc-stl-active-tunnels-20260225.png
+    last_verified_utc: ""
+
+  - name: STL-WIND-100
+    site: Windsor TX
+    site_code: WIND-100
+    site_id: windsor-tx
+
+    hub:
+      device_key: 1-fw-sonicwall-bell-102
+      local_networks:
+        - 192.168.100.0/24
+
+    spoke:
+      device_key: 7-fw-sonicwall-wind-100
+      remote_peer: 192.186.113.50
+      remote_networks:
+        - 192.168.106.0/24
+
+    peer_endpoint:
+      fqdn: vpn.ucbradio.com
+      hub_public_ips:
+        cogeco_current: 24.51.249.34
+        bell_target: 207.236.163.98
+
+    crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
+    ike_version: IKE
+    auth_method: PSK
+    nat_traversal: unknown
+    dpd:
+      enabled: unknown
+
+    broadcast_dependency:
+      carries_rtp_audio: unknown
+      dependent_devices: []
+
+    impact_if_down: On-air
+    owner: UCB (internal)
+    quick_tests: []
+    evidence_refs:
+      - firewall/sonicwall/screenshots/nmc-stl-active-tunnels-20260225.png
+    last_verified_utc: ""
+    

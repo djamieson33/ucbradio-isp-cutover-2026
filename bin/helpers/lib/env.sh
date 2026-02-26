@@ -68,7 +68,7 @@ host_from_url() {
 # ------------------------------------------------------------------------------
 py_yaml_get() {
   # Usage: py_yaml_get <yaml_file> <dot.path>
-  # Example: py_yaml_get inventory/devices/firewalls/9-broc-100.yaml management.wan_url
+  # Example: py_yaml_get inventory/devices/firewalls/9-fw-sonicwall-broc-100.yaml management.wan_url
   local file="${1:-}"
   local keypath="${2:-}"
   [[ -f "$file" ]] || _env_die "YAML not found: $file"
