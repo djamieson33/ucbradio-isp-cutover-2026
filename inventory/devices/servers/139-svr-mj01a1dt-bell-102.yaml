@@ -1,0 +1,29 @@
+device:
+  asset_id: 139
+  category: server
+  vendor: microsoft
+  role: operations-server
+  device_key: 139-svr-mj01a1dt-bell-102
+
+site:
+  code: BELL-102
+  short: bell-102
+  name: Belleville (National Media Centre)
+  province: "ON"
+
+hardware:
+  manufacturer: unknown
+  model: Windows Server
+  serial_number: unknown
+
+network:
+  mgmt_ip: 192.168.100.10
+  mgmt_port: 3389
+
+access:
+  mgmt_url: rdp://192.168.100.10
+  auth_ref: 1password://Shared/SERVER - MJ Admin
+
+dependencies:
+  upstream:
+    - 1-fw-sonicwall-bell-102

@@ -12,7 +12,7 @@ site:
   code: WIND-100
   short: wind-100
   name: Windsor
-  province: ON
+  province: "ON"
 
 hardware:
   manufacturer: SonicWall

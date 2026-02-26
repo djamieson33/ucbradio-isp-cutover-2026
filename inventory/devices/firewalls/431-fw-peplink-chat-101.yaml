@@ -13,7 +13,7 @@ site:
   code: CHAT-101
   short: chat-101
   name: Chatham - Centre
-  province: ON
+  province: "ON"
 
 hardware:
   manufacturer: Peplink

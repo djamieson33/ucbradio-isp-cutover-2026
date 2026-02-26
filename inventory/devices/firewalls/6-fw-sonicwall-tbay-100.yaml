@@ -12,7 +12,7 @@ site:
   code: TBAY-100
   short: tbay-100
   name: Thunder Bay
-  province: ON
+  province: "ON"
 
 hardware:
   manufacturer: SonicWall

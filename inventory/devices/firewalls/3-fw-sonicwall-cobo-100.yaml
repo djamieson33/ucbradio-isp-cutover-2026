@@ -12,7 +12,7 @@ site:
   code: COBO-100
   short: cobo-100
   name: Cobourg
-  province: ON
+  province: "ON"
 
 hardware:
   manufacturer: SonicWall

@@ -13,7 +13,7 @@ site:
   short: bell-102
   name: Belleville (National Media Centre)
   site_id: belleville-nmc
-  province: ON
+  province: "ON"
 
 hardware:
   manufacturer: SonicWall
@@ -279,6 +279,13 @@ verification:
     - evidence/pre-change/sonicwall/bell-102-nmc/20260225/interface-x3-advanced.png
     - evidence/pre-change/sonicwall/bell-102-nmc/20260225/ipsec-active-tunnels.png
     - evidence/pre-change/sonicwall/bell-102-nmc/20260225/ipsec-policies-list.png
+  broc_bell_path_validation:
+    tested: true
+    method: "VPN policy bound to X3"
+    result: "Success"
+    validated_utc: "2026-02-26T21:01:39Z"
+    notes:
+      - "Confirmed Bell WAN operational for BROC tunnel."
 
 operational:
   critical_path: true

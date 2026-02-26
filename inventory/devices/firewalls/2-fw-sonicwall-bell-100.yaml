@@ -12,7 +12,7 @@ site:
   code: BELL-100
   short: bell-100
   name: Belleville Secondary (Read)
-  province: ON
+  province: "ON"
 
 hardware:
   manufacturer: SonicWall

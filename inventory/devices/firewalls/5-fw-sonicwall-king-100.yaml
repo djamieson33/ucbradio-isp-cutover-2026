@@ -12,7 +12,7 @@ site:
   code: KING-100
   short: king-100
   name: Kingston - Italia
-  province: ON
+  province: "ON"
 
 hardware:
   manufacturer: SonicWall

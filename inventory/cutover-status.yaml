@@ -1,0 +1,38 @@
+schema_version: 1
+
+last_updated_utc: "2026-02-26T21:01:39Z"
+
+sites:
+
+  BROC-100:
+    site: "Brockville"
+    device_key: "9-fw-sonicwall-broc-100"
+
+    bell_pre_whitelisted: true
+    dual_gateway_configured: true
+    bell_path_validated: true
+    failover_staged: true
+
+    validation:
+      validated_by: "DJ"
+      validated_utc: "2026-02-26T21:01:39Z"
+      notes:
+        - "Tunnel successfully renegotiated over Bell via X3 binding."
+        - "Tunnel restored cleanly to Cogeco."
+        - "No sustained audio interruption observed."
+
+    cutover_readiness: "ready-for-scheduled-cutover"
+
+  TBAY-100:
+    bell_pre_whitelisted: false
+    dual_gateway_configured: false
+    bell_path_validated: false
+    failover_staged: false
+    cutover_readiness: "not-started"
+
+  WIND-100:
+    bell_pre_whitelisted: false
+    dual_gateway_configured: false
+    bell_path_validated: false
+    failover_staged: false
+    cutover_readiness: "not-started"

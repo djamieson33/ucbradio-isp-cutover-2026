@@ -1,120 +1,41 @@
-# UCB Radio -- ISP Change Project (2026)
+# UCB Radio — ISP Changeover (2026)
 
-.1.2\
-**Cutover Target:** February 28, 2026\
-**Primary Change:** Cogeco → Bell ISP
-
-------------------------------------------------------------------------
+**Current Version:** 0.4.1  
+**Cutover Target:** February 28, 2026  
+**Primary Change:** Cogeco → Bell (NMC / BELL-102)
 
 ## Mission
 
-Execute ISP transition with:
+Execute the ISP transition with:
 
--   No FM broadcast interruption\
--   No significant streaming outage\
--   Immediate rollback capability\
--   Full documentation and evidence trail
+- No FM broadcast interruption
+- No significant streaming outage
+- Immediate rollback capability
+- Full documentation and evidence trail
 
-------------------------------------------------------------------------
+## Repo Layout
 
-## Repository Structure
+- `bin/` — automation and helper scripts
+- `dns/` — DNS state, cutover records
+- `docs/` — governance, validation, and standards (start at `docs/README.md`)
+- `evidence/` — screenshots, exports, and validation outputs
+- `firewall/` — firewall-specific artifacts, exports, and notes
+- `inventory/` — canonical structured inventory (sites, devices, ipsec topology/tunnels)
 
-CHANGELOG.md\
-VERSION\
-bin/\
-dns/\
-docs/\
-evidence/\
-firewall/\
-releases/\
-servers/\
-backups/
+## Inventory Conventions
 
-### Key Directories
+Inventory standards are documented here:
 
-**bin/**\
-Release + archive automation scripts.
+- `docs/inventory-naming-conventions.md`
 
-**dns/**\
-Current and intended DNS state.
+Key rule: device references should use **device_key**, not file paths.
 
-**docs/**\
-Structured planning and governance documents.
+## Quick Start
 
--   01-governance\
--   02-architecture\
--   03-cutover\
--   04-validation\
--   05-rollback\
--   06-executive\
--   07-post-cutover
+- Review `docs/README.md` for governance + validation docs
+- Validate Bell WAN (X3) using `docs/04-validation/bell-wan-validation.md`
+- Use `inventory/ipsec-topology.yaml` and `inventory/ipsec-tunnels.yaml` as the canonical STL view
 
-**evidence/**\
-Pre- and post-change validation artifacts.
+## Notes
 
-**firewall/**\
-SonicWall documentation, exports, and diagrams.
-
-**releases/**\
-Versioned project snapshots.
-
-------------------------------------------------------------------------
-
-## Governance Model
-
-1.  Governance & Risk Definition\
-2.  Architecture Mapping\
-3.  Cutover Planning\
-4.  Validation Criteria\
-5.  Rollback Definition\
-6.  Executive Approval\
-7.  Post-Cutover Review
-
-No production changes occur without documented validation and rollback
-readiness.
-
-------------------------------------------------------------------------
-
-## Versioning
-
--   0.x.x --- Discovery / planning only\
--   1.x.x --- Active cutover phase\
--   2.x.x --- Post-cutover / stabilization
-
-Use:
-
-    ./bin/release.sh patch "description"
-
-to bump version, update changelog, and create release archive.
-
-------------------------------------------------------------------------
-
-## Documentation Standards
-
--   UTC timestamps: YYYYMMDDTHHMMZ\
--   Clear commit messages\
--   Evidence stored in /evidence/\
--   No secrets committed to repository\
--   Sensitive data stored in 1Password
-
-------------------------------------------------------------------------
-
-## Communication
-
--   Operational updates: Microsoft Teams\
--   Task tracking: Monday.com (Sprints board)\
--   Executive approvals: /docs/06-executive/
-
-------------------------------------------------------------------------
-
-## Project Leads
-
--   Dwayne Jamieson -- Technical Lead\
--   Brad Linnard -- Content Director\
--   Dan Trudeau -- Operations\
--   Richard Wand -- Programming
-
-------------------------------------------------------------------------
-
-This repository serves as the official change-control record for the
-2026 ISP migration.
+This repo is the source of truth for the ISP changeover project and is expected to evolve rapidly until cutover.

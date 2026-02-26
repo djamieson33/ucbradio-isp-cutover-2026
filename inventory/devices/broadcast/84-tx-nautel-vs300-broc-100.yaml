@@ -1,43 +1,57 @@
+schema_version: 1
+
 device:
   asset_id: 84
   category: broadcast
+  vendor: nautel
   role: transmitter
+  device_key: 84-tx-nautel-vs300-broc-100
 
 site:
   code: BROC-100
+  short: broc-100
   name: Brockville
+  province: "ON"
 
 hardware:
   manufacturer: Nautel
   model: VS300
-  serial_number: "10024996"
+  serial_number: TBD
 
 network:
-  management_ip: 192.168.104.102
-  management_protocol: https
-  management_port: 443
-  network_zone: transmitter-lan
-
-operational:
-  critical_path: true
-  vpn_dependent: true
-  carries_live_audio: true
-  description: >
-    Primary FM transmitter for BROC-100.
-    Program audio delivered over IPSec VPN from NMC.
+  lan:
+    subnet: 192.168.104.0/24
+    notes:
+      - "Transmitter management expected on BROC transmitter LAN."
 
 access:
   web_interface:
-    username: Nautel
-    password_location: "1Password > UCB > BROC-100 > Nautel VS300"
+    url: TBD
+    credentials_location: "1Password > UCB > Broadcast > BROC-100 Nautel VS300 (Asset 84)"
+    notes:
+      - "Do not store usernames/passwords in repo."
   root_access:
-    username: root
-    password_location: "1Password > UCB > BROC-100 > Nautel VS300 (root)"
+    method: ssh
+    host: TBD
+    credentials_location: "1Password > UCB > Broadcast > BROC-100 Nautel VS300 (Asset 84)"
+    notes:
+      - "Do not store usernames/passwords in repo."
+
+operational:
+  on_air_critical: true
+  notes: >
+    Confirm which transmitter is active and capture a screenshot/evidence before any VPN testing changes.
+
+dependencies:
+  upstream:
+    - 9-fw-sonicwall-broc-100
+    - 28-codec-zipone-broc-100
 
 tags:
-  - transmitter
+  - broc-100
+  - brockville
   - nautel
   - vs300
-  - broc-100
-  - old-red-road
+  - transmitter
+  - broadcast-critical
   

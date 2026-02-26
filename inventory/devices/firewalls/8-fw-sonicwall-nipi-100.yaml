@@ -12,7 +12,7 @@ site:
   code: NIPI-100
   short: nipi-100
   name: Nipigon
-  province: ON
+  province: "ON"
 
 hardware:
   manufacturer: SonicWall

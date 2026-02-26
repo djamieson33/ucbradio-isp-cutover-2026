@@ -1,52 +1,79 @@
+# DEPRECATED (2026-02-26 UTC)
+# ---------------------------------------------------------------------------
+# Replaced by:
+#   inventory/devices/firewalls/1-fw-sonicwall-bell-102.yaml
+#
+# Reason:
+#   Legacy "sonicwall-nmc" record pre-dates the asset-keyed device schema.
+#   Retained for audit traceability only.
+#
+# Governance:
+#   MUST NOT be referenced by:
+#     - inventory/ipsec-topology.yaml
+#     - inventory/ipsec-tunnels.yaml
+#     - inventory/stl-firewalls.yaml
+#     - any automation inputs
+# ---------------------------------------------------------------------------
+
 schema_version: 1
-id: sonicwall-nmc
-name: SonicWall NMC
-type: firewall
-site: nmc-belleville
-role: edge-router
 
-network:
-  mgmt_ip: 192.168.100.1  # TODO: confirm
-  mgmt_port: 443
-  interfaces:
-    - name: X0
-      purpose: LAN
-      subnet: 192.168.100.0/24
-    - name: X1
-      purpose: Cogeco WAN
-      notes: TODO: confirm interface + addressing
-    - name: X3
-      purpose: Bell WAN (staged)
-      notes: Currently staged on X3 per project notes; confirm addressing.
+deprecated_record:
+  legacy_id: sonicwall-nmc
+  legacy_name: "SonicWall NMC"
+  legacy_type: firewall
+  legacy_site: nmc-belleville
+  legacy_role: edge-router
 
-access:
-  mgmt_url: https://192.168.100.1
-  auth_ref: 1password://Shared/DEVICE - SonicWall NMC Admin
-  notes: >
-    SonicOS 7.x. For CPU/memory/health: Device > Diagnostics > Tech Support Report.
+status:
+  deprecated: true
+  reason: "Replaced by asset-keyed hub firewall device record"
+  replaced_by: "inventory/devices/firewalls/1-fw-sonicwall-bell-102.yaml"
+  last_updated_utc: "2026-02-26T00:00:00Z"
 
-ownership:
-  primary: dj
-  escalation: bl
+legacy_snapshot:
+  network:
+    mgmt_ip: "192.168.100.1"
+    mgmt_port: 443
+    interfaces:
+      - name: X0
+        purpose: LAN
+        subnet: "192.168.100.0/24"
+      - name: X1
+        purpose: "Cogeco WAN"
+        notes: "TODO: confirm interface + addressing"
+      - name: X3
+        purpose: "Bell WAN (staged)"
+        notes: "Currently staged on X3 per project notes; confirm addressing."
 
-dependencies:
-  upstream:
-    - cogeco-modem
-    - bell-modem
-  downstream:
-    - core-switch
+  access:
+    mgmt_url: "https://192.168.100.1"
+    auth_ref: "1password://Shared/DEVICE - SonicWall NMC Admin"
+    notes: >
+      SonicOS 7.x. For CPU/memory/health: Device > Diagnostics > Tech Support Report.
 
-cutover:
-  criticality: broadcast-critical
-  prechecks:
-    - Confirm Bell WAN link is up and reachable (no production route change yet)
-    - Confirm outbound tests to streaming endpoints via Bell succeed
-    - Confirm TTL propagation for cutover-related DNS (if applicable)
-  rollback:
-    - Restore default route to Cogeco
-    - Re-enable Cogeco NAT policies; disable Bell NAT policies
-    - Validate FM/streaming stability
+  ownership:
+    primary: dj
+    escalation: bl
 
-evidence:
-  pre_change_dir: evidence/pre-change/sonicwall-nmc/
-  post_change_dir: evidence/post-change/sonicwall-nmc/
+  dependencies:
+    upstream:
+      - cogeco-modem
+      - bell-modem
+    downstream:
+      - core-switch
+
+  cutover:
+    criticality: broadcast-critical
+    prechecks:
+      - "Confirm Bell WAN link is up and reachable (no production route change yet)"
+      - "Confirm outbound tests to streaming endpoints via Bell succeed"
+      - "Confirm TTL propagation for cutover-related DNS (if applicable)"
+    rollback:
+      - "Restore default route to Cogeco"
+      - "Re-enable Cogeco NAT policies; disable Bell NAT policies"
+      - "Validate FM/streaming stability"
+
+  evidence:
+    pre_change_dir: "evidence/pre-change/sonicwall-nmc/"
+    post_change_dir: "evidence/post-change/sonicwall-nmc/"
+    

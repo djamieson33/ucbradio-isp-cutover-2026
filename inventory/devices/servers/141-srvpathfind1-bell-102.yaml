@@ -1,0 +1,29 @@
+device:
+  asset_id: 141
+  category: server
+  vendor: microsoft
+  role: traffic-system
+  device_key: 141-srvpathfind1-bell-102
+
+site:
+  code: BELL-102
+  short: bell-102
+  name: Belleville (National Media Centre)
+  province: "ON"
+
+hardware:
+  manufacturer: unknown
+  model: Windows Server
+  serial_number: unknown
+
+network:
+  mgmt_ip: 192.168.100.18
+  mgmt_port: 3389
+
+access:
+  mgmt_url: rdp://192.168.100.18
+  auth_ref: 1password://Shared/SERVER - SRVPATHFIND1 Admin
+
+dependencies:
+  upstream:
+    - 1-fw-sonicwall-bell-102

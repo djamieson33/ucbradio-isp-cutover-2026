@@ -1,0 +1,29 @@
+device:
+  asset_id: 142
+  category: server
+  vendor: microsoft
+  role: broadcast-automation
+  device_key: 142-zettaserver-bell-102
+
+site:
+  code: BELL-102
+  short: bell-102
+  name: Belleville (National Media Centre)
+  province: "ON"
+
+hardware:
+  manufacturer: microsoft
+  model: Windows Server 2012 R2
+  serial_number: unknown
+
+network:
+  mgmt_ip: 192.168.100.97
+  mgmt_port: 3389
+
+access:
+  mgmt_url: rdp://192.168.100.97
+  auth_ref: 1password://Shared/SERVER - ZETTASERVER Admin
+
+dependencies:
+  upstream:
+    - 1-fw-sonicwall-bell-102
