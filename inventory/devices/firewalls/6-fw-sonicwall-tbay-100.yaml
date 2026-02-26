@@ -1,56 +1,90 @@
-# inventory/devices/6-tbay-100.yaml
-# Thunder Bay transmitter site firewall
+# inventory/devices/firewalls/6-fw-sonicwall-tbay-100.yaml
+# Asset 6 – SonicWall – TBAY-100 (Thunder Bay transmitter site)
 
 device:
-  name: "TBAY-100"
-  site: "Thunder Bay"
-  asset_number: 6
-  vendor: "SonicWall"
-  model: "TZ270"
-  role: "Transmitter site firewall"
-  unique_firewall_identifier: "2CB8EDD82550"
+  asset_id: 6
+  category: firewall
+  vendor: sonicwall
+  role: vpn-gateway
+  device_key: 6-fw-sonicwall-tbay-100
+
+site:
+  code: TBAY-100
+  short: tbay-100
+  name: Thunder Bay
+  province: ON
+
+hardware:
+  manufacturer: SonicWall
+  model: TZ270
   serial_number: "2CB8EDD82550"
 
+firmware:
+  sonicos_major: TBD
+  version: TBD
+
+network:
+  wan:
+    primary:
+      interface: X1
+      public_ip: 216.211.29.160
+  lan:
+    primary:
+      interface: X0
+      subnet: 192.168.35.0/24
+      management_ip: 192.168.35.1
+
+vpn:
+  role: spoke
+
+  ssl_vpn:
+    enabled: true
+    public_ip: 216.211.29.160
+    port: 4433
+    domain: TBAY-100
+
+  ipsec_site_to_site:
+    hub_device_key: 1-fw-sonicwall-bell-102
+    tunnel_name_on_hub: STL-TBAY-100 IPsec
+    peer_fqdn: vpn.ucbradio.com
+    peer_current_public_ip: 24.51.249.34
+    peer_target_public_ip: 207.236.163.98
+
+    local_networks:
+      - 192.168.35.0/24
+    remote_networks:
+      - 192.168.100.0/24
+
+    notes:
+      - "Tunnel currently built toward Belleville Cogeco IP."
+      - "Must whitelist 207.236.163.98 prior to cutover."
+      - "Strong candidate for FQDN-based hub reference."
+
 management:
-  wan_url: "https://216.211.29.160"
-  lan_url: "https://192.168.35.1"
-  username: "admin"
+  wan_url: https://216.211.29.160
+  lan_url: https://192.168.35.1
+  wan_https_enabled: true
+  credentials_location: "1Password > UCB > Firewalls > TBAY-100 (Asset 6)"
   notes:
     - "LAN management at 192.168.35.1"
     - "Public WAN management at 216.211.29.160"
 
-interfaces:
-  wan:
-    public_ip: "216.211.29.160"
-    role: "Primary WAN"
-  lan:
-    gateway_ip: "192.168.35.1"
-    subnet: "192.168.35.0/24"
-
-vpn:
-  ssl_vpn:
-    public_ip: "216.211.29.160"
-    port: 4433
-    domain: "TBAY-100"
-  ipsec_site_to_site:
-    local_networks:
-      - "192.168.35.0/24"
-    peer_device: "BELL-102"
-    peer_current_public_ip: "24.51.249.34"
-    notes:
-      - "Tunnel currently built toward Belleville Cogeco IP"
-      - "Must whitelist 207.236.163.98 prior to cutover"
-      - "Strong candidate for FQDN-based hub reference"
-
 security:
   pre_shared_key_stored: true
   notes:
-    - "PSK stored in secure vault"
-    - "Confirm PSK matches hub"
+    - "PSK stored in secure vault."
+    - "Confirm PSK matches hub configuration."
+
+operational:
+  critical_path: true
+  description: >
+    Thunder Bay transmitter site firewall.
+    Participates in IPSec site-to-site tunnel with BELL-102 hub.
 
 tags:
   - tbay-100
   - thunder-bay
-  - transmitter-site
+  - firewall
   - sonicwall
-  - tz270
+  - transmitter-site
+  

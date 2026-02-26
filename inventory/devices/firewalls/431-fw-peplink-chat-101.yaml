@@ -1,0 +1,110 @@
+# inventory/devices/firewalls/431-fw-peplink-chat-101.yaml
+# Asset 431 – Peplink – CHAT-101 (Chatham - Centre)
+# WAN edge firewall / NAT router / IPsec spoke endpoint
+
+device:
+  asset_id: 431
+  category: firewall
+  vendor: peplink
+  role: vpn-gateway
+  device_key: 431-fw-peplink-chat-101
+
+site:
+  code: CHAT-101
+  short: chat-101
+  name: Chatham - Centre
+  province: ON
+
+hardware:
+  manufacturer: Peplink
+  model: BOne5G
+  serial_number: TBD
+  unique_identifier: TBD
+
+network:
+  wan:
+    primary:
+      public_ip: 67.71.250.138
+      gateway_ip: TBD
+      subnet_mask: TBD
+      ddns: ucbmedia-chat100.ddns.net
+      notes:
+        - "DDNS label currently reads ucbmedia-chat100.ddns.net; confirm whether this should be chat101."
+  lan:
+    primary:
+      subnet: 192.168.103.0/24
+      management_ip: 192.168.103.1
+      dhcp:
+        enabled: TBD
+        pool:
+          start: TBD
+          end: TBD
+
+management:
+  lan_url: https://192.168.103.1
+  wan_url: https://67.71.250.138
+  wan_https_enabled: TBD
+  credentials_location: "1Password > UCB > Firewalls > CHAT-101 Peplink (Asset 431)"
+  notes:
+    - "Confirm whether WAN management should remain enabled long-term (security review)."
+
+vpn:
+  role: spoke
+
+  ipsec_site_to_site:
+    hub_device_key: 1-fw-sonicwall-bell-102
+    tunnel_name_on_hub: STL-CHAT-100 IPsec
+    tunnel_name_target: STL-CHAT-101 IPsec
+
+    local_networks:
+      - 192.168.103.0/24
+    remote_networks:
+      - 192.168.100.0/24
+
+    peer_expected_on_spoke:
+      current: 24.51.249.34
+      target_bell: 207.236.163.98
+      strategy: tbd_after_site_review
+
+    auth_method: PSK
+    ike_version: TBD
+    crypto_suite: TBD
+    nat_traversal: TBD
+    dpd:
+      enabled: TBD
+      interval_seconds: TBD
+      failure_trigger_level: TBD
+
+    notes:
+      - "Device appears to be the IPsec VPN endpoint for CHAT-101."
+      - "Hub label currently shows STL-CHAT-100; treat as label-only until corrected in UI."
+
+verification:
+  quick_tests:
+    - name: Ping CHAT-101 LAN gateway
+      method: ping
+      target: 192.168.103.1
+      expected: Replies locally; over VPN only if routing/ACLs permit
+    - name: Ping hub LAN gateway (BELL-102)
+      method: ping
+      target: 192.168.100.1
+      expected: Replies over IPsec once confirmed
+  last_verified_utc: ""
+  evidence_refs:
+    - evidence/screenshots/peplink-431-chat-101-20260225.png
+
+relationships:
+  hub:
+    hub_site_code: BELL-102
+    hub_asset_id: 1
+    hub_device_key: 1-fw-sonicwall-bell-102
+
+tags:
+  - chat-101
+  - chatham
+  - peplink
+  - wan-edge
+  - firewall
+  - ipsec-spoke
+  - critical-path
+  

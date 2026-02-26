@@ -1,65 +1,101 @@
-# inventory/devices/8-nipi-100.yaml
-# Nipigon transmitter site firewall
+# inventory/devices/firewalls/8-fw-sonicwall-nipi-100.yaml
+# Asset 8 – SonicWall – NIPI-100 (Nipigon transmitter site)
 
 device:
-  name: "NIPI-100"
-  site: "Nipigon"
-  asset_number: 8
-  vendor: "SonicWall"
-  model: "TZ270"
-  role: "Transmitter site firewall"
-  unique_firewall_identifier: "2CB8EDD825F0"
+  asset_id: 8
+  category: firewall
+  vendor: sonicwall
+  role: vpn-gateway
+  device_key: 8-fw-sonicwall-nipi-100
+
+site:
+  code: NIPI-100
+  short: nipi-100
+  name: Nipigon
+  province: ON
+
+hardware:
+  manufacturer: SonicWall
+  model: TZ270
   serial_number: "2CB8EDD825F0"
 
+firmware:
+  sonicos_major: TBD
+  version: TBD
+
+network:
+  wan:
+    primary:
+      interface: X1
+      public_ip: 184.67.180.174
+  lan:
+    primary:
+      interface: X0
+      subnet: 192.168.0.0/24
+      management_ip: 192.168.0.1
+
+dns:
+  provider: Shaw
+  primary:
+    hostname: nsc1.nr.wp.shawcable.net
+    ip: 64.59.176.13
+  secondary:
+    hostname: nsc1.sc.wp.shawcable.net
+    ip: 64.59.177.226
+
+vpn:
+  role: spoke
+
+  ssl_vpn:
+    enabled: true
+    public_ip: 184.67.180.174
+    port: 4433
+    domain: NIPI-100
+
+  ipsec_site_to_site:
+    hub_device_key: 1-fw-sonicwall-bell-102
+    tunnel_name_on_hub: STL-NIPI-100 IPsec
+    peer_fqdn: vpn.ucbradio.com
+    peer_current_public_ip: 24.51.249.34
+    peer_target_public_ip: 207.236.163.98
+
+    local_networks:
+      - 192.168.0.0/24
+    remote_networks:
+      - 192.168.100.0/24
+
+    notes:
+      - "Tunnel currently built toward Belleville Cogeco IP."
+      - "Must whitelist 207.236.163.98 prior to cutover."
+      - "High-latency site — confirm DPD stability post-cutover."
+
 management:
-  wan_url: "https://184.67.180.174"
-  lan_url: "https://192.168.0.1"
-  username: "admin"
+  wan_url: https://184.67.180.174
+  lan_url: https://192.168.0.1
+  wan_https_enabled: true
+  credentials_location: "1Password > UCB > Firewalls > NIPI-100 (Asset 8)"
   notes:
     - "LAN management at 192.168.0.1"
     - "Public WAN management at 184.67.180.174"
 
-interfaces:
-  wan:
-    public_ip: "184.67.180.174"
-    role: "Primary WAN"
-  lan:
-    gateway_ip: "192.168.0.1"
-    subnet: "192.168.0.0/24"
-
-dns:
-  provider: "Shaw"
-  primary:
-    hostname: "nsc1.nr.wp.shawcable.net"
-    ip: "64.59.176.13"
-  secondary:
-    hostname: "nsc1.sc.wp.shawcable.net"
-    ip: "64.59.177.226"
-
-vpn:
-  ssl_vpn:
-    public_ip: "184.67.180.174"
-    port: 4433
-    domain: "NIPI-100"
-  ipsec_site_to_site:
-    local_networks:
-      - "192.168.0.0/24"
-    peer_device: "BELL-102"
-    peer_current_public_ip: "24.51.249.34"
-    notes:
-      - "Tunnel currently built toward Belleville Cogeco IP"
-      - "Must whitelist 207.236.163.98 prior to cutover"
-      - "High-latency site — confirm DPD stability post-cutover"
-
 security:
   pre_shared_key_stored: true
   notes:
-    - "PSK stored in secure vault"
-    - "Confirm PSK matches hub"
+    - "PSK stored in secure vault."
+    - "Confirm PSK matches hub configuration."
+
+operational:
+  critical_path: true
+  description: >
+    Nipigon transmitter site firewall.
+    High-latency spoke site participating in IPSec tunnel to BELL-102 hub.
 
 tags:
   - nipi-100
   - nipigon
-  - transmitter-site
+  - firewall
   - sonicwall
-  - tz270
+  - transmitter-site
+  - stl-spoke
+  - critical-path
+  

@@ -1,5 +1,5 @@
 # inventory/devices/firewalls/5-fw-sonicwall-king-100.yaml
-# Asset 5 – SonicWall – KING-100
+# Asset 5 – SonicWall – KING-100 (Kingston transmitter site)
 
 device:
   asset_id: 5
@@ -20,16 +20,16 @@ hardware:
   serial_number: "2CB8EDD82430"
 
 firmware:
-  sonicos_major: "TBD"
-  version: "TBD"
+  sonicos_major: TBD
+  version: TBD
 
 network:
   wan:
     primary:
       interface: X1
       public_ip: 69.7.247.201
-      gateway: "TBD"
-      isp: "TBD"
+      gateway: TBD
+      isp: TBD
   lan:
     primary:
       interface: X0
@@ -38,12 +38,29 @@ network:
 
 vpn:
   role: spoke
-  nmc_peer_fqdn: vpn.ucbradio.com
-  sslvpn_port: 4433
-  sslvpn_domain: KING-100
-  carries_rtp_audio: true
-  vpn_dependent_devices:
-    - 34-codec-zipone-king-100
+
+  ssl_vpn:
+    enabled: true
+    public_ip: 69.7.247.201
+    port: 4433
+    domain: KING-100
+
+  ipsec_site_to_site:
+    hub_device_key: 1-fw-sonicwall-bell-102
+    tunnel_name_on_hub: STL-KING-100 IPsec
+    peer_fqdn: vpn.ucbradio.com
+    peer_current_public_ip: unknown
+    peer_target_public_ip: 207.236.163.98
+    local_networks:
+      - 192.168.105.0/24
+    remote_networks:
+      - 192.168.100.0/24
+    carries_rtp_audio: true
+    dependent_devices:
+      - 34-codec-zipone-king-100
+    notes:
+      - "IPSec tunnel carries live RTP program audio."
+      - "Pre-whitelist Bell IP 207.236.163.98 prior to cutover."
 
 management:
   wan_url: https://69.7.247.201
@@ -52,17 +69,22 @@ management:
   wan_https_restricted: "Confirm source-IP restriction"
   credentials_location: "1Password > UCB > Firewalls > KING-100 (Asset 5)"
 
+security:
+  pre_shared_key_stored: true
+  notes:
+    - "PSK stored in secure vault."
+    - "Confirm key matches hub configuration."
+
 operational:
   critical_path: true
-  notes: >
-    KING-100 firewall carries RTP program audio for site broadcast chain.
-    IPSec VPN stability is broadcast-critical.
+  description: >
+    Kingston transmitter site firewall.
+    Carries live RTP program audio over IPSec from BELL-102 hub.
 
 tags:
-  - firewall
-  - sonicwall
   - king-100
   - kingston
-  - vpn
-  - critical-path
+  - firewall
+  - sonicwall
+  - transmitter-site
   

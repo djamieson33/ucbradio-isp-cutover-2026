@@ -1,240 +1,296 @@
-schema_version: 1
+# inventory/devices/firewalls/1-fw-sonicwall-bell-102.yaml
+# Asset 1 – SonicWall – BELL-102 (Belleville NMC hub firewall)
+
 device:
-  name: BELL-102
-  site: Belleville (National Media Centre)
+  asset_id: 1
+  category: firewall
+  vendor: sonicwall
+  role: vpn-gateway
+  device_key: 1-fw-sonicwall-bell-102
+
+site:
+  code: BELL-102
+  short: bell-102
+  name: Belleville (National Media Centre)
   site_id: belleville-nmc
-  site_code: BELL-102
-  asset_number: 1
-  vendor: SonicWall
+  province: ON
+
+hardware:
+  manufacturer: SonicWall
   model: TZ470
-  role: Hub firewall
-  unique_firewall_identifier: 2CB8ED903580
-  serial_number: 2CB8ED903580
-  firmware:
-    sonic_os: unknown
-    build: unknown
-  tags:
-  - hub
-  - belle-102
-  - sonicwall
-  - tz470
-  - stl-core
+  serial_number: "2CB8ED903580"
+
+firmware:
+  sonicos_major: TBD
+  version: TBD
+  build: TBD
+
 management:
   wan_url: https://sw.ucbradio.com
   lan_url: https://192.168.100.1
-  username: admin
-  password_secret_ref: 1password://<vault>/<item>/BELL-102-admin
+  wan_https_enabled: true
+  credentials_location: "1Password > UCB > Firewalls > BELL-102 (Asset 1)"
+  password_secret_ref: "1password://<vault>/<item>/BELL-102-admin"
   notes:
-  - Primary hub for all STL IPsec tunnels
-  - 'X3 is Bell static: 207.236.163.98'
-  - Previous Cogeco peer observed as 24.51.249.34
-  - Do not disable Cogeco (X1) during business hours; production still relies on it.
-interfaces:
-  X0:
-    zone: LAN
-    enabled: true
-    ip_assignment: static
-    ip_address: 192.168.100.1
-    subnet_mask: 255.255.255.0
-    subnet_cidr: 192.168.100.0/24
-    link: unknown
-    management:
-      https: unknown
-      ssh: unknown
-      ping: unknown
-      snmp: unknown
-    notes:
-    - Primary internal LAN gateway for NMC.
-  X1:
-    zone: WAN
-    enabled: true
-    ip_assignment: static
-    ip_address: 24.51.249.34
-    subnet_mask: 255.255.255.248
-    subnet_cidr: 24.51.249.32/29
-    default_gateway: unknown
-    dns_servers: []
-    link: unknown
-    management:
-      https: unknown
-      ssh: unknown
-      ping: unknown
-      snmp: unknown
-    notes:
-    - Cogeco WAN is currently production primary.
-    - This is the hub peer IP currently expected by several remote sites unless pre-whitelisted.
-  X2:
-    zone: STAFF-ZONE
-    enabled: true
-    ip_assignment: static
-    ip_address: 10.2.254.1
-    subnet_mask: 255.255.255.0
-    subnet_cidr: 10.2.254.0/24
-    link: unknown
-    notes:
-    - Official Staff Zone.
-  X3:
-    zone: WAN
-    enabled: true
-    ip_assignment: static
-    ip_address: 207.236.163.98
-    subnet_mask: 255.255.255.224
-    subnet_cidr: 207.236.163.96/27
-    default_gateway: 207.236.163.97
-    dns_servers:
-    - 67.69.184.199
-    - 67.69.184.7
-    - 8.8.8.8
-    link_speed: Auto Negotiate
-    link: 1 Gbps Full Duplex
-    comment: Bell WAN (BID 1G/500)
-    management:
-      https: false
-      ping: false
-      snmp: false
-      ssh: true
-      user_login_http: false
-      user_login_https: true
-      redirect_http_to_https: true
-    advanced:
-      interface_mtu: 1500
-      multicast_support: false
-      flow_control: false
-      asymmetric_route_support: false
-      enable_flow_reporting: true
-      fragment_non_vpn_outbound_packets_larger_than_mtu: true
-      ignore_df_bit: false
-      send_icmp_frag_needed: false
-    notes:
-    - Bell WAN is configured and link-up.
-    - ICMP ping to 207.236.163.98 may fail externally because X3 ping is disabled.
-  X8:
-    zone: AXIA INTERNET
-    enabled: true
-    ip_assignment: static
-    ip_address: 192.168.200.1
-    subnet_mask: 255.255.255.0
-    subnet_cidr: 192.168.200.0/24
-    link: No link
-    notes:
-    - Axia Audio Internet Test (currently no link).
-  X9:
-    zone: STAFF-ZONE
-    enabled: false
-    ip_assignment: static
-    ip_address: 10.10.10.1
-    subnet_mask: 255.255.255.0
-    subnet_cidr: 10.10.10.0/24
-    link: No link
-    notes:
-    - Dwayne sandbox (disabled).
+    - "Primary hub for all STL IPsec tunnels."
+    - "X3 is Bell static: 207.236.163.98."
+    - "Previous/Current Cogeco hub peer observed as 24.51.249.34."
+    - "Do not disable Cogeco (X1) during business hours; production still relies on it."
+
+network:
+  lan:
+    primary:
+      interface: X0
+      subnet: 192.168.100.0/24
+      management_ip: 192.168.100.1
+
   wan:
-    interfaces_summary:
-    - interface: X1
+    primary_interface: X1
+    secondary_interface: X3
+    public_ips:
+      cogeco_current: 24.51.249.34
+      bell_target: 207.236.163.98
+
+  interfaces:
+    X0:
+      zone: LAN
+      enabled: true
+      ip_assignment: static
+      ip_address: 192.168.100.1
+      subnet_mask: 255.255.255.0
+      subnet_cidr: 192.168.100.0/24
+      link: TBD
+      management:
+        https: TBD
+        ssh: TBD
+        ping: TBD
+        snmp: TBD
+      notes:
+        - "Primary internal LAN gateway for NMC."
+
+    X1:
       zone: WAN
-      public_ip: 24.51.249.34
-      comment: Default WAN (Cogeco)
-    - interface: X3
+      enabled: true
+      ip_assignment: static
+      ip_address: 24.51.249.34
+      subnet_mask: 255.255.255.248
+      subnet_cidr: 24.51.249.32/29
+      default_gateway: TBD
+      dns_servers: []
+      link: TBD
+      management:
+        https: TBD
+        ssh: TBD
+        ping: TBD
+        snmp: TBD
+      notes:
+        - "Cogeco WAN is currently production primary."
+        - "This is the hub peer IP currently expected by remote sites unless pre-whitelisted."
+
+    X2:
+      zone: STAFF-ZONE
+      enabled: true
+      ip_assignment: static
+      ip_address: 10.2.254.1
+      subnet_mask: 255.255.255.0
+      subnet_cidr: 10.2.254.0/24
+      link: TBD
+      notes:
+        - "Official Staff Zone."
+
+    X3:
       zone: WAN
-      public_ip: 207.236.163.98
-      gateway: 207.236.163.97
+      enabled: true
+      ip_assignment: static
+      ip_address: 207.236.163.98
       subnet_mask: 255.255.255.224
-      comment: Bell WAN (BID 1G/500)
+      subnet_cidr: 207.236.163.96/27
+      default_gateway: 207.236.163.97
+      dns_servers:
+        - 67.69.184.199
+        - 67.69.184.7
+        - 8.8.8.8
+      link_speed: "Auto Negotiate"
+      link: "1 Gbps Full Duplex"
+      comment: "Bell WAN (BID 1G/500)"
+      management:
+        https: false
+        ping: false
+        snmp: false
+        ssh: true
+        user_login_http: false
+        user_login_https: true
+        redirect_http_to_https: true
+      advanced:
+        interface_mtu: 1500
+        multicast_support: false
+        flow_control: false
+        asymmetric_route_support: false
+        enable_flow_reporting: true
+        fragment_non_vpn_outbound_packets_larger_than_mtu: true
+        ignore_df_bit: false
+        send_icmp_frag_needed: false
+      notes:
+        - "Bell WAN is configured and link-up."
+        - "ICMP ping to 207.236.163.98 may fail externally because X3 ping is disabled."
+
+    X8:
+      zone: "AXIA INTERNET"
+      enabled: true
+      ip_assignment: static
+      ip_address: 192.168.200.1
+      subnet_mask: 255.255.255.0
+      subnet_cidr: 192.168.200.0/24
+      link: "No link"
+      notes:
+        - "Axia Audio Internet Test (currently no link)."
+
+    X9:
+      zone: STAFF-ZONE
+      enabled: false
+      ip_assignment: static
+      ip_address: 10.10.10.1
+      subnet_mask: 255.255.255.0
+      subnet_cidr: 10.10.10.0/24
+      link: "No link"
+      notes:
+        - "Dwayne sandbox (disabled)."
+
+  wan_summary:
+    interfaces:
+      - interface: X1
+        zone: WAN
+        public_ip: 24.51.249.34
+        comment: "Default WAN (Cogeco)"
+      - interface: X3
+        zone: WAN
+        public_ip: 207.236.163.98
+        gateway: 207.236.163.97
+        subnet_mask: 255.255.255.224
+        comment: "Bell WAN (BID 1G/500)"
     dns_servers_x3:
-    - 67.69.184.199
-    - 67.69.184.7
-    - 8.8.8.8
+      - 67.69.184.199
+      - 67.69.184.7
+      - 8.8.8.8
+
 routing:
   default_route:
     active_wan: X1
     failover_wan: X3
-    mode: unknown
+    mode: TBD
   notes:
-  - Do not disable X1 (Cogeco) for testing; production still depends on it.
-  - Bell (X3) validation must be done using non-disruptive methods (policy-based routing, diagnostic tools, or parallel VPN
-    tests).
+    - "Do not disable X1 (Cogeco) for testing; production still depends on it."
+    - "Bell (X3) validation should be non-disruptive (policy-based routing, diagnostics, or parallel VPN tests)."
+
 vpn:
+  role: hub
+
   ipsec_site_to_site:
-    description: Hub side of all active STL tunnels
-    local_subnet: 192.168.100.0/24
+    description: "Hub side of all active STL tunnels"
+    local_networks:
+      - 192.168.100.0/24
+
     spokes_active:
-    - BELL-100
-    - BROC-100
-    - CHAT-101
-    - COBO-100
-    - KING-100
-    - WIND-100
+      - BELL-100
+      - BROC-100
+      - CHAT-101
+      - COBO-100
+      - KING-100
+      - WIND-100
+
     policies:
-    - name_on_hub: STL-BELL-100 IPsec
-      peer_gateway: 69.31.226.114
-      remote_subnets:
-      - 192.168.101.0/24
-      enabled: true
-    - name_on_hub: STL-BROC-100 IPsec
-      peer_gateway: 69.31.226.50
-      remote_subnets:
-      - 192.168.104.0/24
-      enabled: true
-    - name_on_hub: STL-CHAT-100 IPsec
-      peer_gateway: 67.71.250.138
-      remote_subnets:
-      - 192.168.103.0/24
-      enabled: true
-      notes:
-      - 'KNOWN LABEL ISSUE: Dan confirmed CHAT-101 is the active location; hub label may be a typo.'
-      - Peer device is currently believed to be Peplink (asset 431); verify when access is available.
-    - name_on_hub: STL-COBO-100 IPsec
-      peer_gateway: 207.236.214.34
-      remote_subnets:
-      - 192.168.102.0/24
-      enabled: true
-    - name_on_hub: STL-KING-100 IPsec
-      peer_gateway: 69.7.247.201
-      remote_subnets:
-      - 192.168.105.0/24
-      enabled: true
-    - name_on_hub: STL-WIND-100 IPsec
-      peer_gateway: 192.186.113.50
-      remote_subnets:
-      - 192.168.106.0/24
-      enabled: true
+      - name_on_hub: STL-BELL-100 IPsec
+        peer_gateway: 69.31.226.114
+        remote_networks:
+          - 192.168.101.0/24
+        enabled: true
+
+      - name_on_hub: STL-BROC-100 IPsec
+        peer_gateway: 69.31.226.50
+        remote_networks:
+          - 192.168.104.0/24
+        enabled: true
+
+      - name_on_hub: STL-CHAT-100 IPsec
+        peer_gateway: 67.71.250.138
+        remote_networks:
+          - 192.168.103.0/24
+        enabled: true
+        notes:
+          - "Peer device inventory currently tracked as asset 431 (device_key: 431-fw-peplink-chat-101)."
+
+      - name_on_hub: STL-COBO-100 IPsec
+        peer_gateway: 207.236.214.34
+        remote_networks:
+          - 192.168.102.0/24
+        enabled: true
+
+      - name_on_hub: STL-KING-100 IPsec
+        peer_gateway: 69.7.247.201
+        remote_networks:
+          - 192.168.105.0/24
+        enabled: true
+
+      - name_on_hub: STL-WIND-100 IPsec
+        peer_gateway: 192.186.113.50
+        remote_networks:
+          - 192.168.106.0/24
+        enabled: true
+
     crypto_profile_observed:
-      auth_method: IKE Using Preshared Secret
-      psk_secret_ref: 1password://<vault>/<item>/BELL-102-IPsec-PSK
+      auth_method: "IKE Using Preshared Secret"
+      psk_secret_ref: "1password://<vault>/<item>/BELL-102-IPsec-PSK"
       ike_phase1:
-        exchange_mode: Aggressive Mode
+        exchange_mode: "Aggressive Mode"
         encryption: AES-256
         authentication: SHA256
-        dh_group: 256-Bit Random ECP Group
+        dh_group: "256-Bit Random ECP Group"
         lifetime_seconds: 28800
       ipsec_phase2:
         protocol: ESP
         encryption: AES-256
         authentication: SHA256
         pfs_enabled: true
-        dh_group: 256-Bit Random ECP Group
+        dh_group: "256-Bit Random ECP Group"
         lifetime_seconds: 28800
+
     policy_advanced_defaults_observed:
-      vpn_policy_bound_to: Zone WAN
+      vpn_policy_bound_to: "Zone WAN"
       keep_alive_enabled: true
       apply_nat_policies: false
       notes:
-      - Advanced options vary per-policy; confirm per tunnel if standardization is needed.
+        - "Advanced options vary per-policy; confirm per tunnel if standardization is needed."
+
 verification:
   quick_checks:
-  - name: Confirm Bell WAN X3 interface configuration
-    method: UI
-    expected: X3 shows 207.236.163.98/27, gateway 207.236.163.97, DNS set, link 1 Gbps Full Duplex
-  - name: Confirm Cogeco remains production primary
-    method: Routing UI
-    expected: Default route remains via X1
-  - name: Confirm STL tunnels active
-    method: Network > IPsec VPN > Active Tunnels
-    expected: STL-* tunnels show established
-  last_verified_utc: ''
+    - name: Confirm Bell WAN X3 interface configuration
+      method: UI
+      expected: "X3 shows 207.236.163.98/27, gateway 207.236.163.97, DNS set, link 1 Gbps Full Duplex"
+    - name: Confirm Cogeco remains production primary
+      method: "Routing UI"
+      expected: "Default route remains via X1"
+    - name: Confirm STL tunnels active
+      method: "Network > IPsec VPN > Active Tunnels"
+      expected: "STL-* tunnels show established"
+  last_verified_utc: ""
   evidence_refs:
-  - /mnt/data/work_repo/evidence/pre-change/sonicwall/bell-102-nmc/20260225/interfaces-list-x0-x3.png
-  - /mnt/data/work_repo/evidence/pre-change/sonicwall/bell-102-nmc/20260225/interface-x3-general.png
-  - /mnt/data/work_repo/evidence/pre-change/sonicwall/bell-102-nmc/20260225/interface-x3-advanced.png
-  - /mnt/data/work_repo/evidence/pre-change/sonicwall/bell-102-nmc/20260225/ipsec-active-tunnels.png
-  - /mnt/data/work_repo/evidence/pre-change/sonicwall/bell-102-nmc/20260225/ipsec-policies-list.png
+    - evidence/pre-change/sonicwall/bell-102-nmc/20260225/interfaces-list-x0-x3.png
+    - evidence/pre-change/sonicwall/bell-102-nmc/20260225/interface-x3-general.png
+    - evidence/pre-change/sonicwall/bell-102-nmc/20260225/interface-x3-advanced.png
+    - evidence/pre-change/sonicwall/bell-102-nmc/20260225/ipsec-active-tunnels.png
+    - evidence/pre-change/sonicwall/bell-102-nmc/20260225/ipsec-policies-list.png
+
+operational:
+  critical_path: true
+  description: >
+    National Media Centre hub firewall for all STL IPSec tunnels.
+    Cogeco (X1) remains production primary while Bell (X3) is validated.
+
+tags:
+  - bell-102
+  - belleville-nmc
+  - firewall
+  - sonicwall
+  - hub
+  - stl-core
+  

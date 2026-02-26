@@ -1,52 +1,82 @@
-# inventory/devices/3-cobo-100.yaml
-# Cobourg transmitter site firewall
+# inventory/devices/firewalls/3-fw-sonicwall-cobo-100.yaml
+# Asset 3 – SonicWall – COBO-100 (Cobourg transmitter site)
 
 device:
-  name: "COBO-100"
-  site: "Cobourg"
-  asset_number: 3
-  vendor: "SonicWall"
-  model: "TZ270"
-  role: "Transmitter site firewall"
-  unique_firewall_identifier: "2CB8EDD81CB0"
+  asset_id: 3
+  category: firewall
+  vendor: sonicwall
+  role: vpn-gateway
+  device_key: 3-fw-sonicwall-cobo-100
+
+site:
+  code: COBO-100
+  short: cobo-100
+  name: Cobourg
+  province: ON
+
+hardware:
+  manufacturer: SonicWall
+  model: TZ270
   serial_number: "2CB8EDD81CB0"
 
+network:
+  wan:
+    primary:
+      interface: X1
+      public_ip: 207.236.214.34
+  lan:
+    primary:
+      interface: X0
+      subnet: 192.168.102.0/24
+      management_ip: 192.168.102.1
+
+vpn:
+  role: spoke
+
+  ipsec_site_to_site:
+    hub_device_key: 1-fw-sonicwall-bell-102
+    tunnel_name_on_hub: STL-COBO-100 IPsec
+    peer_fqdn: vpn.ucbradio.com
+    peer_current_public_ip: unknown
+    peer_target_public_ip: 207.236.163.98
+    local_networks:
+      - 192.168.102.0/24
+    remote_networks:
+      - 192.168.100.0/24
+    crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
+    nat_traversal: unknown
+    dpd:
+      enabled: unknown
+      interval_seconds: unknown
+      failure_trigger_level: unknown
+    notes:
+      - "Must pre-whitelist hub Bell IP 207.236.163.98 prior to cutover."
+
 management:
-  wan_url: "https://207.236.214.34"
-  lan_url: "https://192.168.102.1"
-  username: "admin"
+  wan_url: https://207.236.214.34
+  lan_url: https://192.168.102.1
+  wan_https_enabled: true
+  credentials_location: "1Password > UCB > Firewalls > COBO-100 (Asset 3)"
   notes:
     - "LAN management at 192.168.102.1"
     - "Public WAN management at 207.236.214.34"
 
-interfaces:
-  wan:
-    public_ip: "207.236.214.34"
-    role: "Primary WAN"
-  lan:
-    gateway_ip: "192.168.102.1"
-    subnet: "192.168.102.0/24"
+security:
+  pre_shared_key_stored: true
+  notes:
+    - "PSK stored in secure vault."
+    - "Confirm key matches hub configuration."
 
-vpn:
-  ipsec_site_to_site:
-    - name: "STL-COBO-100 IPsec"
-      status: "active_on_hub"
-      local_subnet: "192.168.102.0/24"
-      remote_subnet: "192.168.100.0/24"
-      remote_gateway_expected: "unknown"   # confirm on site firewall (likely 24.51.249.34 currently)
-      crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
-      nat_traversal: "unknown"
-      dpd:
-        enabled: "unknown"
-        interval_seconds: "unknown"
-        failure_trigger_level: "unknown"
-      notes:
-        - "Must pre-whitelist hub Bell IP 207.236.163.98 prior to cutover"
+operational:
+  critical_path: true
+  description: >
+    Cobourg transmitter site firewall.
+    Participates in IPSec site-to-site tunnel with BELL-102 hub.
 
 tags:
   - cobo-100
   - cobourg
   - transmitter-site
+  - firewall
   - sonicwall
-  - tz270
   

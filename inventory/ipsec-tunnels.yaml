@@ -116,7 +116,7 @@ ipsec_tunnels:
         - 192.168.100.0/24
 
     spoke:
-      device_key: 431-chat-101
+      device_key: 431-fw-peplink-chat-101
       remote_peer: 67.71.250.138
       remote_networks:
         - 192.168.103.0/24

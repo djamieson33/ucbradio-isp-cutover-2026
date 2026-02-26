@@ -125,7 +125,7 @@ spokes:
   - asset: 431
     site_id: chatham-101
     site_code: CHAT-101
-    device_key: 431-chat-101
+    device_key: 431-fw-peplink-chat-101
     networks:
       lan_subnets:
         - 192.168.103.0/24
