@@ -1,0 +1,43 @@
+device:
+  asset_id: 84
+  category: broadcast
+  role: transmitter
+  site_code: BROC-100
+  site_name: Brockville
+
+hardware:
+  manufacturer: Nautel
+  model: VS300
+  serial_number: "10024996"
+
+network:
+  management_ip: 192.168.104.102
+  management_protocol: https
+  management_port: 443
+  network_zone: transmitter-lan
+
+operational:
+  critical_path: true
+  vpn_dependent: true
+  carries_live_audio: true
+  description: >
+    Primary FM transmitter for BROC-100.
+    Program audio delivered over IPSec VPN from NMC.
+
+access:
+  web_interface:
+    username: Nautel
+    password_location: "1Password > UCB > BROC-100 > Nautel VS300"
+  root_access:
+    username: root
+    password_location: "1Password > UCB > BROC-100 > Nautel VS300 (root)"
+
+tags:
+  - BROC
+  - BROC-100
+  - Brockville
+  - TX
+  - Nautel
+  - VS300
+  - Old Red Road
+  
