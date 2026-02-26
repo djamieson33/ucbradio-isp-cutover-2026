@@ -1,5 +1,21 @@
 ## [0.5.0] - 2026-02-26
 - BROC-100 Bell path validated; inventory normalized
+### Added
+- Canonical cutover-status.yaml tracker
+- BROC-100 Bell path validation record
+
+### Changed
+- Standardized device_key to match filename stems
+- Normalized server filenames with site codes
+- Moved Peplink devices into firewalls category
+- Updated deprecated headers to valid schema format
+- Refined lint rules to align with nested site schema
+
+### Verified
+- BROC-100 successfully renegotiated IPsec over Bell (207.236.163.98)
+- Tunnel restored cleanly to Cogeco
+- No sustained audio interruption observed
+- Failover monitoring and probes confirmed operational
 
 ## [0.4.1] - 2026-02-26
 - docs: formalize ISP cutover governance and validation framework
