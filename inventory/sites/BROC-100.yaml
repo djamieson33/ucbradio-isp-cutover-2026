@@ -1,0 +1,22 @@
+site:
+  code: BROC-100
+  name: Brockville
+  province: ON
+
+devices:
+  firewalls:
+    - fw-broc-100-primary
+
+  broadcast:
+    - 84-tx-nautel-vs300-broc-100
+
+  servers: []
+
+  network: []
+
+critical_chain:
+  - 84-tx-nautel-vs300-broc-100
+
+notes: >
+  Live FM broadcast site.
+  Program audio delivered via IPSec VPN from NMC.

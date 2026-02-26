@@ -2,8 +2,10 @@ device:
   asset_id: 84
   category: broadcast
   role: transmitter
-  site_code: BROC-100
-  site_name: Brockville
+
+site:
+  code: BROC-100
+  name: Brockville
 
 hardware:
   manufacturer: Nautel
@@ -33,11 +35,9 @@ access:
     password_location: "1Password > UCB > BROC-100 > Nautel VS300 (root)"
 
 tags:
-  - BROC
-  - BROC-100
-  - Brockville
-  - TX
-  - Nautel
-  - VS300
-  - Old Red Road
+  - transmitter
+  - nautel
+  - vs300
+  - broc-100
+  - old-red-road
   
