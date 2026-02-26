@@ -1,3 +1,6 @@
+## [0.4.1] - 2026-02-26
+- docs: formalize ISP cutover governance and validation framework
+
 ## [0.4.0] - 2026-02-25
 - feat: add site env resolver + nettest suite (ping/tcp/curl/ssh/public_ip + run_all)
 
