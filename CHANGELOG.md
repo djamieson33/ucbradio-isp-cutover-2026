@@ -1,3 +1,6 @@
+## [0.5.0] - 2026-02-26
+- BROC-100 Bell path validated; inventory normalized
+
 ## [0.4.1] - 2026-02-26
 - docs: formalize ISP cutover governance and validation framework
 
