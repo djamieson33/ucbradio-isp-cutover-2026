@@ -5,7 +5,7 @@ device:
   asset_id: 6
   category: firewall
   vendor: sonicwall
-  role: vpn-gateway
+  role: edge-firewall
   device_key: 6-fw-sonicwall-tbay-100
 
 site:
@@ -18,68 +18,76 @@ hardware:
   manufacturer: SonicWall
   model: TZ270
   serial_number: "2CB8EDD82550"
+  unique_firewall_identifier: "2CB8EDD82610" # observed in UI (IPsec VPN > Settings)
 
 firmware:
   sonicos_major: TBD
   version: TBD
+  build: TBD
+  notes:
+    - "Confirm exact SonicOS version/build during next maintenance window."
+
+management:
+  wan_url: "https://216.211.29.160:443"
+  lan_url: "https://192.168.35.1"
+  wan_https_enabled: true
+  credentials_location: "1Password > UCB > Firewalls > TBAY-100 (Asset 6)"
+  notes:
+    - "Confirmed admin access on WAN management port 443."
 
 network:
-  wan:
-    primary:
-      interface: X1
-      public_ip: 216.211.29.160
   lan:
     primary:
       interface: X0
       subnet: 192.168.35.0/24
       management_ip: 192.168.35.1
 
+  wan:
+    primary_interface: X1
+    public_ip: 216.211.29.160
+    isp: "Existing ISP (no change planned)"
+    notes:
+      - "TBAY internet provider is not changing as part of BELL-102 cutover."
+
 vpn:
   role: spoke
 
-  ssl_vpn:
-    enabled: true
-    public_ip: 216.211.29.160
-    port: 4433
-    domain: TBAY-100
-
+  # IMPORTANT: TBAY is not currently using site-to-site IPsec with the Belleville hub.
+  # SonicWall shows only GroupVPN entries and no active tunnels.
   ipsec_site_to_site:
-    hub_device_key: 1-fw-sonicwall-bell-102
-    tunnel_name_on_hub: STL-TBAY-100 IPsec
-    peer_fqdn: vpn.ucbradio.com
-    peer_current_public_ip: 24.51.249.34
-    peer_target_public_ip: 207.236.163.98
+    enabled: false
+    observed_state:
+      policies_present:
+        - "WAN GroupVPN"
+        - "WLAN GroupVPN"
+      active_tunnels_count: 0
+      down_tunnels_present: true
+      notes:
+        - "No STL-TBAY-100 site-to-site policy observed on TBAY firewall."
+        - "This site appears to use Telos ZephyrIP cloud transport instead of IPsec."
 
-    local_networks:
-      - 192.168.35.0/24
-    remote_networks:
-      - 192.168.100.0/24
-
-    notes:
-      - "Tunnel currently built toward Belleville Cogeco IP."
-      - "Must whitelist 207.236.163.98 prior to cutover."
-      - "Strong candidate for FQDN-based hub reference."
-
-management:
-  wan_url: https://216.211.29.160
-  lan_url: https://192.168.35.1
-  wan_https_enabled: true
-  credentials_location: "1Password > UCB > Firewalls > TBAY-100 (Asset 6)"
+stl_transport:
+  type: "telos-zephyrip-cloud"
+  hub_ip_dependency: false
   notes:
-    - "LAN management at 192.168.35.1"
-    - "Public WAN management at 216.211.29.160"
-
-security:
-  pre_shared_key_stored: true
-  notes:
-    - "PSK stored in secure vault."
-    - "Confirm PSK matches hub configuration."
+    - "TBAY audio transport is independent of Belleville hub IP (Cogeco/Bell)."
+    - "Cutover at BELL-102 should not affect TBAY STL audio path."
 
 operational:
   critical_path: true
   description: >
-    Thunder Bay transmitter site firewall.
-    Participates in IPSec site-to-site tunnel with BELL-102 hub.
+    Thunder Bay transmitter site firewall. Current STL audio transport appears to use
+    Telos ZephyrIP cloud service rather than a site-to-site IPsec tunnel to BELL-102.
+
+verification:
+  last_verified_utc: "2026-02-26T22:20:00Z"
+  evidence_refs:
+    - evidence/sonicwall/tbay-100/20260226/ipsec-policies.png
+    - evidence/sonicwall/tbay-100/20260226/ipsec-active-tunnels-empty.png
+    - evidence/sonicwall/tbay-100/20260226/ipsec-down-tunnels.png
+    - evidence/sonicwall/tbay-100/20260226/ipsec-settings-ufi.png
+  notes:
+    - "Verified TBAY firewall has no site-to-site IPsec policy configured for STL."
 
 tags:
   - tbay-100
@@ -87,4 +95,6 @@ tags:
   - firewall
   - sonicwall
   - transmitter-site
+  - telos-cloud-stl
+  - hub-independent
   

@@ -35,6 +35,7 @@ management:
     - "Primary hub for all STL IPsec tunnels."
     - "X3 is Bell static: 207.236.163.98."
     - "Previous/Current Cogeco hub peer observed as 24.51.249.34."
+    - "Failover confirmed: Basic Failover (X1 primary, X3 secondary)."
     - "Do not disable Cogeco (X1) during business hours; production still relies on it."
 
 network:
@@ -177,10 +178,11 @@ routing:
   default_route:
     active_wan: X1
     failover_wan: X3
-    mode: TBD
+    mode: "Basic Failover (probe-based)"
   notes:
     - "Do not disable X1 (Cogeco) for testing; production still depends on it."
     - "Bell (X3) validation should be non-disruptive (policy-based routing, diagnostics, or parallel VPN tests)."
+    - "Controlled validation method used: temporarily bind a single VPN policy to X3, then restore to Zone WAN."
 
 vpn:
   role: hub
@@ -272,20 +274,38 @@ verification:
     - name: Confirm STL tunnels active
       method: "Network > IPsec VPN > Active Tunnels"
       expected: "STL-* tunnels show established"
-  last_verified_utc: ""
+
+  last_verified_utc: "2026-02-26T21:35:00Z"
+
   evidence_refs:
     - evidence/pre-change/sonicwall/bell-102-nmc/20260225/interfaces-list-x0-x3.png
     - evidence/pre-change/sonicwall/bell-102-nmc/20260225/interface-x3-general.png
     - evidence/pre-change/sonicwall/bell-102-nmc/20260225/interface-x3-advanced.png
     - evidence/pre-change/sonicwall/bell-102-nmc/20260225/ipsec-active-tunnels.png
     - evidence/pre-change/sonicwall/bell-102-nmc/20260225/ipsec-policies-list.png
-  broc_bell_path_validation:
-    tested: true
-    method: "VPN policy bound to X3"
-    result: "Success"
-    validated_utc: "2026-02-26T21:01:39Z"
-    notes:
-      - "Confirmed Bell WAN operational for BROC tunnel."
+
+  bell_path_validations:
+    BROC-100:
+      tested: true
+      method: "VPN policy temporarily bound to X3 then restored to Zone WAN"
+      result: "Success"
+      validated_by: "DJ"
+      validated_utc: "2026-02-26T21:01:39Z"
+      notes:
+        - "Confirmed Bell WAN operational for BROC tunnel."
+        - "Tunnel renegotiated successfully over Bell."
+        - "No sustained audio interruption observed."
+
+    KING-100:
+      tested: true
+      method: "VPN policy temporarily bound to X3 then restored to Zone WAN"
+      result: "Success"
+      validated_by: "DJ"
+      validated_utc: "2026-02-26T21:30:00Z"
+      notes:
+        - "Confirmed Bell WAN operational for KING tunnel."
+        - "Tunnel renegotiated successfully over Bell."
+        - "No sustained audio interruption observed."
 
 operational:
   critical_path: true
@@ -300,4 +320,5 @@ tags:
   - sonicwall
   - hub
   - stl-core
+  - bell-validated
   

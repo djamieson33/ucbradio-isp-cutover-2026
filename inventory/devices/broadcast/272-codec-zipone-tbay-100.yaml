@@ -1,0 +1,75 @@
+# inventory/devices/broadcast/272-codec-zipone-tbay-100.yaml
+# Asset 272 – ZIPONE codec – TBAY-100 (Thunder Bay)
+
+device:
+  asset_id: 272
+  category: broadcast
+  vendor: "Telos"
+  model: "ZIPONE"
+  role: "stl-codec"
+  device_key: "272-codec-zipone-tbay-100"
+
+site:
+  code: TBAY-100
+  short: tbay-100
+  name: Thunder Bay
+  province: "ON"
+
+network:
+  lan_ip: 192.168.35.222
+  subnet: 192.168.35.0/24
+  gateway: 192.168.35.1
+  notes:
+    - "ZIPONE reports LAN and WAN as 192.168.35.222 (behind NAT)."
+
+access:
+  web_interface:
+    lan_url: "http://192.168.35.222:8888"
+    wan_url: "http://216.211.29.160:8888"
+    username_present_in_vault: true
+    password_present_in_vault: true
+    credentials_location: "1Password > UCB > Codecs > 272 - ZIPONE - TBAY-100"
+
+stl_transport:
+  type: "telos-zephyrip-cloud"
+  protocol: "tscp"
+  server_hostname: "zip.telos-systems.com"
+  group_name: "UCBCANADA"
+  group_password_ref: "1password://<vault>/<item>/TBAY-100-ZIPONE-group-password"
+  notes:
+    - "Phonebook entries show tsCP / UCBCANADA group."
+    - "This transport does not require SonicWall site-to-site IPsec."
+
+audio:
+  coding_mode_observed:
+    receive: "AAC-HE"
+    transmit: "AAC-ELD"
+  sample_rate_hz: 48000
+  channels: 2
+  rtp_push_receive_only_port: 9150
+  notes:
+    - "Status page showed 'Not connected' at time of capture, but audio meters indicated program activity."
+
+operational:
+  critical_path: true
+  description: >
+    TBAY ZIPONE codec used for STL audio at Thunder Bay. Uses Telos cloud server group
+    (zip.telos-systems.com / UCBCANADA) rather than hub IPsec.
+
+verification:
+  last_verified_utc: "2026-02-26T22:20:00Z"
+  evidence_refs:
+    - evidence/zipone/tbay-100/20260226/status.png
+    - evidence/zipone/tbay-100/20260226/connect.png
+    - evidence/zipone/tbay-100/20260226/streaming.png
+    - evidence/zipone/tbay-100/20260226/network.png
+  notes:
+    - "Confirmed management access on WAN: http://216.211.29.160:8888"
+
+tags:
+  - tbay-100
+  - zipone
+  - codec
+  - stl
+  - telos-cloud
+  

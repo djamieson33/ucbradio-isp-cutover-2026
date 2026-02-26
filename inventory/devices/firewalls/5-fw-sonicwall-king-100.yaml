@@ -1,6 +1,8 @@
 # inventory/devices/firewalls/5-fw-sonicwall-king-100.yaml
 # Asset 5 – SonicWall – KING-100 (Kingston transmitter site)
 
+schema_version: 1
+
 device:
   asset_id: 5
   category: firewall
@@ -20,8 +22,10 @@ hardware:
   serial_number: "2CB8EDD82430"
 
 firmware:
-  sonicos_major: TBD
-  version: TBD
+  sonicos_major: 7
+  version: 7.3.x
+  notes:
+    - "Confirm exact build during next maintenance window."
 
 network:
   wan:
@@ -29,7 +33,7 @@ network:
       interface: X1
       public_ip: 69.7.247.201
       gateway: TBD
-      isp: TBD
+      isp: "Existing ISP (no change planned)"
   lan:
     primary:
       interface: X0
@@ -48,19 +52,29 @@ vpn:
   ipsec_site_to_site:
     hub_device_key: 1-fw-sonicwall-bell-102
     tunnel_name_on_hub: STL-KING-100 IPsec
-    peer_fqdn: vpn.ucbradio.com
-    peer_current_public_ip: unknown
-    peer_target_public_ip: 207.236.163.98
+
+    hub_gateways:
+      primary_cogeco: 24.51.249.34
+      secondary_bell: 207.236.163.98
+
     local_networks:
       - 192.168.105.0/24
     remote_networks:
       - 192.168.100.0/24
+
+    dual_gateway_configured: true
+    bell_pre_whitelisted: true
+    bell_path_validated: true
+
     carries_rtp_audio: true
     dependent_devices:
       - 34-codec-zipone-king-100
+
     notes:
       - "IPSec tunnel carries live RTP program audio."
-      - "Pre-whitelist Bell IP 207.236.163.98 prior to cutover."
+      - "Spoke ISP unchanged; only hub Bell path tested."
+      - "Preempt Secondary Gateway enabled."
+      - "Keep Alive enabled."
 
 management:
   wan_url: https://69.7.247.201
@@ -70,16 +84,39 @@ management:
   credentials_location: "1Password > UCB > Firewalls > KING-100 (Asset 5)"
 
 security:
-  pre_shared_key_stored: true
   notes:
     - "PSK stored in secure vault."
-    - "Confirm key matches hub configuration."
+    - "Confirmed matching hub configuration during validation."
+
+verification:
+  last_verified_utc: "2026-02-26T21:30:00Z"
+  quick_tests:
+    - name: "Confirm tunnel established"
+      method: "UI"
+      target: "Network > IPsec VPN > Active Tunnels > STL-KING-100"
+      expected: "Green/Established"
+    - name: "Ping hub LAN over IPsec"
+      method: "ping"
+      target: "192.168.100.1"
+      expected: "Replies over tunnel"
+  evidence_refs: []
+
+validation:
+  validated_by: "DJ"
+  validated_utc: "2026-02-26T21:30:00Z"
+  method: "Hub IPsec policy temporarily bound to X3 (Bell only), then restored to Zone WAN"
+  result: "Success"
+  notes:
+    - "Tunnel renegotiated successfully over Bell."
+    - "Tunnel restored cleanly to Zone WAN."
+    - "No sustained audio interruption observed."
 
 operational:
   critical_path: true
   description: >
     Kingston transmitter site firewall.
     Carries live RTP program audio over IPSec from BELL-102 hub.
+    Bell failover path validated at hub level.
 
 tags:
   - king-100
@@ -87,4 +124,6 @@ tags:
   - firewall
   - sonicwall
   - transmitter-site
+  - bell-validated
+  - dual-gateway
   

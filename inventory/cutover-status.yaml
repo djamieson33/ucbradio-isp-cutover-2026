@@ -1,12 +1,15 @@
 schema_version: 1
 
-last_updated_utc: "2026-02-26T21:01:39Z"
+last_updated_utc: "2026-02-26T22:20:00Z"
 
 sites:
 
   BROC-100:
     site: "Brockville"
     device_key: "9-fw-sonicwall-broc-100"
+
+    stl_transport: "ipsec-via-bell-102"
+    hub_ip_dependency: true
 
     bell_pre_whitelisted: true
     dual_gateway_configured: true
@@ -23,12 +26,50 @@ sites:
 
     cutover_readiness: "ready-for-scheduled-cutover"
 
+  KING-100:
+    site: "Kingston - Italia"
+    device_key: "5-fw-sonicwall-king-100"
+
+    stl_transport: "ipsec-via-bell-102"
+    hub_ip_dependency: true
+
+    bell_pre_whitelisted: true
+    dual_gateway_configured: true
+    bell_path_validated: true
+    failover_staged: true
+
+    validation:
+      validated_by: "DJ"
+      validated_utc: "2026-02-26T21:30:00Z"
+      notes:
+        - "Tunnel renegotiated successfully over Bell when hub policy temporarily bound to X3."
+        - "Tunnel restored cleanly to Cogeco/Zone WAN."
+        - "No sustained audio interruption observed."
+
+    cutover_readiness: "ready-for-scheduled-cutover"
+
   TBAY-100:
+    site: "Thunder Bay"
+    device_key: "6-fw-sonicwall-tbay-100"
+
+    stl_transport: "telos-zephyrip-cloud"
+    hub_ip_dependency: false
+
+    # Not applicable for TBAY (no hub-IPsec tunnel to stage)
     bell_pre_whitelisted: false
     dual_gateway_configured: false
     bell_path_validated: false
     failover_staged: false
-    cutover_readiness: "not-started"
+
+    validation:
+      validated_by: "DJ"
+      validated_utc: "2026-02-26T22:20:00Z"
+      notes:
+        - "No site-to-site IPsec policy observed on TBAY firewall (only GroupVPN entries)."
+        - "Codec uses Telos cloud server group (zip.telos-systems.com / UCBCANADA)."
+        - "TBAY STL path is hub-IP independent; Belleville Cogeco/Bell change should not impact TBAY."
+
+    cutover_readiness: "not-applicable-hub-independent"
 
   WIND-100:
     bell_pre_whitelisted: false
@@ -36,3 +77,4 @@ sites:
     bell_path_validated: false
     failover_staged: false
     cutover_readiness: "not-started"
+    

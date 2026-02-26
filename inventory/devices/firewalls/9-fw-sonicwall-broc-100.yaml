@@ -1,6 +1,8 @@
 # inventory/devices/firewalls/9-fw-sonicwall-broc-100.yaml
 # Asset 9 – SonicWall – BROC-100 (Brockville transmitter site)
 
+schema_version: 1
+
 device:
   asset_id: 9
   category: firewall
@@ -123,7 +125,6 @@ management:
     - "Hub is BELL-102 (asset 1)."
 
 security:
-  pre_shared_key_stored: true
   notes:
     - "PSK stored in secure vault."
     - "Confirm key matches hub configuration."
@@ -138,7 +139,7 @@ verification:
       method: ping
       target: 192.168.104.1
       expected: Replies once gateway IP confirmed
-  last_verified_utc: ""
+  last_verified_utc: "2026-02-26T21:01:39Z"
   evidence_refs:
     - evidence/pre-change/sonicwall/broc-100/20260225/policy-stl-broc-general.png
     - evidence/pre-change/sonicwall/broc-100/20260225/policy-stl-broc-network.png
@@ -146,18 +147,29 @@ verification:
     - evidence/pre-change/sonicwall/broc-100/20260225/policy-stl-broc-advanced.png
     - evidence/pre-change/sonicwall/broc-100/20260225/ipsec-active-tunnels.png
     - evidence/pre-change/sonicwall/broc-100/20260225/event-logs/log_2CB8EDD82580_2026-02-25_14-56-07.csv
-  bell_path_validation:
-    tested: true
-    test_type: "Controlled hub binding to X3 (Bell)"
-    result: "Success"
-    impact: "No sustained audio interruption"
-    hub_public_ip_used: "207.236.163.98"
-    spoke_public_ip: "69.31.226.50"
-    validated_by: "DJ"
-    validated_utc: "2026-02-26T21:01:39Z"
-    notes:
-      - "Tunnel successfully renegotiated over Bell when hub bound to X3."
-      - "Tunnel returned cleanly to Cogeco when restored to Zone WAN."
+
+validation:
+  validated_by: "DJ"
+  validated_utc: "2026-02-26T21:01:39Z"
+  method: "Hub IPsec policy temporarily bound to X3 (Bell), then restored to Zone WAN"
+  result: "Success"
+  notes:
+    - "Tunnel successfully renegotiated over Bell when hub bound to X3."
+    - "Tunnel returned cleanly when restored to Zone WAN."
+    - "No sustained audio interruption observed."
+
+bell_path_validation:
+  tested: true
+  test_type: "Controlled hub binding to X3 (Bell)"
+  result: "Success"
+  impact: "No sustained audio interruption"
+  hub_public_ip_used: "207.236.163.98"
+  spoke_public_ip: "69.31.226.50"
+  validated_by: "DJ"
+  validated_utc: "2026-02-26T21:01:39Z"
+  notes:
+    - "Tunnel successfully renegotiated over Bell when hub bound to X3."
+    - "Tunnel returned cleanly to Cogeco when restored to Zone WAN."
 
 operational:
   critical_path: true
