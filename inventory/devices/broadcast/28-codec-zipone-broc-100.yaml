@@ -1,0 +1,43 @@
+device:
+  asset_id: 28
+  category: broadcast
+  role: audio-codec
+
+site:
+  code: BROC-100
+  name: Brockville
+
+hardware:
+  manufacturer: Telos
+  model: ZIPONE
+  serial_number: "0289L1484"
+
+network:
+  lan_management_url: "http://192.168.104.101:8888"
+  wan_management_url: "http://69.31.226.50:8888"
+  management_port: 8888
+  protocol: http
+
+operational:
+  critical_path: true
+  vpn_dependent: true
+  carries_live_audio: true
+  transport_protocol: RTP
+  description: >
+    Primary program audio codec for BROC-100.
+    Receives RTP stream over IPSec VPN from NMC.
+    Feeds Nautel VS300 transmitter.
+
+access:
+  web_interface:
+    username: user
+    password_location: "1Password > UCB > BROC-100 > Telos ZIPONE"
+
+tags:
+  - codec
+  - zipone
+  - telos
+  - rtp
+  - broc-100
+  - old-red-road
+  

@@ -5,9 +5,10 @@ site:
 
 devices:
   firewalls:
-    - fw-broc-100-primary
-
+    - 9-fw-sonicwall-broc-100.yaml
+  
   broadcast:
+    - 28-codec-zipone-broc-100
     - 84-tx-nautel-vs300-broc-100
 
   servers: []
@@ -15,6 +16,7 @@ devices:
   network: []
 
 critical_chain:
+  - 28-codec-zipone-broc-100
   - 84-tx-nautel-vs300-broc-100
 
 notes: >
