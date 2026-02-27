@@ -1,3 +1,10 @@
+## [0.6.0] - 2026-02-27
+- v0.6.0 – Per-Firewall Seeding & Scoped Overrides
+
+This release introduces a major structural improvement to the SonicWall seeding workflow: device-scoped seeding and override resolution.
+
+Seeding is now explicitly tied to the exporting firewall, eliminating cross-firewall ambiguity and enabling clean multi-site management.
+
 ## [0.5.0] - 2026-02-26
 - BROC-100 Bell path validated; inventory normalized
 ### Added
