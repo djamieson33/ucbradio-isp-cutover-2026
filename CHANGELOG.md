@@ -1,3 +1,64 @@
+## [0.7.0] - 2026-02-27
+- 🚀 v0.7.0 — Governance & Identity Model Formalization
+
+This release formalizes the architectural and governance foundation of the ISP Changeover repository.
+
+🔐 Canonical Identity Model
+	•	Established site.id (lowercase) as the authoritative system key
+	•	Defined site_code (uppercase) as vendor/display alias only
+	•	Standardized filename conventions to match site.id
+	•	Locked identity usage across audits and tooling
+
+⸻
+
+📘 Documentation Overhaul
+
+Introduced a structured governance documentation set:
+	•	ARCHITECTURE.md — metadata-driven system model and identity contract
+	•	REPO_GOVERNANCE.md — enforcement rules and naming conventions
+	•	AUDIT_FRAMEWORK.md — audit namespace structure and validation standards
+	•	CONTRIBUTING.md — engineering and idempotency standards
+	•	DOCS_INDEX.md — documentation hierarchy reference
+
+This establishes a long-term maintainable schema evolution path.
+
+⸻
+
+🌍 Sites Registry Expansion
+
+Updated inventory/sites.yaml:
+	•	Added Western Canada sites:
+	•	REGI-100
+	•	SASK-100
+	•	FMAC-100
+	•	MHAT-100
+	•	Standardized ipsec.enabled across all sites
+	•	Normalized status field formatting
+	•	Clarified Windsor IPSec state
+	•	Confirmed identity alignment with canonical model
+
+⸻
+
+🛡 Audit Integrity
+	•	Governance model now explicitly enforced via audit framework
+	•	Identity consistency validated through canonical site linkage
+
+⸻
+
+🔄 Impact
+
+No functional changes to firewall export or seeding workflows.
+This release strengthens structural integrity and future-proofing.
+
+⸻
+
+If you’d like, I can also generate:
+	•	The exact bin/release.sh command you should run
+	•	A CHANGELOG entry formatted to match your existing style
+	•	Or a semantic tag summary formatted for GitHub release UI
+
+This is a clean architectural milestone.
+
 ## [0.6.0] - 2026-02-27
 - v0.6.0 – Per-Firewall Seeding & Scoped Overrides
 
