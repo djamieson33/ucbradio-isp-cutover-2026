@@ -1,0 +1,13 @@
+schema_version: 1
+site:
+  id: fmac-100
+  site_code: FMAC-100
+  name: Fort McMurray Transmitter Site
+  province: AB
+devices:
+  firewalls: []
+  broadcast: []
+  servers: []
+  network: []
+critical_chain: []
+notes: ''

@@ -1,0 +1,13 @@
+schema_version: 1
+site:
+  id: bell-100
+  site_code: BELL-100
+  name: Belleville (Read Location)
+  province: true
+devices:
+  firewalls: []
+  broadcast: []
+  servers: []
+  network: []
+critical_chain: []
+notes: ''

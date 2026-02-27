@@ -1,0 +1,13 @@
+schema_version: 1
+site:
+  id: wind-100
+  site_code: WIND-100
+  name: Windsor Transmitter Site
+  province: true
+devices:
+  firewalls: []
+  broadcast: []
+  servers: []
+  network: []
+critical_chain: []
+notes: ''

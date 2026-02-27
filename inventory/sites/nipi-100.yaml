@@ -1,0 +1,13 @@
+schema_version: 1
+site:
+  id: nipi-100
+  site_code: NIPI-100
+  name: Nipigon Transmitter Site
+  province: true
+devices:
+  firewalls: []
+  broadcast: []
+  servers: []
+  network: []
+critical_chain: []
+notes: ''

@@ -1,0 +1,13 @@
+schema_version: 1
+site:
+  id: tbay-100
+  site_code: TBAY-100
+  name: Thunder Bay Transmitter Site
+  province: true
+devices:
+  firewalls: []
+  broadcast: []
+  servers: []
+  network: []
+critical_chain: []
+notes: ''

@@ -1,5 +1,5 @@
 version: 1
-updated_utc: '2026-02-27T14:38:06Z'
+updated_utc: '2026-02-27T18:20:21Z'
 source:
   type: sonicwall_nat_and_security_policy_exports
   nat_csv: /Users/dwaynejamieson/sites/projects/ucbradio-isp-cutover-2026/firewall/sonicwall/exports/8-fw-sonicwall-nipi-100/nat-configurations-20260227T1416Z.csv
@@ -27,7 +27,7 @@ services:
   owner_id: TODO
   environment: production
   category: other
-  site: belleville
+  site: nipi-100
   internal_target:
     device_id: TODO
     ip: ''
@@ -74,7 +74,7 @@ services:
   owner_id: TODO
   environment: production
   category: other
-  site: belleville
+  site: nipi-100
   internal_target:
     device_id: TODO
     ip: ''
@@ -121,7 +121,7 @@ services:
   owner_id: TODO
   environment: production
   category: other
-  site: belleville
+  site: nipi-100
   internal_target:
     device_id: TODO
     ip: ''
@@ -168,7 +168,7 @@ services:
   owner_id: TODO
   environment: production
   category: other
-  site: belleville
+  site: nipi-100
   internal_target:
     device_id: TODO
     ip: ''

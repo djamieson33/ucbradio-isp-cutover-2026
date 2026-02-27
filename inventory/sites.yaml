@@ -10,6 +10,8 @@ sites:
     role: hub
     city: Belleville
     province: ON
+    ipsec:
+      enabled: false
     networks:
       lan_subnets:
         - "192.168.100.0/24"
@@ -27,6 +29,8 @@ sites:
     role: tx-site
     city: Belleville
     province: ON
+    ipsec:
+      enabled: true
     networks:
       lan_subnets:
         - "192.168.101.0/24"
@@ -44,6 +48,8 @@ sites:
     role: tx-site
     city: Brockville
     province: ON
+    ipsec:
+      enabled: true
     networks:
       lan_subnets:
         - "192.168.104.0/24"
@@ -56,6 +62,8 @@ sites:
     role: tx-site
     city: Cobourg
     province: ON
+    ipsec:
+      enabled: true
     networks:
       lan_subnets:
         - "192.168.102.0/24"
@@ -68,6 +76,8 @@ sites:
     role: tx-site
     city: Kingston
     province: ON
+    ipsec:
+      enabled: true
     networks:
       lan_subnets:
         - "192.168.105.0/24"
@@ -80,11 +90,14 @@ sites:
     role: tx-site
     city: Windsor
     province: ON
+    ipsec:
+      enabled: false
     networks:
       lan_subnets:
         - "192.168.106.0/24"
     notes: >
       SonicWall-based transmitter site.
+      IPSec is currently marked disabled; set enabled=true if/when confirmed.
 
   # --------------------------------------------------
   # CHATHAM LOCATIONS (IMPORTANT DISTINCTION)
@@ -95,6 +108,8 @@ sites:
     role: tx-site
     city: Chatham
     province: ON
+    ipsec:
+      enabled: true
     networks:
       lan_subnets:
         - "192.168.103.0/24"
@@ -110,10 +125,12 @@ sites:
   - id: chat-100
     site_code: CHAT-100
     name: Chatham (Secondary Location)
-    role: "unknown"
+    role: unknown
     city: Chatham
     province: ON
-    status: "unverified"
+    status: unverified
+    ipsec:
+      enabled: false
     notes: >
       Location code exists per Dan.
       No confirmed device inventory yet.
@@ -129,6 +146,8 @@ sites:
     city: Thunder Bay
     province: ON
     status: unverified
+    ipsec:
+      enabled: false
     notes: >
       Site present in device inventory filenames (tbay-100).
       Confirm subnet(s), WAN details, and firewall model/config.
@@ -143,6 +162,63 @@ sites:
     city: Nipigon
     province: ON
     status: unverified
+    ipsec:
+      enabled: false
     notes: >
       Site present in device inventory filenames (nipi-100).
       Confirm subnet(s), WAN details, and firewall model/config.
+
+  # --------------------------------------------------
+  # WESTERN CANADA SITES (ADDED FROM CURRENT LIST)
+  # --------------------------------------------------
+  - id: regi-100
+    site_code: REGI-100
+    name: Regina Transmitter Site
+    role: tx-site
+    city: Regina
+    province: SK
+    status: unverified
+    ipsec:
+      enabled: false
+    notes: >
+      Listed as N/A for IPSec at present.
+      Confirm firewall/device inventory and subnet details.
+
+  - id: sask-100
+    site_code: SASK-100
+    name: Saskatoon Transmitter Site
+    role: tx-site
+    city: Saskatoon
+    province: SK
+    status: unverified
+    ipsec:
+      enabled: false
+    notes: >
+      Listed as N/A for IPSec at present.
+      Confirm firewall/device inventory and subnet details.
+
+  - id: fmac-100
+    site_code: FMAC-100
+    name: Fort McMurray Transmitter Site
+    role: tx-site
+    city: Fort McMurray
+    province: AB
+    status: unverified
+    ipsec:
+      enabled: false
+    notes: >
+      Listed as N/A for IPSec at present.
+      Confirm firewall/device inventory and subnet details.
+
+  - id: mhat-100
+    site_code: MHAT-100
+    name: Medicine Hat Transmitter Site
+    role: tx-site
+    city: Medicine Hat
+    province: AB
+    status: unverified
+    ipsec:
+      enabled: false
+    notes: >
+      Listed as N/A for IPSec at present.
+      Confirm firewall/device inventory and subnet details.

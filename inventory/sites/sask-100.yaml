@@ -1,0 +1,13 @@
+schema_version: 1
+site:
+  id: sask-100
+  site_code: SASK-100
+  name: Saskatoon Transmitter Site
+  province: SK
+devices:
+  firewalls: []
+  broadcast: []
+  servers: []
+  network: []
+critical_chain: []
+notes: ''

@@ -1,0 +1,13 @@
+schema_version: 1
+site:
+  id: bell-102
+  site_code: BELL-102
+  name: National Media Centre (Belleville)
+  province: true
+devices:
+  firewalls: []
+  broadcast: []
+  servers: []
+  network: []
+critical_chain: []
+notes: ''
