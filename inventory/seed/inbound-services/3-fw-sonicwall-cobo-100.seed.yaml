@@ -1,0 +1,19 @@
+version: 1
+updated_utc: '2026-02-27T00:53:19Z'
+source:
+  type: sonicwall_nat_and_security_policy_exports
+  nat_csv: /Users/dwaynejamieson/sites/projects/ucbradio-isp-cutover-2026/firewall/sonicwall/exports/3-fw-sonicwall-cobo-100/nat-configurations-20260227T0053Z.csv
+  security_policy_csv: /Users/dwaynejamieson/sites/projects/ucbradio-isp-cutover-2026/firewall/sonicwall/exports/3-fw-sonicwall-cobo-100/security-policy-20260227T0053Z.csv
+summary:
+  policy:
+    rows_total: 76
+    allow_rules: 4
+  seeded_services: 0
+  skipped_rows: 13
+  skip_reasons:
+    translated_destination_is_original_or_empty: 13
+  unresolved_target_objects_count: 0
+  unresolved_service_objects_count: 0
+  unresolved_target_objects: []
+  unresolved_service_objects: []
+services: []

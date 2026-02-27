@@ -5,17 +5,13 @@ UCB Radio – ISP Changeover 2026
 Tool:    seed_inbound_services
 File:    bin/seed_inbound_services/nat_parser.py
 Purpose: Parse SonicWall nat-configurations CSV and build inbound service objects.
-
-Kept intentionally smaller by delegating:
-- inbound candidate + effective service decisions -> nat_logic.py
-- override resolution (address + service expansion) -> nat_resolver.py
 """
 
 from __future__ import annotations
 
 from collections import defaultdict
 from pathlib import Path
-from typing import List, Tuple, Dict, Any
+from typing import Any
 
 from common import extract_ip, extract_port, extract_proto, safe_slug
 from io_csv import read_csv_normalized, is_duplicate_header_row
@@ -28,11 +24,12 @@ from nat_resolver import resolve_addr, resolve_service_variants
 
 def build_services_from_nat(
     nat_csv: Path,
-    allow_rules: List[AllowRule],
+    allow_rules: list[AllowRule],
     site: str,
     default_inbound_iface: str,
     overrides: dict | None = None,
-) -> Tuple[List[Dict[str, Any]], Dict]:
+    firewall_device_key: str = "",
+) -> tuple[list[dict[str, Any]], dict]:
     nat_headers, nat_rows = read_csv_normalized(nat_csv)
     nat_first_key = nat_headers[0] if nat_headers else "rule_id"
 
@@ -41,7 +38,7 @@ def build_services_from_nat(
     unresolved_targets = set()
     unresolved_services = set()
 
-    grouped: Dict[tuple, Dict[str, Any]] = {}
+    grouped: dict[tuple, dict[str, Any]] = {}
 
     for r in nat_rows:
         if is_duplicate_header_row(r, nat_first_key):
@@ -49,7 +46,6 @@ def build_services_from_nat(
             reasons["duplicate_header_row"] += 1
             continue
 
-        # NAT export fields (normalized)
         name = r.get("name", "")
         comment = r.get("cmt", "") or r.get("description", "")
         nat_method = r.get("nat_method", "")
@@ -69,15 +65,13 @@ def build_services_from_nat(
             reasons["translated_destination_is_original_or_empty"] += 1
             continue
 
-        # Resolve address object -> IP + device_id (from overrides)
         device_id_override = ""
         if not internal_ip and target_object:
-            ip, did = resolve_addr(overrides, target_object)
+            ip, did = resolve_addr(overrides, target_object, firewall_device_key=firewall_device_key)
             if ip:
                 internal_ip = ip
                 device_id_override = did
 
-        # Policy allow match (must match translated OR original destination)
         if not policy_allows_nat(
             allow_rules=allow_rules,
             dst_translated=dst_translated,
@@ -93,7 +87,6 @@ def build_services_from_nat(
 
         eff_svc_name, translated_is_original = effective_service_name(svc_original, svc_translated)
 
-        # Best-effort parsing from service strings (often not present)
         proto_guess = extract_proto(svc_original) or extract_proto(svc_translated) or ""
         public_port_guess = extract_port(svc_original)
 
@@ -101,8 +94,9 @@ def build_services_from_nat(
         if translated_is_original:
             internal_port_guess = public_port_guess
 
-        # Expand service via overrides (preferred)
-        variants = resolve_service_variants(overrides, eff_svc_name)
+        # Resolve via overrides (scoped by firewall_device_key)
+        variants = resolve_service_variants(overrides, eff_svc_name, firewall_device_key=firewall_device_key)
+        resolved_from_overrides = bool(variants)
 
         # Skip junk "Any" rules with no ports and no overrides expansion
         if not variants:
@@ -136,7 +130,7 @@ def build_services_from_nat(
                 if not internal_ip:
                     unresolved_targets.add(target_for_id)
 
-                internal_target: Dict[str, Any] = {
+                internal_target: dict[str, Any] = {
                     "device_id": device_id_override or "TODO",
                     "ip": internal_ip,
                     "target_object": target_object or dst_translated,
@@ -167,11 +161,7 @@ def build_services_from_nat(
                     },
                     "nat": {"provider": "sonicwall", "rules": []},
                     "tests": [],
-                    "status": {
-                        "documented": False,
-                        "validated_external": False,
-                        "last_validated_utc": "",
-                    },
+                    "status": {"documented": False, "validated_external": False, "last_validated_utc": ""},
                 }
 
             grouped[key]["nat"]["rules"].append(
@@ -191,7 +181,7 @@ def build_services_from_nat(
                     "original_service_raw": svc_original or "",
                     "translated_service_raw": svc_translated or "",
                     "effective_service_name": eff_svc_name or "",
-                    "resolved_from_overrides": bool(resolve_service_variants(overrides, eff_svc_name)),
+                    "resolved_from_overrides": resolved_from_overrides,
                     "resolved_port_range": port_range or "",
                 }
             )

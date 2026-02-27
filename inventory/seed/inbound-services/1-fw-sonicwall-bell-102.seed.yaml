@@ -1,0 +1,1183 @@
+version: 1
+updated_utc: '2026-02-27T01:31:49Z'
+source:
+  type: sonicwall_nat_and_security_policy_exports
+  nat_csv: /Users/dwaynejamieson/sites/projects/ucbradio-isp-cutover-2026/firewall/sonicwall/exports/1-fw-sonicwall-bell-102/nat-configurations-20260227T0019Z.csv
+  security_policy_csv: /Users/dwaynejamieson/sites/projects/ucbradio-isp-cutover-2026/firewall/sonicwall/exports/1-fw-sonicwall-bell-102/security-policy-20260227T0019Z.csv
+summary:
+  policy:
+    rows_total: 410
+    allow_rules: 30
+  seeded_services: 20
+  skipped_rows: 60
+  skip_reasons:
+    service_is_any_without_ports: 2
+    translated_destination_is_original_or_empty: 58
+  unresolved_target_objects_count: 0
+  unresolved_service_objects_count: 0
+  unresolved_target_objects: []
+  unresolved_service_objects: []
+services:
+- id: in-192-168-100-97-80-tcp
+  name: 'TODO: Name service on 192.168.100.97:80'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: zettaserver
+    ip: 192.168.100.97
+    target_object: SRV-ZETTA-LAN Private
+    protocol: tcp
+    port: 80
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: SRV-ZETTA-WAN Public
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_32
+      comment: Loopback for Zetta Server
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.97
+      internal_port: 80
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-ZETTA-WAN Public
+      translated_destination_raw: SRV-ZETTA-LAN Private
+      original_service_raw: ZETTASERVER Services
+      translated_service_raw: Original
+      effective_service_name: ZETTASERVER Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_42
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.97
+      internal_port: 80
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-ZETTA-WAN Public
+      translated_destination_raw: SRV-ZETTA-LAN Private
+      original_service_raw: ZETTASERVER Services
+      translated_service_raw: Original
+      effective_service_name: ZETTASERVER Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-97-443-tcp
+  name: 'TODO: Name service on 192.168.100.97:443'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: zettaserver
+    ip: 192.168.100.97
+    target_object: SRV-ZETTA-LAN Private
+    protocol: tcp
+    port: 443
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: SRV-ZETTA-WAN Public
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_32
+      comment: Loopback for Zetta Server
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.97
+      internal_port: 443
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-ZETTA-WAN Public
+      translated_destination_raw: SRV-ZETTA-LAN Private
+      original_service_raw: ZETTASERVER Services
+      translated_service_raw: Original
+      effective_service_name: ZETTASERVER Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_42
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.97
+      internal_port: 443
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-ZETTA-WAN Public
+      translated_destination_raw: SRV-ZETTA-LAN Private
+      original_service_raw: ZETTASERVER Services
+      translated_service_raw: Original
+      effective_service_name: ZETTASERVER Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-97-22-tcp
+  name: 'TODO: Name service on 192.168.100.97:22'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: zettaserver
+    ip: 192.168.100.97
+    target_object: SRV-ZETTA-LAN Private
+    protocol: tcp
+    port: 22
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: SRV-ZETTA-WAN Public
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_32
+      comment: Loopback for Zetta Server
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.97
+      internal_port: 22
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-ZETTA-WAN Public
+      translated_destination_raw: SRV-ZETTA-LAN Private
+      original_service_raw: ZETTASERVER Services
+      translated_service_raw: Original
+      effective_service_name: ZETTASERVER Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_42
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.97
+      internal_port: 22
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-ZETTA-WAN Public
+      translated_destination_raw: SRV-ZETTA-LAN Private
+      original_service_raw: ZETTASERVER Services
+      translated_service_raw: Original
+      effective_service_name: ZETTASERVER Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-97-3136-3137-tcp
+  name: 'TODO: Name service on 192.168.100.97:3136-3137'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: zettaserver
+    ip: 192.168.100.97
+    target_object: SRV-ZETTA-LAN Private
+    protocol: tcp
+    port: null
+    port_range: 3136-3137
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: SRV-ZETTA-WAN Public
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_32
+      comment: Loopback for Zetta Server
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.97
+      internal_port: null
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-ZETTA-WAN Public
+      translated_destination_raw: SRV-ZETTA-LAN Private
+      original_service_raw: ZETTASERVER Services
+      translated_service_raw: Original
+      effective_service_name: ZETTASERVER Services
+      resolved_from_overrides: true
+      resolved_port_range: 3136-3137
+    - nat_policy_name: Custom NAT Policy_42
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.97
+      internal_port: null
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-ZETTA-WAN Public
+      translated_destination_raw: SRV-ZETTA-LAN Private
+      original_service_raw: ZETTASERVER Services
+      translated_service_raw: Original
+      effective_service_name: ZETTASERVER Services
+      resolved_from_overrides: true
+      resolved_port_range: 3136-3137
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-18-80-tcp
+  name: 'TODO: Name service on 192.168.100.18:80'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: srvpathfind1
+    ip: 192.168.100.18
+    target_object: SRV-PATHFIND1 Private
+    protocol: tcp
+    port: 80
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1+1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_36
+      comment: Loopback for SQLSVR
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 80
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_44
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 80
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_45
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 80
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-AQUIRA Public
+      translated_destination_raw: SRV-AQUIRA Private
+      original_service_raw: AQUIRA2GO SERVICES
+      translated_service_raw: Original
+      effective_service_name: AQUIRA2GO SERVICES
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-18-85-tcp
+  name: 'TODO: Name service on 192.168.100.18:85'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: srvpathfind1
+    ip: 192.168.100.18
+    target_object: SRV-PATHFIND1 Private
+    protocol: tcp
+    port: 85
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1+1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_36
+      comment: Loopback for SQLSVR
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 85
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_44
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 85
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_45
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 85
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-AQUIRA Public
+      translated_destination_raw: SRV-AQUIRA Private
+      original_service_raw: AQUIRA2GO SERVICES
+      translated_service_raw: Original
+      effective_service_name: AQUIRA2GO SERVICES
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-18-443-tcp
+  name: 'TODO: Name service on 192.168.100.18:443'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: srvpathfind1
+    ip: 192.168.100.18
+    target_object: SRV-PATHFIND1 Private
+    protocol: tcp
+    port: 443
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1+1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_36
+      comment: Loopback for SQLSVR
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 443
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_44
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 443
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_45
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 443
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-AQUIRA Public
+      translated_destination_raw: SRV-AQUIRA Private
+      original_service_raw: AQUIRA2GO SERVICES
+      translated_service_raw: Original
+      effective_service_name: AQUIRA2GO SERVICES
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-18-143-tcp
+  name: 'TODO: Name service on 192.168.100.18:143'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: srvpathfind1
+    ip: 192.168.100.18
+    target_object: SRV-PATHFIND1 Private
+    protocol: tcp
+    port: 143
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1+1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_36
+      comment: Loopback for SQLSVR
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 143
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_44
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 143
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-18-110-tcp
+  name: 'TODO: Name service on 192.168.100.18:110'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: srvpathfind1
+    ip: 192.168.100.18
+    target_object: SRV-PATHFIND1 Private
+    protocol: tcp
+    port: 110
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1+1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_36
+      comment: Loopback for SQLSVR
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 110
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_44
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 110
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-18-25-tcp
+  name: 'TODO: Name service on 192.168.100.18:25'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: srvpathfind1
+    ip: 192.168.100.18
+    target_object: SRV-PATHFIND1 Private
+    protocol: tcp
+    port: 25
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1+1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_36
+      comment: Loopback for SQLSVR
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 25
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+    - nat_policy_name: Custom NAT Policy_44
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 25
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SRV-PATHFIND1 Private
+      original_service_raw: SQLSVR Services
+      translated_service_raw: Original
+      effective_service_name: SQLSVR Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-10-1194-udp
+  name: 'TODO: Name service on 192.168.100.10:1194'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: svr-mj01a1dt
+    ip: 192.168.100.10
+    target_object: SVR-MJ Private
+    protocol: udp
+    port: 1194
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1+1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_40
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: udp
+      internal_ip: 192.168.100.10
+      internal_port: 1194
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1+1 IP
+      translated_destination_raw: SVR-MJ Private
+      original_service_raw: OpenVPN
+      translated_service_raw: Original
+      effective_service_name: OpenVPN
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-118-2200-tcp
+  name: 'TODO: Name service on 192.168.100.118:2200'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: zip-one-studio
+    ip: 192.168.100.118
+    target_object: ZIP-ONE Studio Private
+    protocol: tcp
+    port: 2200
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_41
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.118
+      internal_port: 2200
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1 IP
+      translated_destination_raw: ZIP-ONE Studio Private
+      original_service_raw: ZIP-ONE Studio Services
+      translated_service_raw: Original
+      effective_service_name: ZIP-ONE Studio Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-118-2200-udp
+  name: 'TODO: Name service on 192.168.100.118:2200'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: zip-one-studio
+    ip: 192.168.100.118
+    target_object: ZIP-ONE Studio Private
+    protocol: udp
+    port: 2200
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_41
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: udp
+      internal_ip: 192.168.100.118
+      internal_port: 2200
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1 IP
+      translated_destination_raw: ZIP-ONE Studio Private
+      original_service_raw: ZIP-ONE Studio Services
+      translated_service_raw: Original
+      effective_service_name: ZIP-ONE Studio Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-10-3389-tcp
+  name: 'TODO: Name service on 192.168.100.10:3389'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: svr-mj01a1dt
+    ip: 192.168.100.10
+    target_object: SVR-MJ Private
+    protocol: tcp
+    port: 3389
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_43
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.10
+      internal_port: 3389
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1 IP
+      translated_destination_raw: SVR-MJ Private
+      original_service_raw: SVR-MJ10A1DT Services
+      translated_service_raw: Original
+      effective_service_name: SVR-MJ10A1DT Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-10-3389-udp
+  name: 'TODO: Name service on 192.168.100.10:3389'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: svr-mj01a1dt
+    ip: 192.168.100.10
+    target_object: SVR-MJ Private
+    protocol: udp
+    port: 3389
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_43
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: udp
+      internal_ip: 192.168.100.10
+      internal_port: 3389
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1 IP
+      translated_destination_raw: SVR-MJ Private
+      original_service_raw: SVR-MJ10A1DT Services
+      translated_service_raw: Original
+      effective_service_name: SVR-MJ10A1DT Services
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-18-3139-3144-tcp
+  name: 'TODO: Name service on 192.168.100.18:3139-3144'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: srvpathfind1
+    ip: 192.168.100.18
+    target_object: SRV-AQUIRA Private
+    protocol: tcp
+    port: null
+    port_range: 3139-3144
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: SRV-AQUIRA Public
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_45
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: null
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-AQUIRA Public
+      translated_destination_raw: SRV-AQUIRA Private
+      original_service_raw: AQUIRA2GO SERVICES
+      translated_service_raw: Original
+      effective_service_name: AQUIRA2GO SERVICES
+      resolved_from_overrides: true
+      resolved_port_range: 3139-3144
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-18-8080-tcp
+  name: 'TODO: Name service on 192.168.100.18:8080'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: srvpathfind1
+    ip: 192.168.100.18
+    target_object: SRV-AQUIRA Private
+    protocol: tcp
+    port: 8080
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: SRV-AQUIRA Public
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_45
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 8080
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-AQUIRA Public
+      translated_destination_raw: SRV-AQUIRA Private
+      original_service_raw: AQUIRA2GO SERVICES
+      translated_service_raw: Original
+      effective_service_name: AQUIRA2GO SERVICES
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-18-10281-tcp
+  name: 'TODO: Name service on 192.168.100.18:10281'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: srvpathfind1
+    ip: 192.168.100.18
+    target_object: SRV-AQUIRA Private
+    protocol: tcp
+    port: 10281
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: SRV-AQUIRA Public
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_45
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 10281
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-AQUIRA Public
+      translated_destination_raw: SRV-AQUIRA Private
+      original_service_raw: AQUIRA2GO SERVICES
+      translated_service_raw: Original
+      effective_service_name: AQUIRA2GO SERVICES
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-18-1433-tcp
+  name: 'TODO: Name service on 192.168.100.18:1433'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: srvpathfind1
+    ip: 192.168.100.18
+    target_object: SRV-AQUIRA Private
+    protocol: tcp
+    port: 1433
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: SRV-AQUIRA Public
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_45
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 1433
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-AQUIRA Public
+      translated_destination_raw: SRV-AQUIRA Private
+      original_service_raw: AQUIRA2GO SERVICES
+      translated_service_raw: Original
+      effective_service_name: AQUIRA2GO SERVICES
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-192-168-100-18-22-tcp
+  name: 'TODO: Name service on 192.168.100.18:22'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: bell-102
+  internal_target:
+    device_id: srvpathfind1
+    ip: 192.168.100.18
+    target_object: SRV-AQUIRA Private
+    protocol: tcp
+    port: 22
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: SRV-AQUIRA Public
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Custom NAT Policy_45
+      comment: ''
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: null
+      protocol: tcp
+      internal_ip: 192.168.100.18
+      internal_port: 22
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: SRV-AQUIRA Public
+      translated_destination_raw: SRV-AQUIRA Private
+      original_service_raw: AQUIRA2GO SERVICES
+      translated_service_raw: Original
+      effective_service_name: AQUIRA2GO SERVICES
+      resolved_from_overrides: true
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''

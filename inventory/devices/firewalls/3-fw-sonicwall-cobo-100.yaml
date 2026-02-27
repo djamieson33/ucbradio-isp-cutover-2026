@@ -72,6 +72,9 @@ operational:
   description: >
     Cobourg transmitter site firewall.
     Participates in IPSec site-to-site tunnel with BELL-102 hub.
+  notes:
+    - "Exports review: NAT CSV contains only default/system NAT policies; no inbound NAT (Destination Translated != Original)."
+    - "seed_inbound_services: seeded_services=0 (expected)."
 
 tags:
   - cobo-100

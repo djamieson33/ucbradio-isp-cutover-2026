@@ -1,0 +1,260 @@
+version: 1
+updated_utc: '2026-02-27T00:20:57Z'
+source:
+  type: sonicwall_nat_and_security_policy_exports
+  nat_csv: /Users/dwaynejamieson/sites/projects/ucbradio-isp-cutover-2026/firewall/sonicwall/exports/7-fw-sonicwall-wind-100/nat-configurations-20260226T2334Z.csv
+  security_policy_csv: /Users/dwaynejamieson/sites/projects/ucbradio-isp-cutover-2026/firewall/sonicwall/exports/7-fw-sonicwall-wind-100/security-policy-20260226T2334Z.csv
+  firewall_device_key: 7-fw-sonicwall-wind-100
+  site: wind-100
+  exports_dir: /Users/dwaynejamieson/sites/projects/ucbradio-isp-cutover-2026/firewall/sonicwall/exports/7-fw-sonicwall-wind-100
+summary:
+  policy:
+    rows_total: 85
+    allow_rules: 9
+  seeded_services: 5
+  skipped_rows: 16
+  skip_reasons:
+    translated_destination_is_original_or_empty: 16
+  unresolved_target_objects_count: 3
+  unresolved_service_objects_count: 0
+  unresolved_target_objects:
+  - Inovonics 531N
+  - Nautel
+  - ZIPONE
+  unresolved_service_objects: []
+services:
+- id: in-nautel-3501-tcp
+  name: 'TODO: Name service on Nautel:3501'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: wind-100
+  internal_target:
+    device_id: TODO
+    ip: ''
+    target_object: Nautel
+    protocol: tcp
+    port: 3501
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Nautel AUI (3501)_14
+      comment: Directs traffic to Nautel TX
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: 3501
+      protocol: tcp
+      internal_ip: ''
+      internal_port: 3501
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1 IP
+      translated_destination_raw: Nautel
+      original_service_raw: Nautel AUI (3501-TCP)
+      translated_service_raw: Original
+      effective_service_name: Nautel AUI (3501-TCP)
+      resolved_from_overrides: false
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-inovonics-531n-81-tcp
+  name: 'TODO: Name service on Inovonics 531N:81'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: wind-100
+  internal_target:
+    device_id: TODO
+    ip: ''
+    target_object: Inovonics 531N
+    protocol: tcp
+    port: 81
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Inovonics 531N JHTTP (81-TCP)_15
+      comment: Directs traffic to the Inovonics 531N
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: 81
+      protocol: tcp
+      internal_ip: ''
+      internal_port: 81
+      inbound_interface: X1
+      outbound_interface: Any
+      original_destination_raw: X1 IP
+      translated_destination_raw: Inovonics 531N
+      original_service_raw: Inovonics 531N HTTP (81-TCP)
+      translated_service_raw: Original
+      effective_service_name: Inovonics 531N HTTP (81-TCP)
+      resolved_from_overrides: false
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-nautel-80-tcp
+  name: 'TODO: Name service on Nautel:80'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: wind-100
+  internal_target:
+    device_id: TODO
+    ip: ''
+    target_object: Nautel
+    protocol: tcp
+    port: 80
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: Nautel HTTP (80)_16
+      comment: Directs Remote Traffic to Nautel
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: 80
+      protocol: tcp
+      internal_ip: ''
+      internal_port: 80
+      inbound_interface: X1
+      outbound_interface: Any
+      original_destination_raw: X1 IP
+      translated_destination_raw: Nautel
+      original_service_raw: Nautel HTTP (80-TCP)
+      translated_service_raw: Original
+      effective_service_name: Nautel HTTP (80-TCP)
+      resolved_from_overrides: false
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-zipone-8888-tcp
+  name: 'TODO: Name service on ZIPONE:8888'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: wind-100
+  internal_target:
+    device_id: TODO
+    ip: ''
+    target_object: ZIPONE
+    protocol: tcp
+    port: 8888
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: ZIPONE HTTP (8888-TCP)_17
+      comment: Directs Remote Management to ZIPONE
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: 8888
+      protocol: tcp
+      internal_ip: ''
+      internal_port: 8888
+      inbound_interface: X1
+      outbound_interface: Any
+      original_destination_raw: X1 IP
+      translated_destination_raw: ZIPONE
+      original_service_raw: ZIPONE HTTP (8888-TCP)
+      translated_service_raw: Original
+      effective_service_name: ZIPONE HTTP (8888-TCP)
+      resolved_from_overrides: false
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''
+- id: in-zipone-9150-udp
+  name: 'TODO: Name service on ZIPONE:9150'
+  description: TODO
+  criticality: medium
+  exposure: restricted
+  owner_id: TODO
+  environment: production
+  category: other
+  site: wind-100
+  internal_target:
+    device_id: TODO
+    ip: ''
+    target_object: ZIPONE
+    protocol: udp
+    port: 9150
+  public_entry:
+    fqdns: []
+    current_public_ip: ''
+    current_public_destination: X1 IP
+    target_public_ip: ''
+    target_public_destination: ''
+    notes: ''
+  nat:
+    provider: sonicwall
+    rules:
+    - nat_policy_name: ZIPONE AUDIO (9150-9153-UDP)_18
+      comment: Directing Traffic to ZIPONE
+      nat_method: sticky-ip
+      public_ip: ''
+      public_port: 9150
+      protocol: udp
+      internal_ip: ''
+      internal_port: 9150
+      inbound_interface: Any
+      outbound_interface: Any
+      original_destination_raw: X1 IP
+      translated_destination_raw: ZIPONE
+      original_service_raw: ZIPONE AUDIO (9150-9153-UDP)
+      translated_service_raw: Original
+      effective_service_name: ZIPONE AUDIO (9150-9153-UDP)
+      resolved_from_overrides: false
+      resolved_port_range: ''
+  tests: []
+  status:
+    documented: false
+    validated_external: false
+    last_validated_utc: ''

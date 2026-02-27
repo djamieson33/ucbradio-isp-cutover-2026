@@ -14,17 +14,20 @@ Key behaviors:
 
 from __future__ import annotations
 
-from typing import Iterable, Optional
-
 from common import normalize_obj
 from nat_logic import effective_service_name
 from policy_parser import AllowRule
 
 
+def _norm(s: str) -> str:
+    # normalize_obj is trim-only; we also force lowercase for reliable matching
+    return normalize_obj(s).lower()
+
+
 def _dst_candidates(dst_translated: str, dst_original: str) -> set[str]:
-    cands = set()
+    cands: set[str] = set()
     for raw in (dst_translated, dst_original):
-        n = normalize_obj(raw)
+        n = _norm(raw)
         if n:
             cands.add(n)
     return cands
@@ -46,39 +49,38 @@ def policy_allows_nat(
       - Service: rule.service matches effective NAT service
         (unless service is "Any", which matches everything)
 
-    Note: We don't try to expand service groups from policy export; we treat names literally.
+    Note: We don't expand service groups; names are treated literally.
     """
     dst_cands = _dst_candidates(dst_translated, dst_original)
-
-    eff_service, _translated_is_original = effective_service_name(svc_original, svc_translated)
-    eff_service_norm = normalize_obj(eff_service)
-
-    # If we truly have nothing to compare, bail
     if not dst_cands:
         return False
 
-    for ar in allow_rules:
-        # Defensive: older AllowRule objects might not have normalized attrs
-        dst_norm = getattr(ar, "dst_obj_norm", "") or normalize_obj(getattr(ar, "dst_obj", ""))
-        svc_norm = getattr(ar, "svc_norm", "") or normalize_obj(getattr(ar, "svc", ""))
+    eff_service, _translated_is_original = effective_service_name(svc_original, svc_translated)
+    eff_service_norm = _norm(eff_service)
 
+    for ar in allow_rules:
         # Must be allow
-        if (getattr(ar, "action", "") or "").strip().lower() != "allow":
+        action = (getattr(ar, "action", "") or "").strip().lower()
+        if action != "allow":
             continue
 
         # Destination match (Any wildcard)
+        dst_norm = getattr(ar, "dst_obj_norm", "") or getattr(ar, "dst_obj", "") or ""
+        dst_norm = _norm(dst_norm)
         if dst_norm and dst_norm != "any":
             if dst_norm not in dst_cands:
                 continue
-        # else dst is any/blank -> wildcard
+        # else blank/any => wildcard
 
         # Service match (Any wildcard)
+        svc_norm = getattr(ar, "svc_norm", "") or getattr(ar, "svc", "") or ""
+        svc_norm = _norm(svc_norm)
         if svc_norm and svc_norm != "any":
             if not eff_service_norm:
                 continue
             if svc_norm != eff_service_norm:
                 continue
-        # else service is any/blank -> wildcard
+        # else blank/any => wildcard
 
         return True
 

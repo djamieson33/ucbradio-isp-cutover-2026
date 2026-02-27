@@ -30,7 +30,6 @@ sys.path.insert(0, str(THIS_DIR))
 
 from io_csv import newest_matching
 
-
 EXPORTS_DIR = Path("firewall/sonicwall/exports")
 
 
@@ -44,6 +43,21 @@ def _effective_service(svc: str, svc_translated: str) -> str:
     return svc if _norm(svc_t) == "original" else (svc_t or svc)
 
 
+def _get(row: dict[str, Any], *keys: str) -> str:
+    """
+    Return first non-empty value for provided CSV column names.
+    Helps when SonicWall exports vary slightly between models/firmware.
+    """
+    for k in keys:
+        v = row.get(k)
+        if v is None:
+            continue
+        s = str(v).strip()
+        if s:
+            return s
+    return ""
+
+
 def read_allow_triples(policy_csv: Path) -> set[tuple[str, str, str]]:
     """
     Return a set of (dst_addr, service, dst_zone) for ALLOW rules.
@@ -53,11 +67,13 @@ def read_allow_triples(policy_csv: Path) -> set[tuple[str, str, str]]:
     with policy_csv.open(newline="", encoding="utf-8-sig") as f:
         r = csv.DictReader(f)
         for row in r:
-            if _norm(row.get("Action", "")) != "allow":
+            if _norm(_get(row, "Action")) != "allow":
                 continue
-            dst_addr = _norm(row.get("Destination Address", ""))
-            svc = _norm(row.get("Service", ""))
-            dst_zone = _norm(row.get("Destination Zone", ""))
+
+            dst_addr = _norm(_get(row, "Destination Address", "Destination"))
+            svc = _norm(_get(row, "Service"))
+            dst_zone = _norm(_get(row, "Destination Zone", "To Zone", "To"))
+
             allow.add((dst_addr, svc, dst_zone))
     return allow
 
@@ -68,8 +84,9 @@ def nat_inboundish(row: dict[str, Any]) -> bool:
       - has ingress interface
       - destination translated is present and not 'Original'
     """
-    ingress = (row.get("Ingress Interface") or "").strip()
-    dst_t = (row.get("Destination Translated") or "").strip()
+    ingress = _get(row, "Ingress Interface", "Inbound Interface")
+    dst_t = _get(row, "Destination Translated", "Destination NAT IP", "Dest Translated")
+
     if not ingress:
         return False
     if not dst_t or _norm(dst_t) == "original":
@@ -82,6 +99,11 @@ def main() -> int:
     ap.add_argument("--nat", help="Path to NAT CSV (default: newest nat-configurations-*.csv)")
     ap.add_argument("--policy", help="Path to Security Policy CSV (default: newest security-policy-*.csv)")
     ap.add_argument("--limit", type=int, default=50, help="Max rows to print")
+    ap.add_argument(
+        "--match-zone",
+        action="store_true",
+        help="Also require Destination Zone match (stricter; may reduce false positives).",
+    )
     args = ap.parse_args()
 
     if not EXPORTS_DIR.exists():
@@ -103,6 +125,7 @@ def main() -> int:
     print(f"[INFO] NAT CSV: {nat_csv}")
     print(f"[INFO] Policy CSV: {policy_csv}")
     print(f"[INFO] Allow rules indexed: {len(allow)}")
+    print(f"[INFO] Zone matching: {'ON' if args.match_zone else 'OFF'}")
 
     misses: list[dict[str, str]] = []
 
@@ -112,30 +135,44 @@ def main() -> int:
             if not nat_inboundish(row):
                 continue
 
-            dst_t = (row.get("Destination Translated") or "").strip()
-            svc = (row.get("Service") or "").strip()
-            svc_t = (row.get("Service Translated") or "").strip()
+            nat_name = _get(row, "Name")
+            comment = _get(row, "cmt", "Comment", "Comments")
+            ingress = _get(row, "Ingress Interface", "Inbound Interface")
+            egress = _get(row, "Egress Interface", "Outbound Interface")
+
+            dst_t = _get(row, "Destination Translated", "Destination NAT IP", "Dest Translated")
+            svc = _get(row, "Service")
+            svc_t = _get(row, "Service Translated", "Service (Translated)")
             eff = _effective_service(svc, svc_t)
 
             dst_n = _norm(dst_t)
             svc_n = _norm(eff)
 
-            # Match ignoring zone (zone is often not directly derivable from NAT CSV)
-            has = any((a == dst_n and s == svc_n) for (a, s, _z) in allow)
+            if args.match_zone:
+                # If matching zone, attempt a best-effort guess from NAT ingress interface.
+                # This is imperfect, but helpful when policy CSV is cleanly zoned.
+                # If it creates noise, run without --match-zone.
+                zone_guess = _norm(ingress)
+                has = (dst_n, svc_n, zone_guess) in allow
+            else:
+                # Match ignoring zone (zone often not directly derivable from NAT CSV)
+                has = any((a == dst_n and s == svc_n) for (a, s, _z) in allow)
+
             if has:
                 continue
 
             misses.append(
                 {
                     "csv_line": str(line_no),
-                    "nat_name": (row.get("Name") or "").strip(),
-                    "comment": (row.get("cmt") or "").strip(),
-                    "ingress": (row.get("Ingress Interface") or "").strip(),
-                    "egress": (row.get("Egress Interface") or "").strip(),
+                    "nat_name": nat_name,
+                    "comment": comment,
+                    "ingress": ingress,
+                    "egress": egress,
                     "dst_translated": dst_t,
                     "effective_service": eff,
                     "service": svc,
                     "service_translated": svc_t,
+                    "lookup_key": f"{dst_n} :: {svc_n}",
                 }
             )
 
@@ -153,6 +190,7 @@ def main() -> int:
             "effective_service",
             "service",
             "service_translated",
+            "lookup_key",
         ):
             print(f"{k:>18}: {m.get(k,'')}")
 
@@ -164,4 +202,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

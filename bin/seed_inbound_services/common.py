@@ -11,6 +11,7 @@ from __future__ import annotations
 import datetime as dt
 import ipaddress
 import re
+from pathlib import Path
 
 
 def utc_now_iso() -> str:
@@ -72,3 +73,18 @@ def normalize_zone(z: str) -> str:
 
 def normalize_obj(o: str) -> str:
     return (o or "").strip()
+
+
+# ------------------------------------------------------------------------------
+# Repo path constants (source of truth for defaults)
+# ------------------------------------------------------------------------------
+
+# common.py lives at: <repo>/bin/seed_inbound_services/common.py
+# parents[0]=seed_inbound_services, [1]=bin, [2]=repo root
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+EXPORTS_BASE_DIR = REPO_ROOT / "firewall" / "sonicwall" / "exports"
+DEFAULT_OUT = REPO_ROOT / "inventory" / "03-inbound-services.seed.yaml"
+DEFAULT_OVERRIDES = REPO_ROOT / "inventory" / "sonicwall-object-overrides.yaml"
+SEED_OUT_DIR = REPO_ROOT / "inventory" / "seed" / "inbound-services"
+

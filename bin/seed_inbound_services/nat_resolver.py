@@ -8,22 +8,22 @@ Purpose: Resolve address/service objects for NAT parsing.
 
 - address object name -> (ip, device_id) using overrides (tolerant match)
 - service/group name -> [(proto, port, port_range), ...] using overrides
+
+Supports scoped overrides via firewall_device_key.
 """
 
 from __future__ import annotations
 
-from typing import Any
-
 from common import safe_slug
-from nat_overrides import addr_override, svc_override_entries, expand_ports_from_entries
+from nat_overrides import addr_override, svc_override_entries, expand_ports_from_entries, get_map
 
 
-def resolve_addr(overrides: dict | None, obj_name: str) -> tuple[str, str]:
+def resolve_addr(overrides: dict | None, obj_name: str, firewall_device_key: str = "") -> tuple[str, str]:
     """
     Resolve an address object name -> (ip, device_id)
 
     Strategies:
-      1) nat_overrides.addr_override() exact helper
+      1) nat_overrides.addr_override() (scoped-first, then global)
       2) exact key match (strip)
       3) case-insensitive match
       4) safe_slug match
@@ -35,12 +35,13 @@ def resolve_addr(overrides: dict | None, obj_name: str) -> tuple[str, str]:
     if not name:
         return "", ""
 
-    # 1) exact helper
-    ov = addr_override(overrides, name)
+    # 1) exact helper (scoped-first)
+    ov = addr_override(overrides, name, firewall_device_key=firewall_device_key)
     if ov and getattr(ov, "ip", ""):
         return (ov.ip or "").strip(), (ov.device_id or "").strip()
 
-    ao = overrides.get("address_objects") or {}
+    # Build merged view (global + scoped where scoped overrides)
+    ao = get_map(overrides, firewall_device_key, "address_objects")
     if not isinstance(ao, dict) or not ao:
         return "", ""
 
@@ -71,22 +72,20 @@ def resolve_addr(overrides: dict | None, obj_name: str) -> tuple[str, str]:
 def resolve_service_variants(
     overrides: dict | None,
     effective_service_name: str,
+    firewall_device_key: str = "",
 ) -> list[tuple[str, int | None, str | None]]:
     """
     Resolve a service object/group into concrete protocol + port / port_range variants.
 
     Returns list of (protocol, port, port_range).
-    - port is int or None
-    - port_range is "start-end" or None
     """
     name = (effective_service_name or "").strip()
     if not overrides or not name:
         return []
 
-    entries = svc_override_entries(overrides, name)
+    entries = svc_override_entries(overrides, name, firewall_device_key=firewall_device_key)
     if not entries:
         return []
 
     expanded = expand_ports_from_entries(entries)
-    # expand_ports_from_entries returns objects with .protocol / .port / .port_range
     return [(v.protocol, v.port, v.port_range) for v in expanded]

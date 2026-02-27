@@ -5,7 +5,7 @@ set -euo pipefail
 # File:        bin/rename_export.sh
 # Purpose:     Rename a SonicWall export file using repo UTC timestamp standard
 # Standard:    <base>-YYYYMMDDThhmmZ.<ext>
-# Location:    firewall/sonicwall/exports/
+# Location:    firewall/sonicwall/exports/** (per-site subfolders supported)
 # ==============================================================================
 
 die() { echo "[ERROR] $*" >&2; exit 2; }
@@ -17,13 +17,13 @@ Usage:
   ./bin/rename_export.sh <filename> [--dry-run]
 
 Example:
-  ./bin/rename_export.sh firewall/sonicwall/exports/security-policy.csv
-  ./bin/rename_export.sh route-configurations.csv
-  ./bin/rename_export.sh nat-configurations-20260224T1917Z.csv --dry-run
+  ./bin/rename_export.sh firewall/sonicwall/exports/wind-100/security-policy.csv
+  ./bin/rename_export.sh firewall/sonicwall/exports/wind-100/route-configurations.csv
+  ./bin/rename_export.sh firewall/sonicwall/exports/wind-100/nat-configurations-20260224T1917Z.csv --dry-run
 
 Notes:
   - Timestamp is generated in UTC.
-  - File is renamed in-place inside firewall/sonicwall/exports/.
+  - File is renamed in-place inside firewall/sonicwall/exports/** (site subfolders allowed).
   - Original file extension is preserved (if present).
   - If the filename already includes a UTC stamp (YYYYMMDDThhmmZ), the script will refuse by default.
 USAGE
@@ -52,18 +52,26 @@ done
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-# If only filename given, assume exports directory
+EXPORTS_ROOT="firewall/sonicwall/exports"
+
+# If only filename given, assume exports root (not a site folder)
 if [[ ! "$INPUT" =~ / ]]; then
-  INPUT="firewall/sonicwall/exports/$INPUT"
+  INPUT="${EXPORTS_ROOT}/${INPUT}"
 fi
 
 [[ -f "$INPUT" ]] || die "File not found: $INPUT"
 
-DIR="$(dirname "$INPUT")"
-BASE="$(basename "$INPUT")"
+# Normalize to a path relative to repo root (no leading ./)
+INPUT_CLEAN="${INPUT#./}"
 
-# Enforce correct directory
-[[ "$DIR" == "firewall/sonicwall/exports" ]] || die "File must be inside firewall/sonicwall/exports/"
+DIR="$(dirname "$INPUT_CLEAN")"
+BASE="$(basename "$INPUT_CLEAN")"
+
+# Enforce correct directory tree (allow site subfolders)
+case "$DIR" in
+  "$EXPORTS_ROOT"|"$EXPORTS_ROOT"/*) ;;
+  *) die "File must be inside ${EXPORTS_ROOT}/ (site subfolders allowed): $INPUT_CLEAN" ;;
+esac
 
 # Guard: avoid double-stamping
 TS_RE='[0-9]{8}T[0-9]{4}Z'
@@ -87,13 +95,13 @@ NEW_PATH="${DIR}/${NEW_NAME}"
 
 if [[ "$DRY_RUN" == "yes" ]]; then
   info "Dry run — would rename:"
-  info "  $INPUT"
+  info "  $INPUT_CLEAN"
   info "→ $NEW_PATH"
   exit 0
 fi
 
-mv "$INPUT" "$NEW_PATH"
+mv "$INPUT_CLEAN" "$NEW_PATH"
 
 info "Renamed:"
-info "  $INPUT"
+info "  $INPUT_CLEAN"
 info "→ $NEW_PATH"

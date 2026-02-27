@@ -1,97 +1,101 @@
 version: 1
 updated_utc: "2026-02-24T00:00:00Z"
 
-address_objects:
-    # Aquira app host == SRVPATHFIND1 (same internal IP by design)
-  "SRV-AQUIRA Private":
-    ip: "192.168.100.18"
-    device_id: "srvpathfind1"
+# Intentionally empty: we do not assume object names are global/unique across firewalls.
+address_objects: {}
+service_objects: {}
+ip_map: {}
 
-  "SRV-ZETTA-LAN Private":
-    ip: "192.168.100.97"
-    device_id: "zettaserver"
+# All real mappings live here:
+scoped:
+  "1-fw-sonicwall-bell-102":
+    address_objects:
+      "SRV-AQUIRA Private":
+        ip: "192.168.100.18"
+        device_id: "srvpathfind1"
 
-  "SVR-MJ Private":
-    ip: "192.168.100.10"
-    device_id: "svr-mj01a1dt"
+      "SRV-ZETTA-LAN Private":
+        ip: "192.168.100.97"
+        device_id: "zettaserver"
 
-  # Alias object name seen in NAT/policy exports; maps to same host/IP
-  "SRV-PATHFIND1 Private":
-    ip: "192.168.100.18"    
-    device_id: "srvpathfind1"
+      "SVR-MJ Private":
+        ip: "192.168.100.10"
+        device_id: "svr-mj01a1dt"
 
-  "ZIP-ONE Studio Private":
-    ip: "192.168.100.118"
-    device_id: "zip-one-studio"
+      "SRV-PATHFIND1 Private":
+        ip: "192.168.100.18"
+        device_id: "srvpathfind1"
 
-service_objects:
-  "ZETTASERVER Services":
-    entries:
-      - protocol: tcp
-        port: 80
-      - protocol: tcp
-        port: 443
-      - protocol: tcp
-        port: 22
-      - protocol: tcp
-        port_range: "3136-3137"
+      "ZIP-ONE Studio Private":
+        ip: "192.168.100.118"
+        device_id: "zip-one-studio"
 
-  "AQUIRA2GO SERVICES":
-    entries:
-      - protocol: tcp
-        port_range: "3139-3144"
-      - protocol: tcp
-        port: 80
-      - protocol: tcp
-        port: 8080
-      - protocol: tcp
-        port: 85
-      - protocol: tcp
-        port: 443
-      - protocol: tcp
-        port: 10281
-      - protocol: tcp
-        port: 1433
-      - protocol: tcp
-        port: 22
+    service_objects:
+      "ZETTASERVER Services":
+        entries:
+          - protocol: tcp
+            port: 80
+          - protocol: tcp
+            port: 443
+          - protocol: tcp
+            port: 22
+          - protocol: tcp
+            port_range: "3136-3137"
 
-  "OpenVPN":
-    entries:
-      - protocol: udp
-        port: 1194
+      "AQUIRA2GO SERVICES":
+        entries:
+          - protocol: tcp
+            port_range: "3139-3144"
+          - protocol: tcp
+            port: 80
+          - protocol: tcp
+            port: 8080
+          - protocol: tcp
+            port: 85
+          - protocol: tcp
+            port: 443
+          - protocol: tcp
+            port: 10281
+          - protocol: tcp
+            port: 1433
+          - protocol: tcp
+            port: 22
 
-  # keep (RDP)
-  "Terminal Services":
-    entries:
-      - protocol: tcp
-        port: 3389
+      "OpenVPN":
+        entries:
+          - protocol: udp
+            port: 1194
 
-  # keep (your mapping)
-  "SVR-MJ10A1DT Services":
-    entries:
-      - protocol: tcp
-        port: 3389
-      - protocol: udp
-        port: 3389
+      "Terminal Services":
+        entries:
+          - protocol: tcp
+            port: 3389
 
-  "SQLSVR Services":
-    entries:
-      - protocol: tcp
-        port: 80
-      - protocol: tcp
-        port: 85
-      - protocol: tcp
-        port: 443
-      - protocol: tcp
-        port: 143
-      - protocol: tcp
-        port: 110
-      - protocol: tcp
-        port: 25
+      "SVR-MJ10A1DT Services":
+        entries:
+          - protocol: tcp
+            port: 3389
+          - protocol: udp
+            port: 3389
 
-  "ZIP-ONE Studio Services":
-    entries:
-      - protocol: tcp
-        port: 2200
-      - protocol: udp
-        port: 2200
+      "SQLSVR Services":
+        entries:
+          - protocol: tcp
+            port: 80
+          - protocol: tcp
+            port: 85
+          - protocol: tcp
+            port: 443
+          - protocol: tcp
+            port: 143
+          - protocol: tcp
+            port: 110
+          - protocol: tcp
+            port: 25
+
+      "ZIP-ONE Studio Services":
+        entries:
+          - protocol: tcp
+            port: 2200
+          - protocol: udp
+            port: 2200

@@ -176,6 +176,9 @@ operational:
   description: >
     Brockville transmitter site firewall.
     Carries live RTP program audio over IPSec from BELL-102 hub.
+  notes:
+    - "Exports review: NAT CSV contains only default/system NAT policies; no inbound NAT (Destination Translated != Original)."
+    - "seed_inbound_services result: seeded_services=0 (expected)."
 
 tags:
   - broc-100
