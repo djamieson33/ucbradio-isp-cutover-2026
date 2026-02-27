@@ -1,34 +1,27 @@
-# inventory/devices/firewalls/7-fw-sonicwall-wind-100.yaml
-# Asset 7 – SonicWall – WIND-100 (Windsor transmitter site)
-
 device:
   asset_id: 7
   category: firewall
   vendor: sonicwall
   role: vpn-gateway
   device_key: 7-fw-sonicwall-wind-100
-
 site:
   code: WIND-100
   short: wind-100
   name: Windsor
-  province: "ON"
-
+  province: 'ON'
+  id: wind-100
 hardware:
   manufacturer: SonicWall
   model: TZ270
-  serial_number: "2CB8EDD825E0"
-
+  serial_number: 2CB8EDD825E0
 firmware:
   sonicos_major: TBD
   version: TBD
-
 network:
   wan:
     primary:
       interface: X1
       public_ip: 192.186.113.50
-
   lan:
     primary:
       interface: X0
@@ -37,57 +30,48 @@ network:
       gateway_ip: TBD
       subnet: TBD
       notes:
-        - "192.168.1.1 appears to be management IP from asset card."
-        - "Hub indicates remote network 192.168.106.0/24."
-        - "Confirm actual LAN interface/subnet from firewall interface list."
-        - "Determine whether 192.168.1.0/24 is management VLAN separate from tunnel LAN."
-
+      - 192.168.1.1 appears to be management IP from asset card.
+      - Hub indicates remote network 192.168.106.0/24.
+      - Confirm actual LAN interface/subnet from firewall interface list.
+      - Determine whether 192.168.1.0/24 is management VLAN separate from tunnel LAN.
 vpn:
   role: spoke
-
   ipsec_site_to_site:
     hub_device_key: 1-fw-sonicwall-bell-102
     tunnel_name_on_hub: STL-WIND-100 IPsec
     peer_fqdn: vpn.ucbradio.com
     peer_current_public_ip: 24.51.249.34
     peer_target_public_ip: 207.236.163.98
-
     local_networks:
-      - 192.168.106.0/24
+    - 192.168.106.0/24
     remote_networks:
-      - 192.168.100.0/24
-
+    - 192.168.100.0/24
     notes:
-      - "Must pre-whitelist hub Bell IP 207.236.163.98 prior to cutover."
-      - "Recommend temporary dual-whitelisting of 24.51.249.34 where supported."
-
+    - Must pre-whitelist hub Bell IP 207.236.163.98 prior to cutover.
+    - Recommend temporary dual-whitelisting of 24.51.249.34 where supported.
 management:
   wan_url: https://192.186.113.50
   lan_url: https://192.168.1.1
   wan_https_enabled: true
-  credentials_location: "1Password > UCB > Firewalls > WIND-100 (Asset 7)"
+  credentials_location: 1Password > UCB > Firewalls > WIND-100 (Asset 7)
   notes:
-    - "LAN management IP from asset card: 192.168.1.1"
-
+  - 'LAN management IP from asset card: 192.168.1.1'
 security:
   pre_shared_key_stored: true
   notes:
-    - "PSK stored in secure vault."
-    - "Confirm PSK matches hub configuration."
-
+  - PSK stored in secure vault.
+  - Confirm PSK matches hub configuration.
 operational:
   critical_path: true
-  description: >
-    Windsor transmitter site firewall.
-    Carries live STL traffic from BELL-102 hub.
-    LAN subnet requires confirmation to reconcile 192.168.1.0/24 vs 192.168.106.0/24.
+  description: 'Windsor transmitter site firewall. Carries live STL traffic from BELL-102 hub. LAN subnet requires confirmation
+    to reconcile 192.168.1.0/24 vs 192.168.106.0/24.
 
+    '
 tags:
-  - wind-100
-  - windsor
-  - firewall
-  - sonicwall
-  - transmitter-site
-  - stl-spoke
-  - critical-path
-  
+- wind-100
+- windsor
+- firewall
+- sonicwall
+- transmitter-site
+- stl-spoke
+- critical-path

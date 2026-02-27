@@ -1,100 +1,84 @@
-# inventory/devices/firewalls/6-fw-sonicwall-tbay-100.yaml
-# Asset 6 – SonicWall – TBAY-100 (Thunder Bay transmitter site)
-
 device:
   asset_id: 6
   category: firewall
   vendor: sonicwall
   role: edge-firewall
   device_key: 6-fw-sonicwall-tbay-100
-
 site:
   code: TBAY-100
   short: tbay-100
   name: Thunder Bay
-  province: "ON"
-
+  province: 'ON'
+  id: tbay-100
 hardware:
   manufacturer: SonicWall
   model: TZ270
-  serial_number: "2CB8EDD82550"
-  unique_firewall_identifier: "2CB8EDD82610" # observed in UI (IPsec VPN > Settings)
-
+  serial_number: 2CB8EDD82550
+  unique_firewall_identifier: 2CB8EDD82610
 firmware:
   sonicos_major: TBD
   version: TBD
   build: TBD
   notes:
-    - "Confirm exact SonicOS version/build during next maintenance window."
-
+  - Confirm exact SonicOS version/build during next maintenance window.
 management:
-  wan_url: "https://216.211.29.160:443"
-  lan_url: "https://192.168.35.1"
+  wan_url: https://216.211.29.160:443
+  lan_url: https://192.168.35.1
   wan_https_enabled: true
-  credentials_location: "1Password > UCB > Firewalls > TBAY-100 (Asset 6)"
+  credentials_location: 1Password > UCB > Firewalls > TBAY-100 (Asset 6)
   notes:
-    - "Confirmed admin access on WAN management port 443."
-
+  - Confirmed admin access on WAN management port 443.
 network:
   lan:
     primary:
       interface: X0
       subnet: 192.168.35.0/24
       management_ip: 192.168.35.1
-
   wan:
     primary_interface: X1
     public_ip: 216.211.29.160
-    isp: "Existing ISP (no change planned)"
+    isp: Existing ISP (no change planned)
     notes:
-      - "TBAY internet provider is not changing as part of BELL-102 cutover."
-
+    - TBAY internet provider is not changing as part of BELL-102 cutover.
 vpn:
   role: spoke
-
-  # IMPORTANT: TBAY is not currently using site-to-site IPsec with the Belleville hub.
-  # SonicWall shows only GroupVPN entries and no active tunnels.
   ipsec_site_to_site:
     enabled: false
     observed_state:
       policies_present:
-        - "WAN GroupVPN"
-        - "WLAN GroupVPN"
+      - WAN GroupVPN
+      - WLAN GroupVPN
       active_tunnels_count: 0
       down_tunnels_present: true
       notes:
-        - "No STL-TBAY-100 site-to-site policy observed on TBAY firewall."
-        - "This site appears to use Telos ZephyrIP cloud transport instead of IPsec."
-
+      - No STL-TBAY-100 site-to-site policy observed on TBAY firewall.
+      - This site appears to use Telos ZephyrIP cloud transport instead of IPsec.
 stl_transport:
-  type: "telos-zephyrip-cloud"
+  type: telos-zephyrip-cloud
   hub_ip_dependency: false
   notes:
-    - "TBAY audio transport is independent of Belleville hub IP (Cogeco/Bell)."
-    - "Cutover at BELL-102 should not affect TBAY STL audio path."
-
+  - TBAY audio transport is independent of Belleville hub IP (Cogeco/Bell).
+  - Cutover at BELL-102 should not affect TBAY STL audio path.
 operational:
   critical_path: true
-  description: >
-    Thunder Bay transmitter site firewall. Current STL audio transport appears to use
-    Telos ZephyrIP cloud service rather than a site-to-site IPsec tunnel to BELL-102.
+  description: 'Thunder Bay transmitter site firewall. Current STL audio transport appears to use Telos ZephyrIP cloud service
+    rather than a site-to-site IPsec tunnel to BELL-102.
 
+    '
 verification:
-  last_verified_utc: "2026-02-26T22:20:00Z"
+  last_verified_utc: '2026-02-26T22:20:00Z'
   evidence_refs:
-    - evidence/sonicwall/tbay-100/20260226/ipsec-policies.png
-    - evidence/sonicwall/tbay-100/20260226/ipsec-active-tunnels-empty.png
-    - evidence/sonicwall/tbay-100/20260226/ipsec-down-tunnels.png
-    - evidence/sonicwall/tbay-100/20260226/ipsec-settings-ufi.png
+  - evidence/sonicwall/tbay-100/20260226/ipsec-policies.png
+  - evidence/sonicwall/tbay-100/20260226/ipsec-active-tunnels-empty.png
+  - evidence/sonicwall/tbay-100/20260226/ipsec-down-tunnels.png
+  - evidence/sonicwall/tbay-100/20260226/ipsec-settings-ufi.png
   notes:
-    - "Verified TBAY firewall has no site-to-site IPsec policy configured for STL."
-
+  - Verified TBAY firewall has no site-to-site IPsec policy configured for STL.
 tags:
-  - tbay-100
-  - thunder-bay
-  - firewall
-  - sonicwall
-  - transmitter-site
-  - telos-cloud-stl
-  - hub-independent
-  
+- tbay-100
+- thunder-bay
+- firewall
+- sonicwall
+- transmitter-site
+- telos-cloud-stl
+- hub-independent

@@ -1,30 +1,23 @@
-# inventory/devices/firewalls/9-fw-sonicwall-broc-100.yaml
-# Asset 9 – SonicWall – BROC-100 (Brockville transmitter site)
-
 schema_version: 1
-
 device:
   asset_id: 9
   category: firewall
   vendor: sonicwall
   role: vpn-gateway
   device_key: 9-fw-sonicwall-broc-100
-
 site:
   code: BROC-100
   short: broc-100
   name: Brockville
-  province: "ON"
-
+  province: 'ON'
+  id: broc-100
 hardware:
   manufacturer: SonicWall
   model: TZ270
-  serial_number: "2CB8EDD82580"
-
+  serial_number: 2CB8EDD82580
 firmware:
   sonicos_major: TBD
   version: TBD
-
 network:
   wan:
     primary:
@@ -42,48 +35,40 @@ network:
         pool:
           start: TBD
           end: TBD
-
 vpn:
   role: spoke
-
   ipsec_site_to_site:
     hub_device_key: 1-fw-sonicwall-bell-102
     tunnel_name_on_hub: STL-BROC-100 IPsec
     peer_fqdn: vpn.ucbradio.com
     peer_current_public_ip: 24.51.249.34
     peer_target_public_ip: 207.236.163.98
-
     local_networks:
-      - 192.168.104.0/24
+    - 192.168.104.0/24
     remote_networks:
-      - 192.168.100.0/24
-
+    - 192.168.100.0/24
     carries_rtp_audio: true
     dependent_devices:
-      - 28-codec-zipone-broc-100
-      - 84-tx-nautel-vs300-broc-100
-
+    - 28-codec-zipone-broc-100
+    - 84-tx-nautel-vs300-broc-100
     policy_detail:
       name: STL-BROC-100 IPsec VPN
       policy_type: site-to-site
-      authentication_method: "IKE using Preshared Secret"
-
+      authentication_method: IKE using Preshared Secret
       gateways:
         primary: 24.51.249.34
         secondary: 207.236.163.98
-
       ike_ids:
         local:
-          type: "IPv4 Address"
+          type: IPv4 Address
           value: TBD
         peer:
-          type: "IPv4 Address"
+          type: IPv4 Address
           value: TBD
-
       proposals:
         ike_phase_1:
-          exchange_mode: "Aggressive Mode"
-          dh_group: "256-Bit Random ECP Group"
+          exchange_mode: Aggressive Mode
+          dh_group: 256-Bit Random ECP Group
           encryption: AES-256
           authentication: SHA256
           lifetime_seconds: 28800
@@ -93,99 +78,89 @@ vpn:
           authentication: SHA256
           pfs:
             enabled: true
-            dh_group: "256-Bit Random ECP Group"
+            dh_group: 256-Bit Random ECP Group
           lifetime_seconds: 28800
-
       advanced:
         enable_keep_alive: true
         preempt_secondary_gateway: true
         primary_gateway_detection_interval_seconds: 28800
         primary_gateway_detection_interval_verified_meaning: false
         notes:
-          - "Value is unusual; confirm whether this reflects DPD/keepalive behavior in SonicOS 7."
+        - Value is unusual; confirm whether this reflects DPD/keepalive behavior in SonicOS 7.
         suppress_automatic_access_rules: false
         apply_nat_policies: false
         management_via_sa:
           https: true
           ssh: true
           snmp: true
-
       cutover:
         hub_peer_current: 24.51.249.34
         hub_peer_target_bell: 207.236.163.98
-        goal: "Allow hub to migrate from Cogeco to Bell without tunnel rebuild (dual gateway/whitelist)."
-
+        goal: Allow hub to migrate from Cogeco to Bell without tunnel rebuild (dual gateway/whitelist).
 management:
   wan_url: https://69.31.226.50
   lan_url: TBD
   wan_https_enabled: true
-  credentials_location: "1Password > UCB > Firewalls > BROC-100 (Asset 9)"
+  credentials_location: 1Password > UCB > Firewalls > BROC-100 (Asset 9)
   notes:
-    - "Verify LAN management IP (commonly 192.168.104.1)."
-    - "Hub is BELL-102 (asset 1)."
-
+  - Verify LAN management IP (commonly 192.168.104.1).
+  - Hub is BELL-102 (asset 1).
 security:
   notes:
-    - "PSK stored in secure vault."
-    - "Confirm key matches hub configuration."
-
+  - PSK stored in secure vault.
+  - Confirm key matches hub configuration.
 verification:
   quick_tests:
-    - name: Ping hub LAN over IPsec
-      method: ping
-      target: 192.168.100.1
-      expected: Replies over tunnel
-    - name: Ping BROC LAN gateway from hub
-      method: ping
-      target: 192.168.104.1
-      expected: Replies once gateway IP confirmed
-  last_verified_utc: "2026-02-26T21:01:39Z"
+  - name: Ping hub LAN over IPsec
+    method: ping
+    target: 192.168.100.1
+    expected: Replies over tunnel
+  - name: Ping BROC LAN gateway from hub
+    method: ping
+    target: 192.168.104.1
+    expected: Replies once gateway IP confirmed
+  last_verified_utc: '2026-02-26T21:01:39Z'
   evidence_refs:
-    - evidence/pre-change/sonicwall/broc-100/20260225/policy-stl-broc-general.png
-    - evidence/pre-change/sonicwall/broc-100/20260225/policy-stl-broc-network.png
-    - evidence/pre-change/sonicwall/broc-100/20260225/policy-stl-broc-proposals.png
-    - evidence/pre-change/sonicwall/broc-100/20260225/policy-stl-broc-advanced.png
-    - evidence/pre-change/sonicwall/broc-100/20260225/ipsec-active-tunnels.png
-    - evidence/pre-change/sonicwall/broc-100/20260225/event-logs/log_2CB8EDD82580_2026-02-25_14-56-07.csv
-
+  - evidence/pre-change/sonicwall/broc-100/20260225/policy-stl-broc-general.png
+  - evidence/pre-change/sonicwall/broc-100/20260225/policy-stl-broc-network.png
+  - evidence/pre-change/sonicwall/broc-100/20260225/policy-stl-broc-proposals.png
+  - evidence/pre-change/sonicwall/broc-100/20260225/policy-stl-broc-advanced.png
+  - evidence/pre-change/sonicwall/broc-100/20260225/ipsec-active-tunnels.png
+  - evidence/pre-change/sonicwall/broc-100/20260225/event-logs/log_2CB8EDD82580_2026-02-25_14-56-07.csv
 validation:
-  validated_by: "DJ"
-  validated_utc: "2026-02-26T21:01:39Z"
-  method: "Hub IPsec policy temporarily bound to X3 (Bell), then restored to Zone WAN"
-  result: "Success"
+  validated_by: DJ
+  validated_utc: '2026-02-26T21:01:39Z'
+  method: Hub IPsec policy temporarily bound to X3 (Bell), then restored to Zone WAN
+  result: Success
   notes:
-    - "Tunnel successfully renegotiated over Bell when hub bound to X3."
-    - "Tunnel returned cleanly when restored to Zone WAN."
-    - "No sustained audio interruption observed."
-
+  - Tunnel successfully renegotiated over Bell when hub bound to X3.
+  - Tunnel returned cleanly when restored to Zone WAN.
+  - No sustained audio interruption observed.
 bell_path_validation:
   tested: true
-  test_type: "Controlled hub binding to X3 (Bell)"
-  result: "Success"
-  impact: "No sustained audio interruption"
-  hub_public_ip_used: "207.236.163.98"
-  spoke_public_ip: "69.31.226.50"
-  validated_by: "DJ"
-  validated_utc: "2026-02-26T21:01:39Z"
+  test_type: Controlled hub binding to X3 (Bell)
+  result: Success
+  impact: No sustained audio interruption
+  hub_public_ip_used: 207.236.163.98
+  spoke_public_ip: 69.31.226.50
+  validated_by: DJ
+  validated_utc: '2026-02-26T21:01:39Z'
   notes:
-    - "Tunnel successfully renegotiated over Bell when hub bound to X3."
-    - "Tunnel returned cleanly to Cogeco when restored to Zone WAN."
-
+  - Tunnel successfully renegotiated over Bell when hub bound to X3.
+  - Tunnel returned cleanly to Cogeco when restored to Zone WAN.
 operational:
   critical_path: true
-  description: >
-    Brockville transmitter site firewall.
-    Carries live RTP program audio over IPSec from BELL-102 hub.
-  notes:
-    - "Exports review: NAT CSV contains only default/system NAT policies; no inbound NAT (Destination Translated != Original)."
-    - "seed_inbound_services result: seeded_services=0 (expected)."
+  description: 'Brockville transmitter site firewall. Carries live RTP program audio over IPSec from BELL-102 hub.
 
+    '
+  notes:
+  - 'Exports review: NAT CSV contains only default/system NAT policies; no inbound NAT (Destination Translated != Original).'
+  - 'seed_inbound_services result: seeded_services=0 (expected).'
 tags:
-  - broc-100
-  - brockville
-  - firewall
-  - sonicwall
-  - transmitter-site
-  - stl-spoke
-  - critical-path
-  
+- broc-100
+- brockville
+- firewall
+- sonicwall
+- transmitter-site
+- stl-spoke
+- critical-path

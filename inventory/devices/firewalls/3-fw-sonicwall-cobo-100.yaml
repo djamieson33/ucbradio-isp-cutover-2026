@@ -1,24 +1,19 @@
-# inventory/devices/firewalls/3-fw-sonicwall-cobo-100.yaml
-# Asset 3 – SonicWall – COBO-100 (Cobourg transmitter site)
-
 device:
   asset_id: 3
   category: firewall
   vendor: sonicwall
   role: vpn-gateway
   device_key: 3-fw-sonicwall-cobo-100
-
 site:
   code: COBO-100
   short: cobo-100
   name: Cobourg
-  province: "ON"
-
+  province: 'ON'
+  id: cobo-100
 hardware:
   manufacturer: SonicWall
   model: TZ270
-  serial_number: "2CB8EDD81CB0"
-
+  serial_number: 2CB8EDD81CB0
 network:
   wan:
     primary:
@@ -29,10 +24,8 @@ network:
       interface: X0
       subnet: 192.168.102.0/24
       management_ip: 192.168.102.1
-
 vpn:
   role: spoke
-
   ipsec_site_to_site:
     hub_device_key: 1-fw-sonicwall-bell-102
     tunnel_name_on_hub: STL-COBO-100 IPsec
@@ -40,46 +33,41 @@ vpn:
     peer_current_public_ip: unknown
     peer_target_public_ip: 207.236.163.98
     local_networks:
-      - 192.168.102.0/24
+    - 192.168.102.0/24
     remote_networks:
-      - 192.168.100.0/24
-    crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
+    - 192.168.100.0/24
+    crypto_suite: 'ESP: AES-256/HMAC SHA256 (IKE)'
     nat_traversal: unknown
     dpd:
       enabled: unknown
       interval_seconds: unknown
       failure_trigger_level: unknown
     notes:
-      - "Must pre-whitelist hub Bell IP 207.236.163.98 prior to cutover."
-
+    - Must pre-whitelist hub Bell IP 207.236.163.98 prior to cutover.
 management:
   wan_url: https://207.236.214.34
   lan_url: https://192.168.102.1
   wan_https_enabled: true
-  credentials_location: "1Password > UCB > Firewalls > COBO-100 (Asset 3)"
+  credentials_location: 1Password > UCB > Firewalls > COBO-100 (Asset 3)
   notes:
-    - "LAN management at 192.168.102.1"
-    - "Public WAN management at 207.236.214.34"
-
+  - LAN management at 192.168.102.1
+  - Public WAN management at 207.236.214.34
 security:
   pre_shared_key_stored: true
   notes:
-    - "PSK stored in secure vault."
-    - "Confirm key matches hub configuration."
-
+  - PSK stored in secure vault.
+  - Confirm key matches hub configuration.
 operational:
   critical_path: true
-  description: >
-    Cobourg transmitter site firewall.
-    Participates in IPSec site-to-site tunnel with BELL-102 hub.
-  notes:
-    - "Exports review: NAT CSV contains only default/system NAT policies; no inbound NAT (Destination Translated != Original)."
-    - "seed_inbound_services: seeded_services=0 (expected)."
+  description: 'Cobourg transmitter site firewall. Participates in IPSec site-to-site tunnel with BELL-102 hub.
 
+    '
+  notes:
+  - 'Exports review: NAT CSV contains only default/system NAT policies; no inbound NAT (Destination Translated != Original).'
+  - 'seed_inbound_services: seeded_services=0 (expected).'
 tags:
-  - cobo-100
-  - cobourg
-  - transmitter-site
-  - firewall
-  - sonicwall
-  
+- cobo-100
+- cobourg
+- transmitter-site
+- firewall
+- sonicwall

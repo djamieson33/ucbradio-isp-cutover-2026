@@ -1,57 +1,50 @@
 schema_version: 1
-
 device:
   asset_id: 84
   category: broadcast
   vendor: nautel
   role: transmitter
   device_key: 84-tx-nautel-vs300-broc-100
-
 site:
   code: BROC-100
   short: broc-100
   name: Brockville
-  province: "ON"
-
+  province: 'ON'
+  id: broc-100
 hardware:
   manufacturer: Nautel
   model: VS300
   serial_number: TBD
-
 network:
   lan:
     subnet: 192.168.104.0/24
     notes:
-      - "Transmitter management expected on BROC transmitter LAN."
-
+    - Transmitter management expected on BROC transmitter LAN.
 access:
   web_interface:
     url: TBD
-    credentials_location: "1Password > UCB > Broadcast > BROC-100 Nautel VS300 (Asset 84)"
+    credentials_location: 1Password > UCB > Broadcast > BROC-100 Nautel VS300 (Asset 84)
     notes:
-      - "Do not store usernames/passwords in repo."
+    - Do not store usernames/passwords in repo.
   root_access:
     method: ssh
     host: TBD
-    credentials_location: "1Password > UCB > Broadcast > BROC-100 Nautel VS300 (Asset 84)"
+    credentials_location: 1Password > UCB > Broadcast > BROC-100 Nautel VS300 (Asset 84)
     notes:
-      - "Do not store usernames/passwords in repo."
-
+    - Do not store usernames/passwords in repo.
 operational:
   on_air_critical: true
-  notes: >
-    Confirm which transmitter is active and capture a screenshot/evidence before any VPN testing changes.
+  notes: 'Confirm which transmitter is active and capture a screenshot/evidence before any VPN testing changes.
 
+    '
 dependencies:
   upstream:
-    - 9-fw-sonicwall-broc-100
-    - 28-codec-zipone-broc-100
-
+  - 9-fw-sonicwall-broc-100
+  - 28-codec-zipone-broc-100
 tags:
-  - broc-100
-  - brockville
-  - nautel
-  - vs300
-  - transmitter
-  - broadcast-critical
-  
+- broc-100
+- brockville
+- nautel
+- vs300
+- transmitter
+- broadcast-critical

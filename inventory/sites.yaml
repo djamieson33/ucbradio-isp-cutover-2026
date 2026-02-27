@@ -1,12 +1,10 @@
 schema_version: 1
 
 sites:
-
   # --------------------------------------------------
   # BELLEVILLE - NATIONAL MEDIA CENTRE (NMC)
   # --------------------------------------------------
-
-  - id: belleville-nmc
+  - id: bell-102
     site_code: BELL-102
     name: National Media Centre (Belleville)
     role: hub
@@ -20,12 +18,10 @@ sites:
       Primary head office site. Most broadcast/ops systems terminate here.
       SonicWall hub firewall asset 1 (TZ470).
 
-
   # --------------------------------------------------
   # BELLEVILLE - READ LOCATION (SEPARATE PHYSICAL SITE)
   # --------------------------------------------------
-
-  - id: belleville-read
+  - id: bell-100
     site_code: BELL-100
     name: Belleville (Read Location)
     role: tx-site
@@ -39,12 +35,10 @@ sites:
       Location code BELL-100.
       SonicWall firewall asset 2 (TZ270).
 
-
   # --------------------------------------------------
   # STL SPOKE SITES
   # --------------------------------------------------
-
-  - id: brockville-tx
+  - id: broc-100
     site_code: BROC-100
     name: Brockville Transmitter Site
     role: tx-site
@@ -56,7 +50,7 @@ sites:
     notes: >
       SonicWall-based transmitter site.
 
-  - id: cobourg-tx
+  - id: cobo-100
     site_code: COBO-100
     name: Cobourg Transmitter Site
     role: tx-site
@@ -68,7 +62,7 @@ sites:
     notes: >
       SonicWall-based transmitter site.
 
-  - id: kingston-tx
+  - id: king-100
     site_code: KING-100
     name: Kingston Transmitter Site
     role: tx-site
@@ -80,7 +74,7 @@ sites:
     notes: >
       SonicWall-based transmitter site.
 
-  - id: windsor-tx
+  - id: wind-100
     site_code: WIND-100
     name: Windsor Transmitter Site
     role: tx-site
@@ -92,12 +86,10 @@ sites:
     notes: >
       SonicWall-based transmitter site.
 
-
   # --------------------------------------------------
   # CHATHAM LOCATIONS (IMPORTANT DISTINCTION)
   # --------------------------------------------------
-
-  - id: chatham-101
+  - id: chat-101
     site_code: CHAT-101
     name: Chatham Centre (Peplink Location)
     role: tx-site
@@ -115,14 +107,42 @@ sites:
       Confirmed by Dan that -100/-101 represent different physical locations.
       Note: DDNS label uses chat100; verify if hostname should be updated to chat101.
 
-  - id: chatham-100
+  - id: chat-100
     site_code: CHAT-100
     name: Chatham (Secondary Location)
-    role: unknown
+    role: "unknown"
     city: Chatham
     province: ON
-    status: unverified
+    status: "unverified"
     notes: >
       Location code exists per Dan.
       No confirmed device inventory yet.
       Confirm subnet, WAN, and firewall presence before using in topology.
+
+  # --------------------------------------------------
+  # THUNDER BAY TRANSMITTER SITE
+  # --------------------------------------------------
+  - id: tbay-100
+    site_code: TBAY-100
+    name: Thunder Bay Transmitter Site
+    role: tx-site
+    city: Thunder Bay
+    province: ON
+    status: unverified
+    notes: >
+      Site present in device inventory filenames (tbay-100).
+      Confirm subnet(s), WAN details, and firewall model/config.
+
+  # --------------------------------------------------
+  # NIPIGON TRANSMITTER SITE
+  # --------------------------------------------------
+  - id: nipi-100
+    site_code: NIPI-100
+    name: Nipigon Transmitter Site
+    role: tx-site
+    city: Nipigon
+    province: ON
+    status: unverified
+    notes: >
+      Site present in device inventory filenames (nipi-100).
+      Confirm subnet(s), WAN details, and firewall model/config.

@@ -1,51 +1,45 @@
 schema_version: 1
-
 device:
   asset_id: 28
   category: broadcast
   vendor: zipone
   role: codec
   device_key: 28-codec-zipone-broc-100
-
 site:
   code: BROC-100
   short: broc-100
   name: Brockville
-  province: "ON"
-
+  province: 'ON'
+  id: broc-100
 hardware:
   manufacturer: ZIPone
   model: TBD
   serial_number: TBD
-
 network:
   lan:
     subnet: 192.168.104.0/24
     notes:
-      - "ZIPone is on BROC transmitter LAN."
+    - ZIPone is on BROC transmitter LAN.
   rtp:
     used: true
     notes:
-      - "BROC-100 program audio uses RTP via ZIPone over VPN."
-
+    - BROC-100 program audio uses RTP via ZIPone over VPN.
 access:
   web_interface:
     url: TBD
-    credentials_location: "1Password > UCB > Broadcast > BROC-100 ZIPone (Asset 28)"
+    credentials_location: 1Password > UCB > Broadcast > BROC-100 ZIPone (Asset 28)
     notes:
-      - "Do not store usernames/passwords in repo."
-  notes: >
-    Verify RTP stream parameters and confirm active/standby behavior.
+    - Do not store usernames/passwords in repo.
+  notes: 'Verify RTP stream parameters and confirm active/standby behavior.
 
+    '
 dependencies:
   upstream:
-    - 9-fw-sonicwall-broc-100
-
+  - 9-fw-sonicwall-broc-100
 tags:
-  - broc-100
-  - brockville
-  - zipone
-  - codec
-  - rtp
-  - broadcast-critical
-  
+- broc-100
+- brockville
+- zipone
+- codec
+- rtp
+- broadcast-critical

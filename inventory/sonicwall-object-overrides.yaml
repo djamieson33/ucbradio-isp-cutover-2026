@@ -1,101 +1,96 @@
 version: 1
-updated_utc: "2026-02-24T00:00:00Z"
-
-# Intentionally empty: we do not assume object names are global/unique across firewalls.
+updated_utc: '2026-02-27T14:38:00Z'
 address_objects: {}
 service_objects: {}
 ip_map: {}
-
-# All real mappings live here:
 scoped:
-  "1-fw-sonicwall-bell-102":
+  1-fw-sonicwall-bell-102:
     address_objects:
-      "SRV-AQUIRA Private":
-        ip: "192.168.100.18"
-        device_id: "srvpathfind1"
-
-      "SRV-ZETTA-LAN Private":
-        ip: "192.168.100.97"
-        device_id: "zettaserver"
-
-      "SVR-MJ Private":
-        ip: "192.168.100.10"
-        device_id: "svr-mj01a1dt"
-
-      "SRV-PATHFIND1 Private":
-        ip: "192.168.100.18"
-        device_id: "srvpathfind1"
-
-      "ZIP-ONE Studio Private":
-        ip: "192.168.100.118"
-        device_id: "zip-one-studio"
-
+      SRV-AQUIRA Private:
+        ip: 192.168.100.18
+        device_id: srvpathfind1
+      SRV-ZETTA-LAN Private:
+        ip: 192.168.100.97
+        device_id: zettaserver
+      SVR-MJ Private:
+        ip: 192.168.100.10
+        device_id: svr-mj01a1dt
+      SRV-PATHFIND1 Private:
+        ip: 192.168.100.18
+        device_id: srvpathfind1
+      ZIP-ONE Studio Private:
+        ip: 192.168.100.118
+        device_id: zip-one-studio
     service_objects:
-      "ZETTASERVER Services":
+      ZETTASERVER Services:
         entries:
-          - protocol: tcp
-            port: 80
-          - protocol: tcp
-            port: 443
-          - protocol: tcp
-            port: 22
-          - protocol: tcp
-            port_range: "3136-3137"
-
-      "AQUIRA2GO SERVICES":
+        - protocol: tcp
+          port: 80
+        - protocol: tcp
+          port: 443
+        - protocol: tcp
+          port: 22
+        - protocol: tcp
+          port_range: 3136-3137
+      AQUIRA2GO SERVICES:
         entries:
-          - protocol: tcp
-            port_range: "3139-3144"
-          - protocol: tcp
-            port: 80
-          - protocol: tcp
-            port: 8080
-          - protocol: tcp
-            port: 85
-          - protocol: tcp
-            port: 443
-          - protocol: tcp
-            port: 10281
-          - protocol: tcp
-            port: 1433
-          - protocol: tcp
-            port: 22
-
-      "OpenVPN":
+        - protocol: tcp
+          port_range: 3139-3144
+        - protocol: tcp
+          port: 80
+        - protocol: tcp
+          port: 8080
+        - protocol: tcp
+          port: 85
+        - protocol: tcp
+          port: 443
+        - protocol: tcp
+          port: 10281
+        - protocol: tcp
+          port: 1433
+        - protocol: tcp
+          port: 22
+      OpenVPN:
         entries:
-          - protocol: udp
-            port: 1194
-
-      "Terminal Services":
+        - protocol: udp
+          port: 1194
+      Terminal Services:
         entries:
-          - protocol: tcp
-            port: 3389
-
-      "SVR-MJ10A1DT Services":
+        - protocol: tcp
+          port: 3389
+      SVR-MJ10A1DT Services:
         entries:
-          - protocol: tcp
-            port: 3389
-          - protocol: udp
-            port: 3389
-
-      "SQLSVR Services":
+        - protocol: tcp
+          port: 3389
+        - protocol: udp
+          port: 3389
+      SQLSVR Services:
         entries:
-          - protocol: tcp
-            port: 80
-          - protocol: tcp
-            port: 85
-          - protocol: tcp
-            port: 443
-          - protocol: tcp
-            port: 143
-          - protocol: tcp
-            port: 110
-          - protocol: tcp
-            port: 25
-
-      "ZIP-ONE Studio Services":
+        - protocol: tcp
+          port: 80
+        - protocol: tcp
+          port: 85
+        - protocol: tcp
+          port: 443
+        - protocol: tcp
+          port: 143
+        - protocol: tcp
+          port: 110
+        - protocol: tcp
+          port: 25
+      ZIP-ONE Studio Services:
         entries:
-          - protocol: tcp
-            port: 2200
-          - protocol: udp
-            port: 2200
+        - protocol: tcp
+          port: 2200
+        - protocol: udp
+          port: 2200
+  8-fw-sonicwall-nipi-100:
+    address_objects:
+      Nautel:
+        ip: ''
+        device_id: ''
+      ZIPONE:
+        ip: ''
+        device_id: ''
+    service_objects: {}
+    ip_map: {}

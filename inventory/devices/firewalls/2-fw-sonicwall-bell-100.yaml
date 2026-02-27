@@ -1,24 +1,19 @@
-# inventory/devices/firewalls/2-fw-sonicwall-bell-100.yaml
-# Asset 2 – SonicWall – BELL-100 (Belleville Read Site)
-
 device:
   asset_id: 2
   category: firewall
   vendor: sonicwall
   role: vpn-gateway
   device_key: 2-fw-sonicwall-bell-100
-
 site:
   code: BELL-100
   short: bell-100
   name: Belleville Secondary (Read)
-  province: "ON"
-
+  province: 'ON'
+  id: bell-100
 hardware:
   manufacturer: SonicWall
   model: TZ270
-  serial_number: "2CB8EDD82610"
-
+  serial_number: 2CB8EDD82610
 network:
   wan:
     primary:
@@ -30,53 +25,45 @@ network:
       interface: X0
       subnet: 192.168.101.0/24
       management_ip: 192.168.101.1
-
 vpn:
   role: spoke
-
   ssl_vpn:
     enabled: true
     public_ip: 69.31.226.114
     port: 4433
     domain: BELL-100
-
   ipsec_site_to_site:
     hub_device_key: 1-fw-sonicwall-bell-102
     peer_fqdn: vpn.ucbradio.com
     peer_current_public_ip: 24.51.249.34
     peer_target_public_ip: 207.236.163.98
     local_networks:
-      - 192.168.101.0/24
+    - 192.168.101.0/24
     notes:
-      - "Tunnel currently built toward Belleville core Cogeco IP."
-      - "Must whitelist 207.236.163.98 prior to cutover."
-      - "Prefer FQDN peer (vpn.ucbradio.com) long-term."
-
+    - Tunnel currently built toward Belleville core Cogeco IP.
+    - Must whitelist 207.236.163.98 prior to cutover.
+    - Prefer FQDN peer (vpn.ucbradio.com) long-term.
 management:
   wan_url: https://69.31.226.114
   lan_url: https://192.168.101.1
   wan_https_enabled: true
-  credentials_location: "1Password > UCB > Firewalls > BELL-100 (Asset 2)"
+  credentials_location: 1Password > UCB > Firewalls > BELL-100 (Asset 2)
   notes:
-    - "LAN management at 192.168.101.1"
-    - "Public WAN management at 69.31.226.114"
-
+  - LAN management at 192.168.101.1
+  - Public WAN management at 69.31.226.114
 security:
   pre_shared_key_stored: true
   notes:
-    - "PSK stored in secure vault."
-    - "Confirm key matches hub configuration."
-
+  - PSK stored in secure vault.
+  - Confirm key matches hub configuration.
 operational:
   critical_path: true
-  description: >
-    Belleville secondary (Read) site firewall.
-    Participates in IPSec site-to-site tunnel with BELL-102 hub.
+  description: 'Belleville secondary (Read) site firewall. Participates in IPSec site-to-site tunnel with BELL-102 hub.
 
+    '
 tags:
-  - bell-100
-  - belleville
-  - read-site
-  - firewall
-  - sonicwall
-  
+- bell-100
+- belleville
+- read-site
+- firewall
+- sonicwall
