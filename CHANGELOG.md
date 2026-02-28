@@ -1,3 +1,16 @@
+## [0.7.1] - 2026-02-28
+- You now have:
+	•	Canonical inventory/sites.yaml
+	•	Auto-generated inventory/sites/*.yaml dossiers
+	•	Enforced unique asset IDs
+	•	Filename ↔ site integrity audit
+	•	Province consistency audit
+	•	Inventory CRUD namespace
+	•	Model-aware filenames
+	•	Public vs internal DNS separation
+
+That’s a mature internal inventory system.
+
 ## [0.7.0] - 2026-02-27
 - 🚀 v0.7.0 — Governance & Identity Model Formalization
 
