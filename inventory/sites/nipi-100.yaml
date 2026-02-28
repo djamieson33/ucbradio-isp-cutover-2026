@@ -2,8 +2,8 @@ schema_version: 1
 site:
   id: nipi-100
   site_code: NIPI-100
-  name: Nipigon Transmitter Site
-  province: true
+  city: Nipigon
+  province: Ontario
 devices:
   firewalls: []
   broadcast: []

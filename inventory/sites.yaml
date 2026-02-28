@@ -9,7 +9,7 @@ sites:
     name: National Media Centre (Belleville)
     role: hub
     city: Belleville
-    province: ON
+    province: Ontario
     ipsec:
       enabled: false
     networks:
@@ -28,7 +28,7 @@ sites:
     name: Belleville (Read Location)
     role: tx-site
     city: Belleville
-    province: ON
+    province: Ontario
     ipsec:
       enabled: true
     networks:
@@ -47,7 +47,7 @@ sites:
     name: Brockville Transmitter Site
     role: tx-site
     city: Brockville
-    province: ON
+    province: Ontario
     ipsec:
       enabled: true
     networks:
@@ -61,7 +61,7 @@ sites:
     name: Cobourg Transmitter Site
     role: tx-site
     city: Cobourg
-    province: ON
+    province: Ontario
     ipsec:
       enabled: true
     networks:
@@ -75,7 +75,7 @@ sites:
     name: Kingston Transmitter Site
     role: tx-site
     city: Kingston
-    province: ON
+    province: Ontario
     ipsec:
       enabled: true
     networks:
@@ -89,7 +89,7 @@ sites:
     name: Windsor Transmitter Site
     role: tx-site
     city: Windsor
-    province: ON
+    province: Ontario
     ipsec:
       enabled: false
     networks:
@@ -107,7 +107,7 @@ sites:
     name: Chatham Centre (Peplink Location)
     role: tx-site
     city: Chatham
-    province: ON
+    province: Ontario
     ipsec:
       enabled: true
     networks:
@@ -127,7 +127,7 @@ sites:
     name: Chatham (Secondary Location)
     role: unknown
     city: Chatham
-    province: ON
+    province: Ontario
     status: unverified
     ipsec:
       enabled: false
@@ -144,7 +144,7 @@ sites:
     name: Thunder Bay Transmitter Site
     role: tx-site
     city: Thunder Bay
-    province: ON
+    province: Ontario
     status: unverified
     ipsec:
       enabled: false
@@ -160,7 +160,7 @@ sites:
     name: Nipigon Transmitter Site
     role: tx-site
     city: Nipigon
-    province: ON
+    province: Ontario
     status: unverified
     ipsec:
       enabled: false
@@ -176,7 +176,7 @@ sites:
     name: Regina Transmitter Site
     role: tx-site
     city: Regina
-    province: SK
+    province: Saskatchewan
     status: unverified
     ipsec:
       enabled: false
@@ -189,7 +189,7 @@ sites:
     name: Saskatoon Transmitter Site
     role: tx-site
     city: Saskatoon
-    province: SK
+    province: Saskatchewan
     status: unverified
     ipsec:
       enabled: false
@@ -202,7 +202,7 @@ sites:
     name: Fort McMurray Transmitter Site
     role: tx-site
     city: Fort McMurray
-    province: AB
+    province: Alberta
     status: unverified
     ipsec:
       enabled: false
@@ -215,7 +215,7 @@ sites:
     name: Medicine Hat Transmitter Site
     role: tx-site
     city: Medicine Hat
-    province: AB
+    province: Alberta
     status: unverified
     ipsec:
       enabled: false

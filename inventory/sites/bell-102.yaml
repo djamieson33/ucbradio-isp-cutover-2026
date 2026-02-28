@@ -2,8 +2,8 @@ schema_version: 1
 site:
   id: bell-102
   site_code: BELL-102
-  name: National Media Centre (Belleville)
-  province: true
+  city: Belleville
+  province: Ontario
 devices:
   firewalls: []
   broadcast: []

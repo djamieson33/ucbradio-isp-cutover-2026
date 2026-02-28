@@ -2,8 +2,8 @@ schema_version: 1
 site:
   id: fmac-100
   site_code: FMAC-100
-  name: Fort McMurray Transmitter Site
-  province: AB
+  city: Fort McMurray
+  province: Alberta
 devices:
   firewalls: []
   broadcast: []

@@ -2,8 +2,8 @@ schema_version: 1
 site:
   id: regi-100
   site_code: REGI-100
-  name: Regina Transmitter Site
-  province: SK
+  city: Regina
+  province: Saskatchewan
 devices:
   firewalls: []
   broadcast: []

@@ -2,8 +2,8 @@ schema_version: 1
 site:
   id: wind-100
   site_code: WIND-100
-  name: Windsor Transmitter Site
-  province: true
+  city: Windsor
+  province: Ontario
 devices:
   firewalls: []
   broadcast: []

@@ -2,8 +2,8 @@ schema_version: 1
 site:
   id: tbay-100
   site_code: TBAY-100
-  name: Thunder Bay Transmitter Site
-  province: true
+  city: Thunder Bay
+  province: Ontario
 devices:
   firewalls: []
   broadcast: []

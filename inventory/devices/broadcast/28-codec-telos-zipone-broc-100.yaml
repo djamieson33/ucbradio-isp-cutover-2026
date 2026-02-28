@@ -1,0 +1,16 @@
+schema_version: 1
+id: 28-codec-telos-zipone-broc-100
+asset_id: 28
+site:
+  id: broc-100
+vendor: Telos
+model: ZIPONE
+hostname: broc100-codec.ucbradio.com
+network:
+  management_ip: 192.168.104.101
+hardware:
+  serial_number: 0289L1484
+  location_detail: rack
+monitoring:
+  enabled: true
+notes: also has wan of 69.31.226.50 listed

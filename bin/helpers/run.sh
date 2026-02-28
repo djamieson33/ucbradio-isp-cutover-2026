@@ -6,6 +6,9 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 # shellcheck source=bin/helpers/lib/common.sh
 source "$ROOT/bin/helpers/lib/common.sh"
 
+# shellcheck source=bin/helpers/lib/colors.sh
+source "$ROOT/bin/helpers/lib/colors.sh"
+
 usage() {
   cat <<'USAGE'
 Usage:
@@ -38,6 +41,12 @@ case "${1:-}" in
 
     echo "JSON emit demo:"
     emit_json "helpers" "n/a" "ok" 0 "Helpers wiring OK"
+
+    echo
+    echo "Color output demo:"
+    green_ok "Operation successful!"
+    red_error "Something failed."
+    yellow_warn "Check this warning."
     ;;
   --print-ts)
     ts_utc

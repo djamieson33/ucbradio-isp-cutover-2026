@@ -2,10 +2,11 @@ schema_version: 1
 site:
   id: cobo-100
   site_code: COBO-100
-  name: Cobourg Transmitter Site
-  province: true
+  city: Cobourg
+  province: Ontario
 devices:
-  firewalls: []
+  firewalls:
+  - 3-fw-sonicwall-tz270-cobo-100
   broadcast: []
   servers: []
   network: []

@@ -2,8 +2,8 @@ schema_version: 1
 site:
   id: chat-100
   site_code: CHAT-100
-  name: Chatham (Secondary Location)
-  province: true
+  city: Chatham
+  province: Ontario
 devices:
   firewalls: []
   broadcast: []

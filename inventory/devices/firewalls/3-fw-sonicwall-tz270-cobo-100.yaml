@@ -1,0 +1,100 @@
+schema_version: 1
+
+asset:
+  id: 3
+
+identity:
+  role: firewall
+  vendor: SonicWall
+  model: TZ270
+
+site:
+  id: cobo-100
+
+network:
+  lan:
+    primary:
+      interface: X0
+      subnet: "192.168.102.0/24"
+  management:
+    hostname: cobo100-fw.ucbradio.local
+    ip: "192.168.102.1"
+    dns_zone: ucbradio.local
+
+internet:
+  wan:
+    primary:
+      interface: X1
+      public_ip: "207.236.214.34"
+  wan_public_ip: "207.236.214.34"
+  nat_exposed: true
+  public_dns:
+    active:
+      - ucbmedia-cobo100.ddns.net
+    deprecated: []
+  transitional: true
+
+vpn:
+  role: spoke
+  ipsec_site_to_site:
+    hub_device_key: 1-fw-sonicwall-bell-102
+    tunnel_name_on_hub: "STL-COBO-100 IPsec"
+    peer_fqdn: vpn.ucbradio.com
+    peer_current_public_ip: unknown
+    peer_target_public_ip: "207.236.163.98"
+    local_networks:
+      - "192.168.102.0/24"
+    remote_networks:
+      - "192.168.100.0/24"
+    crypto_suite: "ESP: AES-256/HMAC SHA256 (IKE)"
+    nat_traversal: unknown
+    dpd:
+      enabled: unknown
+      interval_seconds: unknown
+      failure_trigger_level: unknown
+    notes:
+      - Must pre-whitelist hub Bell IP 207.236.163.98 prior to cutover.
+
+management:
+  wan_url: "https://207.236.214.34"
+  lan_url: "https://192.168.102.1"
+  wan_https_enabled: true
+  credentials_location: "1Password > UCB > Firewalls > COBO-100 (Asset 3)"
+  notes:
+    - LAN management at 192.168.102.1
+    - Public WAN management at 207.236.214.34
+
+security:
+  pre_shared_key_stored: true
+  notes:
+    - PSK stored in secure vault.
+    - Confirm key matches hub configuration.
+
+lifecycle:
+  target_state: internal-only
+  public_dns_planned_removal: false
+
+monitoring:
+  enabled: true
+
+hardware:
+  serial_number: 2CB8EDD81CB0
+  location_detail: rack
+
+operational:
+  critical_path: true
+  description: >
+    Cobourg transmitter site firewall. Participates in IPSec site-to-site tunnel with BELL-102 hub.
+  notes:
+    - Exports review: NAT CSV contains only default/system NAT policies; no inbound NAT (Destination Translated != Original).
+    - seed_inbound_services: seeded_services=0 (expected).
+
+tags:
+  - cobo-100
+  - cobourg
+  - transmitter-site
+  - firewall
+  - sonicwall
+
+notes: >
+  WAN IP 207.236.214.34. DDNS ucbmedia-cobo100.ddns.net

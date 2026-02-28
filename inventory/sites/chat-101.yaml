@@ -2,8 +2,8 @@ schema_version: 1
 site:
   id: chat-101
   site_code: CHAT-101
-  name: Chatham Centre (Peplink Location)
-  province: true
+  city: Chatham
+  province: Ontario
 devices:
   firewalls: []
   broadcast: []

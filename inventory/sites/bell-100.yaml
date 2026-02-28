@@ -2,8 +2,8 @@ schema_version: 1
 site:
   id: bell-100
   site_code: BELL-100
-  name: Belleville (Read Location)
-  province: true
+  city: Belleville
+  province: Ontario
 devices:
   firewalls: []
   broadcast: []

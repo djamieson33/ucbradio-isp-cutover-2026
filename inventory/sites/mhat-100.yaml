@@ -2,8 +2,8 @@ schema_version: 1
 site:
   id: mhat-100
   site_code: MHAT-100
-  name: Medicine Hat Transmitter Site
-  province: AB
+  city: Medicine Hat
+  province: Alberta
 devices:
   firewalls: []
   broadcast: []

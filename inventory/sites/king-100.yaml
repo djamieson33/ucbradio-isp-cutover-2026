@@ -2,8 +2,8 @@ schema_version: 1
 site:
   id: king-100
   site_code: KING-100
-  name: Kingston Transmitter Site
-  province: true
+  city: Kingston
+  province: Ontario
 devices:
   firewalls: []
   broadcast: []
